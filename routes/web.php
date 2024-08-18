@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ThreadController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,5 +27,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('categories', CategoryController::class)->only(['index','store','update','show','destroy']);
+Route::resource('threads', ThreadController::class)->only(['index','store','update','show','destroy']);
 
 require __DIR__.'/auth.php';

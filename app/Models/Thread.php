@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Category extends Model
+class Thread extends Model
 {
     use HasFactory;
 
@@ -15,10 +15,15 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'code', 'name' ];
+    protected $fillable = [ 'title', 'content' ];
 
-    public function parent() : HasOne
+    public function category() : HasOne
     {
-        return $this->hasOne(self::class, 'id', 'parent_id');
+        return $this->hasOne(Category::class);
+    }
+
+    public function author() : HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'author_id');
     }
 }

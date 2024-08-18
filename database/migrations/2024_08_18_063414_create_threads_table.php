@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('threads', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('name');
-            $table->foreignIdFor(Category::class, 'parent_id')->nullable()->constrained('categories')->cascadeOnUpdate()->restrictOnDelete();
+            $table->string('title');
+            $table->longText('content');
+            $table->foreignIdFor(Category::class)->constrained('categories')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignIdFor(User::class, 'author_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('threads');
     }
 };
