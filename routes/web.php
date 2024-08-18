@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThreadController;
 use Illuminate\Foundation\Application;
@@ -16,9 +17,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Themes/' . env('APP_FRONTEND_THEME') . '/Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// dashboard routes
+Route::get('/dashboard', [ DashboardController::class, 'dashboard' ])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard/{code}', [ DashboardController::class, 'category'])->middleware(['auth', 'verified'])->name('dashboard.category');
+Route::get('/dashboard/{category}/children', [ DashboardController::class, 'categoryChildren'])->middleware(['auth', 'verified'])->name('dashboard.category.children');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

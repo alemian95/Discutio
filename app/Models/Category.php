@@ -27,4 +27,20 @@ class Category extends Model
     {
         return $this->hasMany(self::class, 'parent_id', 'id');
     }
+
+    public function threads() : HasMany
+    {
+        return $this->hasMany(Thread::class, 'category_id', 'id');
+    }
+
+    public function pathToParent() : array
+    {
+        $pointer = $this;
+        $path = [];
+        while ($pointer->parent) {
+            $path[] = $pointer->parent;
+            $pointer = $pointer->parent;
+        }
+        return array_reverse($path);
+    }
 }
