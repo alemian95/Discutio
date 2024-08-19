@@ -20,7 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Themes/' . env('APP_FRONTEND_THEME') . '/Auth/Register');
+        return Inertia::render('Themes/'.env('APP_FRONTEND_THEME').'/Auth/Register');
     }
 
     /**

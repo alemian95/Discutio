@@ -29,9 +29,10 @@ class ThreadController extends Controller
      */
     public function store(StoreThreadRequest $request)
     {
-        $thread = new Thread();
+        $thread = new Thread;
         $thread->fill($request->validated());
         $thread->save();
+
         return response()->noContent();
     }
 
@@ -58,6 +59,7 @@ class ThreadController extends Controller
     {
         $thread->fill($request->validated());
         $thread->save();
+
         return response()->noContent();
     }
 
@@ -67,6 +69,7 @@ class ThreadController extends Controller
     public function destroy(Thread $thread)
     {
         $thread->delete();
+
         return response()->noContent();
     }
 }

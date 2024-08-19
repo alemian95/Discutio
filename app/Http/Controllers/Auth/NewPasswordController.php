@@ -21,7 +21,7 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request): Response
     {
-        return Inertia::render('Themes/' . env('APP_FRONTEND_THEME') . '/Auth/ResetPassword', [
+        return Inertia::render('Themes/'.env('APP_FRONTEND_THEME').'/Auth/ResetPassword', [
             'email' => $request->email,
             'token' => $request->route('token'),
         ]);

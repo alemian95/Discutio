@@ -29,9 +29,10 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        $category = new Category();
+        $category = new Category;
         $category->fill($request->validated());
         $category->save();
+
         return response()->noContent();
     }
 
@@ -58,6 +59,7 @@ class CategoryController extends Controller
     {
         $category->fill($request->validated());
         $category->save();
+
         return response()->noContent();
     }
 
@@ -67,6 +69,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+
         return response()->noContent();
     }
 }

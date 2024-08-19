@@ -16,24 +16,24 @@ class Category extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'code', 'name' ];
+    protected $fillable = ['code', 'name'];
 
-    public function parent() : HasOne
+    public function parent(): HasOne
     {
         return $this->hasOne(self::class, 'id', 'parent_id');
     }
 
-    public function children() : HasMany
+    public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id', 'id');
     }
 
-    public function threads() : HasMany
+    public function threads(): HasMany
     {
         return $this->hasMany(Thread::class, 'category_id', 'id');
     }
 
-    public function pathToParent() : array
+    public function pathToParent(): array
     {
         $pointer = $this;
         $path = [];
@@ -41,6 +41,7 @@ class Category extends Model
             $path[] = $pointer->parent;
             $pointer = $pointer->parent;
         }
+
         return array_reverse($path);
     }
 }

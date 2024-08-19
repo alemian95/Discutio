@@ -8,13 +8,12 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-
     public function dashboard(Request $request)
     {
         $parentCategories = Category::whereNull('parent_id')->with('threads')->get();
 
-        return Inertia::render('Themes/' . env('APP_FRONTEND_THEME') . '/Dashboard', [
-            'categories' => $parentCategories
+        return Inertia::render('Themes/'.env('APP_FRONTEND_THEME').'/Dashboard', [
+            'categories' => $parentCategories,
         ]);
     }
 

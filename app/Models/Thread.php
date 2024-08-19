@@ -15,14 +15,14 @@ class Thread extends Model
      *
      * @var array
      */
-    protected $fillable = [ 'title', 'content' ];
+    protected $fillable = ['title', 'content'];
 
-    public function category() : HasOne
+    public function category(): HasOne
     {
         return $this->hasOne(Category::class);
     }
 
-    public function author() : HasOne
+    public function author(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'author_id');
     }

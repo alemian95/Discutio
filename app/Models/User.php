@@ -10,7 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -46,17 +46,17 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    public function isSuperadmin() : bool
+    public function isSuperadmin(): bool
     {
         return $this->hasRole('superadmin');
     }
 
-    public function isAdmin() : bool
+    public function isAdmin(): bool
     {
         return $this->isSuperadmin() || $this->hasRole('admin');
     }
 
-    public function isModerator() : bool
+    public function isModerator(): bool
     {
         return $this->isAdmin() || $this->hasRole('moderator');
     }

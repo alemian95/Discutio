@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Thread;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ThreadPolicy
 {
@@ -45,8 +44,7 @@ class ThreadPolicy
      */
     public function delete(User $user, Thread $thread): bool
     {
-        return
-            $thread->author == $user || $user->isModerator();
+        return $thread->author == $user || $user->isModerator();
     }
 
     /**

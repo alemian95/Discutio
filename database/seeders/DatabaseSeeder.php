@@ -17,16 +17,16 @@ class DatabaseSeeder extends Seeder
     {
 
         $roles = [
-            'superadmin' => Role::create(['name'=>'superadmin']),
-            'admin' => Role::create(['name'=>'admin']),
-            'moderator' => Role::create(['name'=>'moderator']),
-            'user' => Role::create(['name'=>'user']),
+            'superadmin' => Role::create(['name' => 'superadmin']),
+            'admin' => Role::create(['name' => 'admin']),
+            'moderator' => Role::create(['name' => 'moderator']),
+            'user' => Role::create(['name' => 'user']),
         ];
 
         $user = User::factory()->create([
             'name' => env('SUPERADMIN_DEFAULT_NAME'),
             'email' => env('SUPERADMIN_DEFAULT_EMAIL'),
-            'password' => Hash::make(env('SUPERADMIN_DEFAULT_PASSWORD'))
+            'password' => Hash::make(env('SUPERADMIN_DEFAULT_PASSWORD')),
         ]);
 
         $user->assignRole($roles['superadmin']);
