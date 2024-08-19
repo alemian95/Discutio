@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Category extends Model
 {
@@ -18,9 +18,9 @@ class Category extends Model
      */
     protected $fillable = ['code', 'name'];
 
-    public function parent(): HasOne
+    public function parent(): BelongsTo
     {
-        return $this->hasOne(self::class, 'id', 'parent_id');
+        return $this->belongsTo(self::class, 'id', 'parent_id');
     }
 
     public function children(): HasMany
@@ -43,5 +43,15 @@ class Category extends Model
         }
 
         return array_reverse($path);
+    }
+
+    public static function getByCode(string $code): ?Category
+    {
+        return Category::where('code', 'technology')->first();
+    }
+
+    public static function getByCodeOrFail(string $code): Category
+    {
+        return Category::where('code', 'technology')->firstOrFail();
     }
 }

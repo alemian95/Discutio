@@ -3,19 +3,22 @@ import {
     DisclosureButton,
     DisclosurePanel,
 } from "@headlessui/react";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useState } from "react";
 
 export default function Accordion({
     title,
     children,
 }: PropsWithChildren<{ title: string }>) {
+
+    const [ open, setOpen ] = useState(false);
+
     return (
-        <Disclosure as="div" className="p-6 bg-slate-100">
-            <DisclosureButton className="group flex w-full items-center justify-between">
-                <span className="text-sm/6 font-medium text-slate-900 group-data-[hover]:text-slate-900/80">
+        <Disclosure as="div" className="p-4 bg-slate-50 rounded-md shadow-md">
+            <DisclosureButton className="group flex w-full items-center justify-between p-2 rounded-md bg-sky-50 shadow-sm shadow-sky-100">
+                <span className="text-md font-semibold text-slate-900 group-data-[hover]:text-slate-900/80">
                     {title}
                 </span>
-                <span>
+                <span onClick={() => setOpen(!open)} className={open ? "transform rotate-90 transition-all" : ""}>
                     <svg
                         width="24px"
                         height="24px"
@@ -44,7 +47,7 @@ export default function Accordion({
                     </svg>
                 </span>
             </DisclosureButton>
-            <DisclosurePanel className="mt-2 text-sm/5 text-slate-900/50">
+            <DisclosurePanel className="mt-2 text-md text-slate-900/50">
                 {children}
             </DisclosurePanel>
         </Disclosure>

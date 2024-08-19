@@ -14,6 +14,7 @@ export interface Category {
     parent?: Category;
     children?: Category[];
     threads?: Thread[];
+    threads_count?: number;
 }
 
 export interface Thread {

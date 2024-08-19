@@ -17,13 +17,13 @@ export default function Dashboard( { categories } : { categories: Category[] } )
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
+                        <div className="p-6 text-gray-900 dark:text-gray-100 flex flex-col gap-4">
                             {
                                 categories.map((category, index) => {
                                     return (
                                         <Accordion key={index} title={category.name}>
                                             <p>{category.code}</p>
-                                            <p>Threads: <span>{category.threads?.length}</span></p>
+                                            <p>Threads: <span>{category.threads_count}</span></p>
                                         </Accordion>
                                     )
                                 })

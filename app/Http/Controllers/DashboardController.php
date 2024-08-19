@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-        $parentCategories = Category::whereNull('parent_id')->with('threads')->get();
+        $parentCategories = Category::whereNull('parent_id')->withCount('threads')->get();
 
         return Inertia::render('Themes/'.env('APP_FRONTEND_THEME').'/Dashboard', [
             'categories' => $parentCategories,
