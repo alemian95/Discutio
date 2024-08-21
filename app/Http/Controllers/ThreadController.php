@@ -24,7 +24,8 @@ class ThreadController extends Controller
     public function create()
     {
 
-        $categories = Category::getCategoryTree();
+        // $categories = Category::getCategoryTree();
+        $categories = Category::getPreOrderList();
 
         return InertiaWithThemes::renderTheme('Thread/Form', [
             'categories' => $categories

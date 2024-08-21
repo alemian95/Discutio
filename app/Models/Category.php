@@ -57,14 +57,10 @@ class Category extends Model
 
     public static function getCategoryTree()
     {
-        // Carica tutte le categorie
         $categories = Category::whereNull('parent_id')->with('children')->get();
-
-        // Costruisce l'albero partendo dalle categorie senza parent
         return self::buildTree($categories);
     }
 
-    // Funzione ricorsiva per costruire l'albero delle categorie
     private static function buildTree($categories, $parentId = null)
     {
         $branch = [];
@@ -77,5 +73,27 @@ class Category extends Model
         }
 
         return $branch;
+    }
+
+    public static function getPreOrderList()
+    {
+        $categories = Category::with('children')->get()->keyBy('id');
+        $ordered = [];
+        foreach ($categories as $category) {
+            if ($category->parent_id === null) {
+                self::preorderTraversal($category, $ordered);
+            }
+        }
+
+        return $ordered;
+    }
+
+    private static function preorderTraversal($category, &$ordered)
+    {
+        $ordered[] = $category;
+
+        foreach ($category->children as $child) {
+            self::preorderTraversal($child, $ordered);
+        }
     }
 }
