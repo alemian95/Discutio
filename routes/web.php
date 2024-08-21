@@ -29,6 +29,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
-Route::resource('threads', ThreadController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
+Route::resource('threads', ThreadController::class)->only(['index', 'create', 'store', 'update', 'show', 'destroy']);
 
 require __DIR__.'/auth.php';

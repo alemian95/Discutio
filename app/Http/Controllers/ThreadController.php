@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Thread\StoreThreadRequest;
 use App\Http\Requests\Thread\UpdateThreadRequest;
 use App\Models\Thread;
+use App\Extensions\Inertia\InertiaWithThemes;
+use App\Models\Category;
 
 class ThreadController extends Controller
 {
@@ -21,7 +23,12 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        //
+
+        $categories = Category::getCategoryTree();
+
+        return InertiaWithThemes::renderTheme('Thread/Form', [
+            'categories' => $categories
+        ]);
     }
 
     /**

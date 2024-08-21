@@ -54,4 +54,28 @@ class Category extends Model
     {
         return Category::where('code', 'technology')->firstOrFail();
     }
+
+    public static function getCategoryTree()
+    {
+        // Carica tutte le categorie
+        $categories = Category::whereNull('parent_id')->with('children')->get();
+
+        // Costruisce l'albero partendo dalle categorie senza parent
+        return self::buildTree($categories);
+    }
+
+    // Funzione ricorsiva per costruire l'albero delle categorie
+    private static function buildTree($categories, $parentId = null)
+    {
+        $branch = [];
+
+        foreach ($categories as $category) {
+            if ($category->parent_id == $parentId) {
+                $category->children = self::buildTree($categories, $category->id);
+                $branch[] = $category;
+            }
+        }
+
+        return $branch;
+    }
 }

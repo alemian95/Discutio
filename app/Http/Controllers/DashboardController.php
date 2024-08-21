@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Extensions\Inertia\InertiaWithThemes;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -12,7 +13,7 @@ class DashboardController extends Controller
     {
         $parentCategories = Category::whereNull('parent_id')->withCount('threads')->get();
 
-        return Inertia::render('Themes/'.env('APP_FRONTEND_THEME').'/Dashboard', [
+        return InertiaWithThemes::renderTheme('Dashboard', [
             'categories' => $parentCategories,
         ]);
     }

@@ -3,8 +3,10 @@ import { Head, usePage } from '@inertiajs/react';
 import { Category, PageProps } from '@/types';
 import Accordion from '@/Components/Themes/default/Accordion';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
+import Dropdown from '@/Components/Themes/default/Dropdown';
+import { Select } from '@/Components/Themes/default/Select';
 
-export default function Dashboard( { categories } : { categories: Category[] } ) {
+export default function Form( { categories } : { categories: Category[] } ) {
 
     const { auth } = usePage<PageProps>().props
 
@@ -19,19 +21,11 @@ export default function Dashboard( { categories } : { categories: Category[] } )
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 flex justify-end">
-                            <a href={route('threads.create')}><PrimaryButton>New Thread +</PrimaryButton></a>
-                        </div>
-                        <div className="p-6 text-gray-900 dark:text-gray-100 flex flex-col gap-4">
-                            {
-                                categories.map((category, index) => {
-                                    return (
-                                        <Accordion key={index} title={category.name}>
-                                            <p>{category.code}</p>
-                                            <p>Threads: <span>{category.threads_count}</span></p>
-                                        </Accordion>
-                                    )
-                                })
-                            }
+
+                            <Select />
+
+                            <textarea className='rounded-md border border-slate-400'></textarea>
+
                         </div>
                     </div>
                 </div>
