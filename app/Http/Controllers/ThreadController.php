@@ -37,11 +37,22 @@ class ThreadController extends Controller
      */
     public function store(StoreThreadRequest $request)
     {
+
+        $category = Category::getByCode($request->category);
+
+        if (!$category ) {
+            abort(422);
+        }
+
         $thread = new Thread;
         $thread->fill($request->validated());
+
+        $thread->category_id = $category->id;
+        $thread->author_id = $request->user()->id;
+
         $thread->save();
 
-        return response()->noContent();
+        return $thread;
     }
 
     /**

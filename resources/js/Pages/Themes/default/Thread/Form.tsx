@@ -1,12 +1,29 @@
 import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, useForm, usePage } from '@inertiajs/react';
 import { Category, PageProps } from '@/types';
 import { Select } from '@/Components/Themes/default/Select';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
+import TextInput from '@/Components/Themes/default/TextInput';
+import { setDefaultHighWaterMark } from 'stream';
+import { FormEventHandler } from 'react';
 
 export default function Form( { categories } : { categories: Category[] } ) {
 
     const { auth } = usePage<PageProps>().props
+
+    const { data, setData, post, processing, errors, reset } = useForm({
+        category: '',
+        title: '',
+        content: '',
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route('threads.store'), {
+            onFinish: () => alert('created'),
+        });
+    };
 
     return (
         <AuthenticatedLayout
@@ -21,25 +38,34 @@ export default function Form( { categories } : { categories: Category[] } ) {
                         <div className="p-6">
 
                             <div>
-                                <select>
-                                    <option value="0">Select Category</option>
-                                    {
-                                        categories.map(category => {
-                                            return (
-                                                <option value={category.id}>{category.name}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+                                <pre>
+                                    <pre>{JSON.stringify({ data, setData }, null,'   ')}</pre>
+                                </pre>
                             </div>
 
-                            <div>
-                                <textarea className='rounded-md border border-slate-400'></textarea>
-                            </div>
+                            <form onSubmit={submit}>
+                                <div>
+                                    <select onChange={(e) => setData('category', e.currentTarget.value)}>
+                                        <option value="">Select Category</option>
+                                        {
+                                            categories.map(category => {
+                                                return (
+                                                    <option value={category.code}>{category.name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </div>
 
-                            <div>
-                                <PrimaryButton>Inserisci</PrimaryButton>
-                            </div>
+                                <div>
+                                    <TextInput onChange={(e) => setData('title', e.currentTarget.value)} />
+                                    <textarea  onChange={(e) => setData('content', e.currentTarget.value)} className='rounded-md border border-slate-400'></textarea>
+                                </div>
+
+                                <div>
+                                    <PrimaryButton disabled={processing}>Inserisci</PrimaryButton>
+                                </div>
+                            </form>
 
                         </div>
                     </div>
