@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,6 +34,13 @@ class Category extends Model
         return $this->hasMany(Thread::class, 'category_id', 'id');
     }
 
+    public function path(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->pathToParent(),
+        );
+    }
+
     public function pathToParent(): array
     {
         $pointer = $this;
@@ -43,6 +51,13 @@ class Category extends Model
         }
 
         return array_reverse($path);
+    }
+
+    public function depth(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => count($this->pathToParent()),
+        );
     }
 
     public static function getByCode(string $code): ?Category

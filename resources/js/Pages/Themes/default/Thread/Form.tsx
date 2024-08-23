@@ -2,6 +2,7 @@ import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
 import { Head, usePage } from '@inertiajs/react';
 import { Category, PageProps } from '@/types';
 import { Select } from '@/Components/Themes/default/Select';
+import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 
 export default function Form( { categories } : { categories: Category[] } ) {
 
@@ -20,7 +21,16 @@ export default function Form( { categories } : { categories: Category[] } ) {
                         <div className="p-6">
 
                             <div>
-                                <Select />
+                                <select>
+                                    <option value="0">Select Category</option>
+                                    {
+                                        categories.map(category => {
+                                            return (
+                                                <option value={category.id}>{category.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
                             </div>
 
                             <div>
@@ -28,13 +38,7 @@ export default function Form( { categories } : { categories: Category[] } ) {
                             </div>
 
                             <div>
-                                {
-                                    categories.map(category => {
-                                        return (
-                                            <div>{category.name}</div>
-                                        )
-                                    })
-                                }
+                                <PrimaryButton>Inserisci</PrimaryButton>
                             </div>
 
                         </div>
