@@ -34,6 +34,24 @@ class Category extends Model
         return $this->hasMany(Thread::class, 'category_id', 'id');
     }
 
+    public function threadsWithSubcategories(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getThreadsWithSubcategories($this)
+        );
+    }
+
+    private function getThreadsWithSubcategories($category)
+    {
+        $threads = $category->threads;
+
+        foreach ($category->children as $childCategory) {
+            $threads = $threads->merge($this->getThreadsWithSubcategories($childCategory));
+        }
+
+        return $threads;
+    }
+
     public function path(): Attribute
     {
         return Attribute::make(

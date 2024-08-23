@@ -13,6 +13,10 @@ class DashboardController extends Controller
     {
         $parentCategories = Category::whereNull('parent_id')->withCount('threads')->get();
 
+        foreach ($parentCategories as &$category) {
+            $category->threads_count = count($category->threadsWithSubcategories);
+        }
+
         return InertiaWithThemes::renderTheme('Dashboard', [
             'categories' => $parentCategories,
         ]);
