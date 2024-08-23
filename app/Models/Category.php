@@ -62,12 +62,12 @@ class Category extends Model
 
     public static function getByCode(string $code): ?Category
     {
-        return Category::where('code', 'technology')->first();
+        return Category::where('code', $code)->first();
     }
 
     public static function getByCodeOrFail(string $code): Category
     {
-        return Category::where('code', 'technology')->firstOrFail();
+        return Category::where('code', $code)->firstOrFail();
     }
 
     public static function getCategoryTree()
