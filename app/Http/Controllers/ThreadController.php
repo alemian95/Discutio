@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Extensions\Inertia\InertiaWithThemes;
 use App\Http\Requests\Thread\StoreThreadRequest;
 use App\Http\Requests\Thread\UpdateThreadRequest;
-use App\Models\Thread;
-use App\Extensions\Inertia\InertiaWithThemes;
 use App\Models\Category;
+use App\Models\Thread;
+use Illuminate\Support\Facades\Redirect;
 
 class ThreadController extends Controller
 {
@@ -28,7 +29,7 @@ class ThreadController extends Controller
         $categories = Category::getPreOrderList();
 
         return InertiaWithThemes::renderTheme('Thread/Form', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -40,7 +41,7 @@ class ThreadController extends Controller
 
         $category = Category::getByCode($request->category);
 
-        if (!$category ) {
+        if (! $category) {
             abort(422);
         }
 
@@ -52,7 +53,7 @@ class ThreadController extends Controller
 
         $thread->save();
 
-        return $thread;
+        return Redirect::route('threads.show', ['thread' => $thread]);
     }
 
     /**
@@ -60,7 +61,7 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        return $thread;
+        return InertiaWithThemes::renderTheme('Thread/Show', ['thread' => $thread]);
     }
 
     /**

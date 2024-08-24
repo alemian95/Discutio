@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Extensions\Inertia\InertiaWithThemes;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class DashboardController extends Controller
 {

@@ -91,6 +91,7 @@ class Category extends Model
     public static function getCategoryTree()
     {
         $categories = Category::whereNull('parent_id')->with('children')->get();
+
         return self::buildTree($categories);
     }
 
