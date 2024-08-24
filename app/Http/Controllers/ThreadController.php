@@ -36,17 +36,10 @@ class ThreadController extends Controller
      */
     public function store(StoreThreadRequest $request)
     {
-
-        $category = Category::getByCode($request->category);
-
-        if (! $category) {
-            abort(422);
-        }
-
         $thread = new Thread;
         $thread->fill($request->validated());
 
-        $thread->category_id = $category->id;
+        $thread->category_id = Category::getByCode($request->category)->id;
         $thread->author_id = $request->user()->id;
 
         $thread->save();
@@ -68,6 +61,8 @@ class ThreadController extends Controller
     public function edit(Thread $thread)
     {
         $categories = Category::getPreOrderList();
+
+        $thread->category;
 
         return InertiaWithThemes::renderTheme('Thread/Form', [
             'categories' => $categories,

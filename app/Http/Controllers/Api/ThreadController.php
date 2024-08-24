@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Thread\StoreThreadRequest;
 use App\Http\Requests\Thread\UpdateThreadRequest;
+use App\Models\Category;
 use App\Models\Thread;
 
 class ThreadController extends Controller
@@ -24,6 +25,10 @@ class ThreadController extends Controller
     {
         $thread = new Thread();
         $thread->fill($request->validated());
+
+        $thread->category_id = Category::getByCode($request->category)->id;
+        $thread->author_id = $request->user()->id;
+
         $thread->save();
         return $thread;
     }
