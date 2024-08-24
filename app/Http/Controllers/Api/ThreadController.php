@@ -23,13 +23,14 @@ class ThreadController extends Controller
      */
     public function store(StoreThreadRequest $request)
     {
-        $thread = new Thread();
+        $thread = new Thread;
         $thread->fill($request->validated());
 
         $thread->category_id = Category::getByCode($request->category)->id;
         $thread->author_id = $request->user()->id;
 
         $thread->save();
+
         return $thread;
     }
 
@@ -48,6 +49,7 @@ class ThreadController extends Controller
     {
         $thread->fill($request->validated());
         $thread->save();
+
         return $thread;
     }
 

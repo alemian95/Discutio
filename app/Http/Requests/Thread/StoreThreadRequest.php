@@ -28,8 +28,8 @@ class StoreThreadRequest extends FormRequest
             'category' => [
                 'required',
                 'string',
-                Rule::exists('categories', 'code')
-            ]
+                Rule::exists('categories', 'code'),
+            ],
         ];
     }
 }

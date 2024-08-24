@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function () {
 Route::resource('categories', CategoryController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
 Route::resource('threads', ThreadController::class)->only(['create', 'store', 'edit', 'update', 'show']);
 
-Route::name('api.')->prefix('api')->group(function() {
+Route::name('api.')->prefix('api')->group(function () {
     Route::resource('api/threads', ApiThreadController::class);
 });
 

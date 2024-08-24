@@ -66,7 +66,7 @@ class ThreadController extends Controller
 
         return InertiaWithThemes::renderTheme('Thread/Form', [
             'categories' => $categories,
-            'thread' => $thread
+            'thread' => $thread,
         ]);
     }
 
@@ -77,6 +77,7 @@ class ThreadController extends Controller
     {
         $thread->fill($request->validated());
         $thread->save();
+
         return Redirect::route('threads.show', ['thread' => $thread]);
     }
 
