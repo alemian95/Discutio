@@ -1,10 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
-import { Select } from '@/Components/Themes/default/Select';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import TextInput from '@/Components/Themes/default/TextInput';
-import { setDefaultHighWaterMark } from 'stream';
 import { FormEventHandler } from 'react';
 
 export default function Form( { categories, thread } : { categories: Category[], thread?: Thread } ) {
