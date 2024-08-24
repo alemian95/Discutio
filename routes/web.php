@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ThreadController as ApiThreadController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +30,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
-Route::resource('threads', ThreadController::class)->only(['index', 'create', 'store', 'update', 'show', 'destroy']);
+Route::resource('threads', ThreadController::class)->only(['create', 'store', 'edit', 'update', 'show']);
+
+Route::name('api.')->prefix('api')->group(function() {
+    Route::resource('api/threads', ApiThreadController::class);
+});
 
 require __DIR__.'/auth.php';

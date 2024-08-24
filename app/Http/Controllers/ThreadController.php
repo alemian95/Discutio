@@ -16,7 +16,7 @@ class ThreadController extends Controller
      */
     public function index()
     {
-        return Thread::all();
+        //
     }
 
     /**
@@ -24,8 +24,6 @@ class ThreadController extends Controller
      */
     public function create()
     {
-
-        // $categories = Category::getCategoryTree();
         $categories = Category::getPreOrderList();
 
         return InertiaWithThemes::renderTheme('Thread/Form', [
@@ -69,7 +67,12 @@ class ThreadController extends Controller
      */
     public function edit(Thread $thread)
     {
-        //
+        $categories = Category::getPreOrderList();
+
+        return InertiaWithThemes::renderTheme('Thread/Form', [
+            'categories' => $categories,
+            'thread' => $thread
+        ]);
     }
 
     /**
@@ -79,8 +82,7 @@ class ThreadController extends Controller
     {
         $thread->fill($request->validated());
         $thread->save();
-
-        return response()->noContent();
+        return Redirect::route('threads.show', ['thread' => $thread]);
     }
 
     /**
@@ -88,8 +90,6 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        $thread->delete();
-
-        return response()->noContent();
+        //
     }
 }
