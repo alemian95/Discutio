@@ -78,17 +78,17 @@ class Category extends Model
         );
     }
 
-    public static function getByCode(string $code): ?Category
+    public static function findByCode(string $code): ?Category
     {
         return Category::where('code', $code)->first();
     }
 
-    public static function getByCodeOrFail(string $code): Category
+    public static function findByCodeOrFail(string $code): Category
     {
         return Category::where('code', $code)->firstOrFail();
     }
 
-    public static function getCategoryTree()
+    public static function categoryTree()
     {
         $categories = Category::whereNull('parent_id')->with('children')->get();
 
