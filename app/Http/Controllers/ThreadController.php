@@ -7,6 +7,8 @@ use App\Http\Requests\Thread\StoreThreadRequest;
 use App\Http\Requests\Thread\UpdateThreadRequest;
 use App\Models\Category;
 use App\Models\Thread;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 
 class ThreadController extends Controller
@@ -22,8 +24,12 @@ class ThreadController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        if ($request->user()->cannot('create', Thread::class)) {
+            abort(403);
+        }
+
         $categories = Category::getPreOrderList();
 
         return InertiaWithThemes::renderTheme('Thread/Form', [
@@ -56,6 +62,8 @@ class ThreadController extends Controller
      */
     public function edit(Thread $thread)
     {
+        Gate::authorize('update', $thread);
+
         $categories = Category::getPreOrderList();
 
         $thread->category;

@@ -25,7 +25,7 @@ class Thread extends Model
 
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id', 'author_id');
+        return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
     public static function createFromRequest(StoreThreadRequest $request): self

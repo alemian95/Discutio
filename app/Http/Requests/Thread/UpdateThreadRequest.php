@@ -2,16 +2,18 @@
 
 namespace App\Http\Requests\Thread;
 
+use App\Models\Thread;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class UpdateThreadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize(): \Illuminate\Auth\Access\Response
     {
-        return true;
+        return Gate::authorize('update', Thread::find($this->route('thread'))->first());
     }
 
     /**
