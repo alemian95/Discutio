@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::before(function (User $user, string $ability): bool {
+        Gate::before(function (User $user, string $ability): bool|null {
             return $user->isSuperadmin() ? true : null;
         });
     }
