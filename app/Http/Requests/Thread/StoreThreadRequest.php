@@ -5,7 +5,6 @@ namespace App\Http\Requests\Thread;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class StoreThreadRequest extends FormRequest
@@ -13,10 +12,11 @@ class StoreThreadRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         /** @var User $user */
         $user = $this->user();
+
         return $user->can('create', Thread::class);
     }
 

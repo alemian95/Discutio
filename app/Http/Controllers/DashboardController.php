@@ -26,8 +26,7 @@ class DashboardController extends Controller
     {
         try {
             $category = Category::findByCodeOrFail($code);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             abort(404);
         }
 
@@ -44,5 +43,4 @@ class DashboardController extends Controller
         dump($threads);
         dump($category->parent);
     }
-
 }
