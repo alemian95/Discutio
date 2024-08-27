@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Extensions\Inertia\InertiaWithThemes;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,7 @@ class DashboardController extends Controller
 
         return InertiaWithThemes::renderTheme('Dashboard', [
             'categories' => $parentCategories,
+            'canCreateThreads' => $request->user()->can('create', \App\Models\Thread::class),
         ]);
     }
 

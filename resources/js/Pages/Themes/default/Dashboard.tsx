@@ -4,7 +4,7 @@ import { Category, PageProps } from '@/types';
 import Accordion from '@/Components/Themes/default/Accordion';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 
-export default function Dashboard( { categories } : { categories: Category[] } ) {
+export default function Dashboard( { categories, canCreateThreads } : { categories: Category[], canCreateThreads: boolean } ) {
 
     const { auth } = usePage<PageProps>().props
 
@@ -19,7 +19,7 @@ export default function Dashboard( { categories } : { categories: Category[] } )
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 flex justify-end">
-                            <a href={route('threads.create')}><PrimaryButton>New Thread +</PrimaryButton></a>
+                            { canCreateThreads && <a href={route('threads.create')}><PrimaryButton>New Thread +</PrimaryButton></a> }
                         </div>
                         <div className="p-6 text-gray-900 dark:text-gray-100 flex flex-col gap-4">
                             {
