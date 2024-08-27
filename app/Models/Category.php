@@ -19,14 +19,15 @@ class Category extends Model
      */
     protected $fillable = ['code', 'name'];
 
-    public function parent(): BelongsTo
-    {
-        return $this->belongsTo(self::class, 'id', 'parent_id');
-    }
-
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id', 'id');
+    }
+
+    public function parent(): BelongsTo
+    {
+        // return $this->belongsTo(self::class, 'id', 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id', 'id');
     }
 
     public function threads(): HasMany
@@ -63,18 +64,19 @@ class Category extends Model
     {
         $pointer = $this;
         $path = [];
-        while ($pointer->parent) {
-            $path[] = $pointer->parent;
+
+        while ($pointer != null) {
+            $path[] = $pointer;
             $pointer = $pointer->parent;
         }
 
-        return array_reverse($path);
+        return $path;
     }
 
     public function depth(): Attribute
     {
         return Attribute::make(
-            get: fn () => count($this->pathToParent()),
+            get: fn () => count($this->pathToParent()) + 1,
         );
     }
 

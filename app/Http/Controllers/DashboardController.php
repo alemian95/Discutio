@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Extensions\Inertia\InertiaWithThemes;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-        $parentCategories = Category::whereNull('parent_id')->withCount('threads')->get();
+        $parentCategories = Category::whereNull('parent_id')->get();
 
         foreach ($parentCategories as &$category) {
             $category->threads_count = count($category->threadsWithSubcategories);
@@ -25,17 +24,25 @@ class DashboardController extends Controller
 
     public function category(Request $request, string $code)
     {
-        $category = Category::where('code', $code)->first();
-
-        if (! $category) {
+        try {
+            $category = Category::findByCodeOrFail($code);
+        }
+        catch (\Exception $e) {
             abort(404);
         }
 
-        return $category;
+        $path = $category->path;
+        $categories = $category->children()->get();
+        $threads = $category->threads;
+
+        foreach ($categories as $index => $c) {
+            $categories[$index]->threads_count = count($c->threadsWithSubcategories);
+        }
+
+        dump($path);
+        dump($categories);
+        dump($threads);
+        dump($category->parent);
     }
 
-    public function categoryChildren(Request $request, Category $category)
-    {
-        return $category->children;
-    }
 }
