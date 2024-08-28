@@ -13,7 +13,7 @@ export default function Accordion({
     const [ open, setOpen ] = useState(false);
 
     return (
-        <Disclosure as="div" className="p-4 bg-slate-50 rounded-md shadow-md">
+        <Disclosure as="div" className="bg-slate-50 rounded-md shadow-md">
             <DisclosureButton onClick={() => setOpen(!open)} className="group flex w-full items-center justify-between p-2 bg-indigo-50 shadow-sm shadow-sky-100 border-b-2 border-indigo-400">
                 <span className="text-md font-semibold text-indigo-700 group-data-[hover]:text-indigo-900/80">
                     {title}
@@ -47,7 +47,7 @@ export default function Accordion({
                     </svg>
                 </span>
             </DisclosureButton>
-            <DisclosurePanel className="mt-2 text-md text-slate-900/50">
+            <DisclosurePanel className=" p-4 mt-2 text-md text-slate-900/50">
                 {children}
             </DisclosurePanel>
         </Disclosure>
