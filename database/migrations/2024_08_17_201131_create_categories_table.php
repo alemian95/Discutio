@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignIdFor(Category::class, 'parent_id')->nullable()->constrained('categories')->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Category::class)->constrained('categories')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreignIdFor(User::class, 'author_id')->constrained('users')->cascadeOnUpdate()->restrictOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
