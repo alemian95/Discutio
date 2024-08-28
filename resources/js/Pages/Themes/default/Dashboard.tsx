@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
-import { Head, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Category, PageProps } from '@/types';
 import Accordion from '@/Components/Themes/default/Accordion';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
@@ -28,6 +28,7 @@ export default function Dashboard( { categories, canCreateThreads } : { categori
                                         <Accordion key={index} title={category.name}>
                                             <p>{category.code}</p>
                                             <p>Threads: <span>{category.threads_count}</span></p>
+                                            <p>Last Thread: <span>{ category.last_thread ? <Link className='text-indigo-700' href={route('threads.show', category.id)}>{category.last_thread.title}</Link> : "No Threads inside this category"}</span></p>
                                         </Accordion>
                                     )
                                 })

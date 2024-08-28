@@ -36,6 +36,13 @@ class Category extends Model
         return $this->hasMany(Thread::class, 'category_id', 'id');
     }
 
+    public function lastInsertedThread(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->threads()->orderBy('created_at', 'desc')->first()
+        );
+    }
+
     public function threadsWithSubcategories(): Attribute
     {
         return Attribute::make(
