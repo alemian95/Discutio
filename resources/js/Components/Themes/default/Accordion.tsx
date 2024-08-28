@@ -14,11 +14,11 @@ export default function Accordion({
 
     return (
         <Disclosure as="div" className="p-4 bg-slate-50 rounded-md shadow-md">
-            <DisclosureButton className="group flex w-full items-center justify-between p-2 rounded-md bg-sky-50 shadow-sm shadow-sky-100">
-                <span className="text-md font-semibold text-slate-900 group-data-[hover]:text-slate-900/80">
+            <DisclosureButton onClick={() => setOpen(!open)} className="group flex w-full items-center justify-between p-2 bg-indigo-50 shadow-sm shadow-sky-100 border-b-2 border-indigo-400">
+                <span className="text-md font-semibold text-indigo-700 group-data-[hover]:text-indigo-900/80">
                     {title}
                 </span>
-                <span onClick={() => setOpen(!open)} className={open ? "transform rotate-90 transition-all" : ""}>
+                <span className={open ? "transform rotate-90 transition-all" : ""}>
                     <svg
                         width="24px"
                         height="24px"
