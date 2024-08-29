@@ -10,28 +10,41 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Dashboard</h2>}
+            header={
+                <>
+                    <div className='flex flex-row gap-4'>
+                        <Link
+                            key={0}
+                            href={route('dashboard')}
+                            className='font-semibold text-indigo-600'
+                        >
+                            <span>Dashboard</span>
+                        </Link>
+                        {
+                            breadcrumbs && breadcrumbs.length &&
+                            breadcrumbs.map((category, index) => {
+                                return (
+                                    <>
+                                        <span>&raquo;</span>
+                                        <Link
+                                            key={category.id}
+                                            href={route('dashboard.category', category.code)}
+                                            className='font-semibold text-indigo-600'
+                                        >
+                                            <span>{category.name}</span>
+                                        </Link>
+                                    </>
+                                )
+                            })
+                        }
+                    </div>
+                </>
+            }
         >
             <Head title="Dashboard" />
 
             {
-                breadcrumbs?.length
-                &&
-                <div className="py-12">
-                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                            <div className="p-6 text-gray-900 dark:text-gray-100 flex flex-col gap-4">
-                                <p>Here goes the breadcrumbs</p>
-                                <pre>{JSON.stringify(breadcrumbs, null,'  ')}</pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-
-            {
-                categories.length
-                &&
+                categories && categories.length &&
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -44,7 +57,9 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                                         return (
                                             <>
                                                 <div className='flex flex-col' key={index}>
-                                                    <div className='bg-indigo-50 font-semibold text-indigo-600 p-2 border-b-2 border-indigo-400'><Link href={route('dashboard.category', category.code)}>{category.name}</Link></div>
+                                                    <div className='bg-indigo-50 font-semibold text-indigo-600 p-2 border-b-2 border-indigo-400'>
+                                                        <Link href={route('dashboard.category', category.code)}>{category.name}</Link>
+                                                    </div>
                                                     <div className='bg-slate-50 py-2 px-4'>
                                                         <p>{category.code}</p>
                                                         <p>Threads: <span>{category.threads_count}</span></p>
@@ -62,8 +77,7 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
             }
 
             {
-                threads?.length
-                &&
+                threads && threads?.length &&
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
