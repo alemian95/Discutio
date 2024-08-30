@@ -44,7 +44,8 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
             <Head title="Dashboard" />
 
             {
-                categories && categories.length &&
+                (categories && categories.length)
+                ?
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -74,10 +75,13 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                         </div>
                     </div>
                 </div>
+                :
+                <></>
             }
 
             {
-                threads && threads?.length &&
+                (threads && threads.length)
+                ?
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -90,6 +94,24 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                         </div>
                     </div>
                 </div>
+                :
+                <></>
+            }
+
+{
+                (threads && threads.length == 0)
+                ?
+                <div className="py-12">
+                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                            <div className="p-6 text-gray-900 dark:text-gray-100 flex flex-col gap-4">
+                                No threads for this category
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                :
+                <></>
             }
         </AuthenticatedLayout>
     );
