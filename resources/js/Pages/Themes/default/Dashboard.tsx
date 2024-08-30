@@ -41,17 +41,22 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                 </>
             }
         >
-            <Head title="Dashboard" />
+            <Head title={category?.name || "Dashboard"} />
+
+            <div className="py-6">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className="flex justify-end gap-6">
+                        { canCreateThreads && <a href={`${route('threads.create')}${category ? `?category=${category.code}` : ""}`}><PrimaryButton>New Thread +</PrimaryButton></a> }
+                    </div>
+                </div>
+            </div>
 
             {
                 (categories && categories.length)
                 ?
-                <div className="py-12">
+                <div className="py-6">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                            <div className="p-6 flex justify-end">
-                                { canCreateThreads && <a href={`${route('threads.create')}${category ? `?category=${category.code}` : ""}`}><PrimaryButton>New Thread +</PrimaryButton></a> }
-                            </div>
                             <div className="p-6 text-gray-900 dark:text-gray-100 flex flex-col gap-4">
                                 {
                                     categories.map((category, index) => {
@@ -82,7 +87,7 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
             {
                 (threads && threads.length)
                 ?
-                <div className="py-12">
+                <div className="py-6">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900 dark:text-gray-100 flex flex-col gap-4">

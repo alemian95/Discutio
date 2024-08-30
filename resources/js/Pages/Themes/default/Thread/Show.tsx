@@ -9,9 +9,9 @@ export default function Show( { thread } : { thread: Thread } ) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Thread</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{thread.title}</h2>}
         >
-            <Head title="Thread" />
+            <Head title={thread.title} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
