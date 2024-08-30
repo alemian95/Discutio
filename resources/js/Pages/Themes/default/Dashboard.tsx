@@ -103,7 +103,7 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                 <></>
             }
 
-{
+            {
                 (threads && threads.length == 0)
                 ?
                 <div className="py-12">

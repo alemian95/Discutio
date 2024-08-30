@@ -40,17 +40,12 @@ class DashboardController extends Controller
             $categories[$index]->last_thread = $c->lastInsertedThread;
         }
 
-        // dump($path);
-        // dump($categories);
-        // dump($threads);
-        // dump($category->parent);
-
         return InertiaWithThemes::renderTheme('Dashboard', [
             'categories' => $categories,
             'threads' => $threads,
             'category' => $category,
             'breadcrumbs' => array_reverse($path),
-            'canCreateThreads'  => $request->user()->can('create', \App\Models\Thread::class),
+            'canCreateThreads' => $request->user()->can('create', \App\Models\Thread::class),
         ]);
     }
 }

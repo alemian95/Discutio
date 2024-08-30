@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Http\Requests\Thread\StoreThreadRequest;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,6 +20,8 @@ class Thread extends Model
      * @var array
      */
     protected $fillable = ['title', 'content'];
+
+    protected $appends = ['human_created_at'];
 
     public function category(): BelongsTo
     {
@@ -38,5 +42,12 @@ class Thread extends Model
         $thread->author_id = $request->user()->id;
 
         return $thread;
+    }
+
+    public function humanCreatedAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => Carbon::parse($this->created_at)->diffForHumans()
+        );
     }
 }

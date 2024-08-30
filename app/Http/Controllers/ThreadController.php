@@ -54,7 +54,13 @@ class ThreadController extends Controller
      */
     public function show(Thread $thread)
     {
-        return InertiaWithThemes::renderTheme('Thread/Show', ['thread' => $thread]);
+        $thread->author;
+        $thread->human_created_at;
+
+        return InertiaWithThemes::renderTheme('Thread/Show', [
+            'thread' => $thread,
+            'breadcrumbs' => array_reverse($thread->category->path),
+        ]);
     }
 
     /**
