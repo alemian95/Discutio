@@ -56,7 +56,7 @@ export default function Show( { thread, breadcrumbs } : { thread: Thread, breadc
                                 <b>{thread.author?.name}</b>
                             </div>
                             <div className='flex flex-col justify-between rounded-r-lg w-full'>
-                                <div className='p-6'>{thread.content}</div>
+                                <div className='p-6 break-normal whitespace-pre'>{thread.content}</div>
                                 <div className='bg-slate-200 p-2 text-sm text-slate-600'>{thread.human_created_at}</div>
                             </div>
                         </div>
