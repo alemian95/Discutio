@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Extensions\Inertia\InertiaWithThemes;
 use App\Http\Requests\Thread\StoreThreadRequest;
 use App\Http\Requests\Thread\UpdateThreadRequest;
+use App\Models\Answer;
 use App\Models\Category;
 use App\Models\Thread;
 use Illuminate\Http\Request;
@@ -53,7 +54,7 @@ class ThreadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Thread $thread)
+    public function show(Request $request, Thread $thread)
     {
         $thread->author;
         $thread->human_created_at;
@@ -61,6 +62,7 @@ class ThreadController extends Controller
         return InertiaWithThemes::renderTheme('Thread/Show', [
             'thread' => $thread,
             'breadcrumbs' => array_reverse($thread->category->path),
+            'canAnswerThread' => $request->user()->can('create', Answer::class)
         ]);
     }
 
