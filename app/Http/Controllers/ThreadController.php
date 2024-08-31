@@ -33,6 +33,7 @@ class ThreadController extends Controller
         $categories = Category::getPreOrderList();
 
         return InertiaWithThemes::renderTheme('Thread/Form', [
+            'category' => $request->get('category'),
             'categories' => $categories,
         ]);
     }

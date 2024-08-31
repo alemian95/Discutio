@@ -5,12 +5,12 @@ import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import TextInput from '@/Components/Themes/default/TextInput';
 import { FormEventHandler } from 'react';
 
-export default function Form( { categories, thread } : { categories: Category[], thread?: Thread } ) {
+export default function Form( { category, categories, thread } : { category: string, categories: Category[], thread?: Thread } ) {
 
     const { auth } = usePage<PageProps>().props
 
     const { data, setData, post, patch, processing, errors } = useForm({
-        category: thread?.category?.code || '',
+        category: category || thread?.category?.code || '',
         title: thread?.title || '',
         content: thread?.content || '',
     });
@@ -41,7 +41,7 @@ export default function Form( { categories, thread } : { categories: Category[],
                             <div>
                                 <pre>
                                     <pre>{JSON.stringify({ data }, null,'  ')}</pre>
-                                    <pre>{JSON.stringify({ errors }, null,'  ')}</pre>
+                                    <pre className='text-red-600'>{JSON.stringify({ errors }, null,'  ')}</pre>
                                 </pre>
                             </div>
 
