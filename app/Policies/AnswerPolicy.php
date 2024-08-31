@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Thread;
+use App\Models\Answer;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 
-class ThreadPolicy
+class AnswerPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,7 +19,7 @@ class ThreadPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Thread $thread): bool
+    public function view(User $user, Answer $answer): bool
     {
         return true;
     }
@@ -34,23 +35,23 @@ class ThreadPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Thread $thread): bool
+    public function update(User $user, Answer $answer): bool
     {
-        return $thread->author == $user || $user->isModerator();
+        return true;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Thread $thread): bool
+    public function delete(User $user, Answer $answer): bool
     {
-        return $thread->author == $user || $user->isModerator();
+        return true;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Thread $thread): bool
+    public function restore(User $user, Answer $answer): bool
     {
         return $user->isModerator();
     }
@@ -58,7 +59,7 @@ class ThreadPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Thread $thread): bool
+    public function forceDelete(User $user, Answer $answer): bool
     {
         return $user->isAdmin();
     }
