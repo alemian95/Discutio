@@ -69,7 +69,7 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                                                     <div className='bg-slate-50 py-2 px-4 rounded-b-md'>
                                                         <p>{category.code}</p>
                                                         <p>Threads: <span>{category.threads_count}</span></p>
-                                                        <p>Last Thread: <span>{ category.last_thread ? <Link className='text-indigo-700' href={route('threads.show', category.id)}>{category.last_thread.title}</Link> : "No Threads inside this category"}</span></p>
+                                                        <p>Last Thread: <span>{ category.last_thread ? <Link className='text-indigo-700' href={route('threads.show', category.last_thread.id)}>{category.last_thread.title}</Link> : "No Threads inside this category"}</span></p>
                                                     </div>
                                                 </div>
                                             </>
