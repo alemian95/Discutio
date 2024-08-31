@@ -36,7 +36,7 @@ class DashboardController extends Controller
 
         $path = $category->path;
         $categories = $category->children()->get();
-        $threads = $category->threads;
+        $threads = $category->threads()->with('author')->get();
 
         foreach ($categories as $index => $c) {
             $categories[$index]->threads_count = count($c->threadsWithSubcategories);

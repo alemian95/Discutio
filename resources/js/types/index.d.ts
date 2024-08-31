@@ -20,14 +20,28 @@ export interface Category {
 
 export interface Thread {
     id: number;
-    title?: string;
-    content?: string;
-    category_id?: number | null;
+    title: string;
+    content: string;
+    category_id?: number;
+    author_id?: number;
     category?: Category;
     created_at?: string;
     updated_at?: string;
     author?: User;
     human_created_at?: string;
+}
+
+export interface Answer {
+    id: number;
+    content?: string;
+    thread_id?: number;
+    author_id?: number;
+    created_at?: string;
+    updated_at?: string;
+    thread?: Thread;
+    author?: User;
+    human_created_at?: string;
+
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
