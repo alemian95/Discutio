@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
+import React from 'react';
 
 export default function Show( { thread, breadcrumbs } : { thread: Thread, breadcrumbs: Category[] } ) {
 
@@ -22,16 +23,15 @@ export default function Show( { thread, breadcrumbs } : { thread: Thread, breadc
                         breadcrumbs && breadcrumbs.length &&
                         breadcrumbs.map((category, index) => {
                             return (
-                                <>
+                                <React.Fragment key={category.id}>
                                     <span>&raquo;</span>
                                     <Link
-                                        key={category.id}
                                         href={route('dashboard.category', category.code)}
                                         className='font-semibold text-indigo-600'
                                     >
                                         <span>{category.name}</span>
                                     </Link>
-                                </>
+                                </React.Fragment>
                             )
                         })
                     }

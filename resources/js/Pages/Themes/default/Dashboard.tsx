@@ -4,6 +4,7 @@ import { Category, PageProps, Thread } from '@/types';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import { CategoryBox } from '@/Components/Themes/default/ui_components/CategoryBox';
 import { ThreadBox } from '@/Components/Themes/default/ui_components/ThreadBox';
+import React from 'react';
 
 export default function Dashboard( { categories, threads, category, breadcrumbs, canCreateThreads } : { categories: Category[], threads?: Thread[], category?: Category, breadcrumbs?: Category[], canCreateThreads: boolean } ) {
 
@@ -23,19 +24,18 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                             <span>Dashboard</span>
                         </Link>
                         {
-                            breadcrumbs && breadcrumbs.length &&
+                            breadcrumbs?.length &&
                             breadcrumbs.map((category, index) => {
                                 return (
-                                    <>
+                                    <React.Fragment key={category.id}>
                                         <span>&raquo;</span>
                                         <Link
-                                            key={category.id}
                                             href={route('dashboard.category', category.code)}
                                             className='font-semibold text-indigo-600'
                                         >
                                             <span>{category.name}</span>
                                         </Link>
-                                    </>
+                                    </React.Fragment>
                                 )
                             })
                         }
