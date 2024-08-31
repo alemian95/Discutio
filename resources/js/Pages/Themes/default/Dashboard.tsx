@@ -3,6 +3,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import { CategoryBox } from '@/Components/Themes/default/ui_components/CategoryBox';
+import { ThreadBox } from '@/Components/Themes/default/ui_components/ThreadBox';
 
 export default function Dashboard( { categories, threads, category, breadcrumbs, canCreateThreads } : { categories: Category[], threads?: Thread[], category?: Category, breadcrumbs?: Category[], canCreateThreads: boolean } ) {
 
@@ -81,10 +82,13 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                             <div className="p-6 text-gray-900 dark:text-gray-100 flex flex-col gap-4">
-                                <p>Here goes category threads</p>
-                                <pre>
-                                    { JSON.stringify(threads, null, 2) }
-                                </pre>
+                                {
+                                    threads.map((thread, index) => {
+                                        return (
+                                            <ThreadBox thread={thread} key={index}/>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                     </div>
