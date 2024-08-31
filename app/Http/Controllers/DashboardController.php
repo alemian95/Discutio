@@ -14,8 +14,11 @@ class DashboardController extends Controller
 
         foreach ($parentCategories as $index => $category) {
             $parentCategories[$index]->threads_count = count($category->threadsWithSubcategories);
-            $parentCategories[$index]->last_thread = $category->lastInsertedThread;
+            // $parentCategories[$index]->last_thread = $category->lastInsertedThread;
+            $parentCategories[$index]->last_thread = $category->threadsWithSubcategories->get(0);
         }
+
+        // dd($parentCategories);
 
         return InertiaWithThemes::renderTheme('Dashboard', [
             'categories' => $parentCategories,

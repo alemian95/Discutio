@@ -27,7 +27,6 @@ class Category extends Model
 
     public function parent(): BelongsTo
     {
-        // return $this->belongsTo(self::class, 'id', 'parent_id');
         return $this->belongsTo(self::class, 'parent_id', 'id');
     }
 
@@ -52,13 +51,22 @@ class Category extends Model
 
     private function getThreadsWithSubcategories($category)
     {
-        $threads = $category->threads;
+        $categoryIds = $this->getAllSubCategoryIds($category);
+
+        return Thread::whereIn('category_id', $categoryIds)
+                ->orderBy('created_at', 'desc')
+                ->get();
+    }
+
+    private function getAllSubCategoryIds($category)
+    {
+        $categoryIds = [$category->id];
 
         foreach ($category->children as $childCategory) {
-            $threads = $threads->merge($this->getThreadsWithSubcategories($childCategory));
+            $categoryIds = array_merge($categoryIds, $this->getAllSubCategoryIds($childCategory));
         }
 
-        return $threads;
+        return $categoryIds;
     }
 
     public function path(): Attribute
