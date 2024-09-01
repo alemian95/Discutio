@@ -34,18 +34,27 @@ class ThreadController extends Controller
 
         $categories = Category::getPreOrderList();
 
+        $category = null;
+
         try {
-            $category = Category::findByCodeOrFail($request->get('category'));
+            if ($request->get('category')) {
+                $category = Category::findByCodeOrFail($request->get('category'));
+            }
         }
         catch (Exception $e) {
             abort(404);
         }
 
-        return InertiaWithThemes::renderTheme('Thread/Form', [
-            'category' => $category->code,
-            'categories' => $categories,
-            'breadcrumbs' => $category->path
-        ]);
+        $props = [
+            'categories' => $categories
+        ];
+
+        if ($category) {
+            $props['category'] = $category->code;
+            $props['breadcrumbs'] = $category->path;
+        }
+
+        return InertiaWithThemes::renderTheme('Thread/Form', $props);
     }
 
     /**
