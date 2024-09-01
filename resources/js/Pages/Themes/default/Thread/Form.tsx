@@ -1,11 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import TextInput from '@/Components/Themes/default/TextInput';
-import { FormEventHandler } from 'react';
+import React, { FormEventHandler } from 'react';
 
-export default function Form( { category, categories, thread } : { category: string, categories: Category[], thread?: Thread } ) {
+export default function Form( { category, categories, thread, breadcrumbs } : { category?: string, categories: Category[], thread?: Thread, breadcrumbs: Category[] } ) {
 
     const { auth } = usePage<PageProps>().props
 
@@ -29,7 +29,47 @@ export default function Form( { category, categories, thread } : { category: str
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">New Thread</h2>}
+            header={
+                <div className='flex flex-row gap-4'>
+                    <Link
+                        key={0}
+                        href={route('dashboard')}
+                        className='font-semibold text-indigo-600'
+                    >
+                        <span>Dashboard</span>
+                    </Link>
+                    {
+                        breadcrumbs && breadcrumbs.length &&
+                        breadcrumbs.map((category, index) => {
+                            return (
+                                <React.Fragment key={category.id}>
+                                    <span>&raquo;</span>
+                                    <Link
+                                        href={route('dashboard.category', category.code)}
+                                        className='font-semibold text-indigo-600'
+                                    >
+                                        <span>{category.name}</span>
+                                    </Link>
+                                </React.Fragment>
+                            )
+                        })
+                    }
+                    <span>&raquo;</span>
+                    {
+                        thread
+                        ?
+                        <Link
+                            key={breadcrumbs.length}
+                            href={route('threads.show', thread.id)}
+                            className='font-semibold text-indigo-600'
+                        >
+                            <span>{thread?.title}</span>
+                        </Link>
+                        :
+                        <div className='font-semibold'>New thread</div>
+                    }
+                </div>
+            }
         >
             <Head title="New Thread" />
 

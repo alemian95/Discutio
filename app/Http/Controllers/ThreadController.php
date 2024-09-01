@@ -8,6 +8,7 @@ use App\Http\Requests\Thread\UpdateThreadRequest;
 use App\Models\Answer;
 use App\Models\Category;
 use App\Models\Thread;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
@@ -33,9 +34,17 @@ class ThreadController extends Controller
 
         $categories = Category::getPreOrderList();
 
+        try {
+            $category = Category::findByCodeOrFail($request->get('category'));
+        }
+        catch (Exception $e) {
+            abort(404);
+        }
+
         return InertiaWithThemes::renderTheme('Thread/Form', [
-            'category' => $request->get('category'),
+            'category' => $category->code,
             'categories' => $categories,
+            'breadcrumbs' => $category->path
         ]);
     }
 
@@ -81,6 +90,7 @@ class ThreadController extends Controller
         return InertiaWithThemes::renderTheme('Thread/Form', [
             'categories' => $categories,
             'thread' => $thread,
+            'breadcrumbs' => $thread->category->path
         ]);
     }
 
