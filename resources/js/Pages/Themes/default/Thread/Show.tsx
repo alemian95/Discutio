@@ -5,7 +5,7 @@ import React, { FormEventHandler, useState } from 'react';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import SecondaryButton from '@/Components/Themes/default/SecondaryButton';
 
-export default function Show( { thread, breadcrumbs, canAnswerThread } : { thread: Thread, breadcrumbs: Category[], canAnswerThread: boolean } ) {
+export default function Show( { thread, breadcrumbs, canAnswerThread, canUpdateThread } : { thread: Thread, breadcrumbs: Category[], canAnswerThread: boolean, canUpdateThread: boolean } ) {
 
     const { auth } = usePage<PageProps>().props
 
@@ -73,7 +73,16 @@ export default function Show( { thread, breadcrumbs, canAnswerThread } : { threa
                             </div>
                             <div className='flex flex-col justify-between rounded-r-lg w-full'>
                                 <div className='p-6 break-normal whitespace-pre'>{thread.content}</div>
-                                <div className='bg-slate-200 p-2 text-sm text-slate-600'>{thread.human_created_at}</div>
+                                <div className='bg-slate-200 text-sm text-slate-600 flex justify-end'>
+                                    <div className='p-2'>{thread.human_created_at}</div>
+                                    {
+                                        canUpdateThread
+                                        &&
+                                        <div className='p-2 px-4 border-l-2 border-slate-400'>
+                                            <Link className='text-indigo-600' href={route('threads.edit', thread.id)}><b>Edit</b></Link>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>

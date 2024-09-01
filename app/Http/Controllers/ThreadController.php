@@ -62,7 +62,8 @@ class ThreadController extends Controller
         return InertiaWithThemes::renderTheme('Thread/Show', [
             'thread' => $thread,
             'breadcrumbs' => array_reverse($thread->category->path),
-            'canAnswerThread' => $request->user()->can('create', Answer::class)
+            'canAnswerThread' => $request->user()->can('create', Answer::class),
+            'canUpdateThread' => $request->user()->can('update', $thread),
         ]);
     }
 
