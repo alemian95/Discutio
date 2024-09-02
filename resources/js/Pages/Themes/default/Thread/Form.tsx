@@ -100,8 +100,8 @@ export default function Form( { category, categories, thread, breadcrumbs } : { 
                                 </div>
 
                                 <div className='flex flex-col'>
-                                    <TextInput value={data.title} onChange={(e) => setData('title', e.currentTarget.value)} />
-                                    <textarea value={data.content} onChange={(e) => setData('content', e.currentTarget.value)} className='rounded-md border border-slate-400'></textarea>
+                                    <TextInput name='title' value={data.title} onChange={(e) => setData('title', e.currentTarget.value)} />
+                                    <textarea name='content' value={data.content} onChange={(e) => setData('content', e.currentTarget.value)} className='rounded-md border border-slate-400'></textarea>
                                 </div>
 
                                 <div>

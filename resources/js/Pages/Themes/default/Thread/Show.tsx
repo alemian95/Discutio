@@ -101,7 +101,7 @@ export default function Show( { thread, breadcrumbs, canAnswerThread, canUpdateT
                                             <pre className='font-mono'>
                                                 { JSON.stringify(data, null, 2)}
                                             </pre>
-                                            <textarea className='w-full rounded-md border border-slate-400'></textarea>
+                                            <textarea name='content' className='w-full rounded-md border border-slate-400'></textarea>
                                             <div className='flex justify-end gap-2'>
                                                 <SecondaryButton className='w-auto' onClick={() => setShowAnswerForm(false)}>Cancel</SecondaryButton>
                                                 <PrimaryButton onClick={() => setShowAnswerForm(true)}>Insert</PrimaryButton>
