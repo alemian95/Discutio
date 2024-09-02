@@ -1,7 +1,7 @@
-import { Category } from "@/types";
+import { Category as CategoryType } from "@/types";
 import { Link } from "@inertiajs/react";
 
-export function CategoryBox({ category }: { category: Category }) {
+export default function Category({ category }: { category: CategoryType }) {
     return (
         <>
             <div className="flex flex-col">

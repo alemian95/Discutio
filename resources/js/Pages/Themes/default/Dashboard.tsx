@@ -2,8 +2,8 @@ import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
-import { CategoryBox } from '@/Components/Themes/default/ui_components/CategoryBox';
-import { ThreadBox } from '@/Components/Themes/default/ui_components/ThreadBox';
+import CategoryBox from '@/Components/Themes/default/ui_components/Category';
+import ThreadBox from '@/Components/Themes/default/ui_components/Thread';
 import React from 'react';
 
 export default function Dashboard( { categories, threads, category, breadcrumbs, canCreateThreads } : { categories: Category[], threads?: Thread[], category?: Category, breadcrumbs?: Category[], canCreateThreads: boolean } ) {

@@ -1,7 +1,7 @@
-import { Thread } from "@/types";
+import { Thread as ThreadType } from "@/types";
 import { Link } from "@inertiajs/react";
 
-export function ThreadBox({ thread }: { thread: Thread }) {
+export default function Thread({ thread }: { thread: ThreadType }) {
     return (
         <>
             <div className="flex flex-col shadow-md rounded-md">
