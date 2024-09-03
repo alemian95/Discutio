@@ -13,6 +13,7 @@ export interface Category {
     name: string;
     parent?: Category;
     children?: Category[];
+    children_count?: number;
     threads?: Thread[];
     threads_count?: number;
     last_thread?: Thread | null;

@@ -10,15 +10,12 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-        $parentCategories = Category::whereNull('parent_id')->get();
+        $parentCategories = Category::whereNull('parent_id')->withCount('children')->get();
 
         foreach ($parentCategories as $index => $category) {
             $parentCategories[$index]->threads_count = count($category->threadsWithSubcategories);
-            // $parentCategories[$index]->last_thread = $category->lastInsertedThread;
             $parentCategories[$index]->last_thread = $category->threadsWithSubcategories->get(0);
         }
-
-        // dd($parentCategories);
 
         return InertiaWithThemes::renderTheme('Dashboard', [
             'categories' => $parentCategories,
@@ -35,7 +32,7 @@ class DashboardController extends Controller
         }
 
         $path = $category->path;
-        $categories = $category->children()->get();
+        $categories = $category->children()->withCount('children')->get();
         $threads = $category->threads()->with('author')->get();
 
         foreach ($categories as $index => $c) {
