@@ -1,26 +1,12 @@
 import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
-import { Head, Link, useForm, usePage } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
-import React, { FormEventHandler, useState } from 'react';
-import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
-import SecondaryButton from '@/Components/Themes/default/SecondaryButton';
+import React from 'react';
+import AnswerForm from '@/Components/Themes/default/ui_components/AnswerForm';
 
 export default function Show( { thread, breadcrumbs, canAnswerThread, canUpdateThread } : { thread: Thread, breadcrumbs: Category[], canAnswerThread: boolean, canUpdateThread: boolean } ) {
 
     const { auth } = usePage<PageProps>().props
-
-    const [ showAnswerForm, setShowAnswerForm ] = useState(false)
-
-    const { data, setData, post, patch, processing, errors } = useForm({
-        content: '',
-        thread: thread.id
-    });
-
-    const submit: FormEventHandler = (e) => {
-        e.preventDefault();
-
-        post(route('answers.store'));
-    };
 
     return (
         <AuthenticatedLayout
@@ -93,24 +79,7 @@ export default function Show( { thread, breadcrumbs, canAnswerThread, canUpdateT
                             canAnswerThread
                             &&
                             <>
-                               <div className="flex flex-row gap-4 justify-end">
-                                    {
-                                        showAnswerForm
-                                        ?
-                                        <div className='w-full'>
-                                            <pre className='font-mono'>
-                                                { JSON.stringify(data, null, 2)}
-                                            </pre>
-                                            <textarea name='content' className='w-full rounded-md border border-slate-400'></textarea>
-                                            <div className='flex justify-end gap-2'>
-                                                <SecondaryButton className='w-auto' onClick={() => setShowAnswerForm(false)}>Cancel</SecondaryButton>
-                                                <PrimaryButton onClick={() => setShowAnswerForm(true)}>Insert</PrimaryButton>
-                                            </div>
-                                        </div>
-                                        :
-                                        <PrimaryButton onClick={() => setShowAnswerForm(true)}>Answer</PrimaryButton>
-                                    }
-                                </div>
+                                <AnswerForm thread={thread} />
                                 <hr />
                             </>
                         }
