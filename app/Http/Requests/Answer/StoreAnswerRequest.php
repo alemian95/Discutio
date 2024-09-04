@@ -4,6 +4,7 @@ namespace App\Http\Requests\Answer;
 
 use App\Models\Answer;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreAnswerRequest extends FormRequest
 {
@@ -26,7 +27,12 @@ class StoreAnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'thread' => [
+                'required',
+                'integer',
+                Rule::exists('threads', 'id'),
+            ],
+            'content' => 'required|string'
         ];
     }
 }
