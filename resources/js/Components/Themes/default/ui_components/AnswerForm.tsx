@@ -8,7 +8,7 @@ import { Answer, Thread } from "@/types";
 
 export default function AnswerForm({ thread, answer } : { thread: Thread, answer?: Answer }) {
 
-    const { data, setData, post, patch, processing, errors } = useForm({
+    const { data, setData, post, patch, processing, errors, reset } = useForm({
         content: '',
         thread: thread.id
     });
@@ -16,7 +16,12 @@ export default function AnswerForm({ thread, answer } : { thread: Thread, answer
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('answers.store'));
+        post(route('answers.store'), {
+            onSuccess: () => {
+                reset()
+                setShowAnswerForm(false)
+            }
+        })
     };
 
     const [ showAnswerForm, setShowAnswerForm ] = useState(false)

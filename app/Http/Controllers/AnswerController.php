@@ -29,7 +29,11 @@ class AnswerController extends Controller
      */
     public function store(StoreAnswerRequest $request)
     {
-        //
+        $answer = new Answer();
+        $answer->content = $request->content;
+        $answer->thread_id = $request->thread;
+        $answer->author_id = $request->user()->id;
+        $answer->save();
     }
 
     /**

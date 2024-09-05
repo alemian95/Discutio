@@ -1,10 +1,20 @@
 import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Category, PageProps, Thread } from '@/types';
+import { Answer, Category, PageProps, Thread } from '@/types';
 import React from 'react';
 import AnswerForm from '@/Components/Themes/default/ui_components/AnswerForm';
 
-export default function Show( { thread, breadcrumbs, canAnswerThread, canUpdateThread } : { thread: Thread, breadcrumbs: Category[], canAnswerThread: boolean, canUpdateThread: boolean } ) {
+export default function Show(
+    { thread, breadcrumbs, canAnswerThread, canUpdateThread, answers }
+    :
+    {
+        thread: Thread,
+        breadcrumbs: Category[],
+        canAnswerThread: boolean,
+        canUpdateThread: boolean,
+        answers: Answer[],
+    }
+) {
 
     const { auth } = usePage<PageProps>().props
 
@@ -83,6 +93,12 @@ export default function Show( { thread, breadcrumbs, canAnswerThread, canUpdateT
                                 <hr />
                             </>
                         }
+                    </div>
+
+                    <div className="flex flex-col gap-8 mt-16">
+                        <pre>
+                            {JSON.stringify(answers, null, 2)}
+                        </pre>
                     </div>
 
                 </div>

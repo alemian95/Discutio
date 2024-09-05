@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Thread extends Model
@@ -31,6 +32,11 @@ class Thread extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'author_id', 'id');
+    }
+
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class);
     }
 
     public static function createFromRequest(StoreThreadRequest $request): self
