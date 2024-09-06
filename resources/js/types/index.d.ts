@@ -30,6 +30,8 @@ export interface Thread {
     updated_at?: string;
     author?: User;
     human_created_at?: string;
+    answers?: Answer[];
+    answers_count?: number;
 }
 
 export interface Answer {

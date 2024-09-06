@@ -14,9 +14,10 @@ export default function Thread({ thread }: { thread: ThreadType }) {
                         </Link>
                     </div>
                     <div className="flex text-sm">
-                        <div className="border-l-2 border-r border-indigo-400 p-2">Author: {thread.author?.name} </div>
+                        <div className="border-l-2 border-indigo-400 p-2">Answers: {thread.answers_count} </div>
+                        <div className="border-l-2 border-indigo-400 p-2">Author: {thread.author?.name} </div>
                         {/* <span>|</span> */}
-                        <div className="border-l border-indigo-400 p-2">{ thread.human_created_at }</div>
+                        <div className="border-l-2 border-indigo-400 p-2">{ thread.human_created_at }</div>
                     </div>
                 </div>
                 <div className="bg-slate-50 py-2 px-4 rounded-b-md text-sm text-slate-600">
