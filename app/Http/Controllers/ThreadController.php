@@ -40,13 +40,12 @@ class ThreadController extends Controller
             if ($request->get('category')) {
                 $category = Category::findByCodeOrFail($request->get('category'));
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             abort(404);
         }
 
         $props = [
-            'categories' => $categories
+            'categories' => $categories,
         ];
 
         if ($category) {
@@ -100,7 +99,7 @@ class ThreadController extends Controller
         return InertiaWithThemes::renderTheme('Thread/Form', [
             'categories' => $categories,
             'thread' => $thread,
-            'breadcrumbs' => array_reverse($thread->category->path)
+            'breadcrumbs' => array_reverse($thread->category->path),
         ]);
     }
 

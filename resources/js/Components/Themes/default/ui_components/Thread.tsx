@@ -16,7 +16,6 @@ export default function Thread({ thread }: { thread: ThreadType }) {
                     <div className="flex text-sm">
                         <div className="border-l-2 border-indigo-400 p-2">Answers: {thread.answers_count} </div>
                         <div className="border-l-2 border-indigo-400 p-2">Author: {thread.author?.name} </div>
-                        {/* <span>|</span> */}
                         <div className="border-l-2 border-indigo-400 p-2">{ thread.human_created_at }</div>
                     </div>
                 </div>

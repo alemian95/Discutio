@@ -54,8 +54,8 @@ class Category extends Model
         $categoryIds = $this->getAllSubCategoryIds($category);
 
         return Thread::whereIn('category_id', $categoryIds)
-                ->orderBy('created_at', 'desc')
-                ->get();
+            ->orderBy('created_at', 'desc')
+            ->get();
     }
 
     private function getAllSubCategoryIds($category)

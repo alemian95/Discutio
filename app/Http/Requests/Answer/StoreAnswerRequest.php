@@ -32,7 +32,7 @@ class StoreAnswerRequest extends FormRequest
                 'integer',
                 Rule::exists('threads', 'id'),
             ],
-            'content' => 'required|string'
+            'content' => 'required|string',
         ];
     }
 }
