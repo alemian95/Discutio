@@ -100,7 +100,7 @@ class ThreadController extends Controller
         return InertiaWithThemes::renderTheme('Thread/Form', [
             'categories' => $categories,
             'thread' => $thread,
-            'breadcrumbs' => $thread->category->path
+            'breadcrumbs' => array_reverse($thread->category->path)
         ]);
     }
 

@@ -58,13 +58,17 @@ export default function Form( { category, categories, thread, breadcrumbs } : { 
                     {
                         thread
                         ?
-                        <Link
-                            key={breadcrumbs.length}
-                            href={route('threads.show', thread.id)}
-                            className='font-semibold text-indigo-600'
-                        >
-                            <span>{thread?.title}</span>
-                        </Link>
+                        <>
+                            <Link
+                                key={breadcrumbs.length}
+                                href={route('threads.show', thread.id)}
+                                className='font-semibold text-indigo-600'
+                            >
+                                <span>{thread?.title}</span>
+                            </Link>
+                            <span>&raquo;</span>
+                            <div className='font-semibold'>Edit</div>
+                        </>
                         :
                         <div className='font-semibold'>New thread</div>
                     }
