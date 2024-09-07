@@ -4,6 +4,7 @@ import { Answer, Category, PageProps, Thread } from '@/types';
 import React from 'react';
 import AnswerForm from '@/Components/Themes/default/ui_components/AnswerForm';
 import AnswerBox from '@/Components/Themes/default/ui_components/Answer';
+import { truncate } from '@/lib/utils';
 
 export default function Show(
     { thread, breadcrumbs, canAnswerThread, canUpdateThread, answers }
@@ -53,7 +54,7 @@ export default function Show(
                         href={route('threads.show', thread.id)}
                         className='font-semibold text-indigo-600'
                     >
-                        <span>{thread.title}</span>
+                        <span>{truncate(thread.title, 30)}</span>
                     </Link>
                 </div>
             }
@@ -69,7 +70,10 @@ export default function Show(
                                 <b>{thread.author?.name}</b>
                             </div>
                             <div className='flex flex-col justify-between rounded-r-lg w-full'>
-                                <div className='p-6 break-normal whitespace-pre'>{thread.content}</div>
+                                <div>
+                                    <div className='pt-6 pb-2 px-6 font-semibold text-lg'>{thread.title}</div>
+                                    <div className='pb-6 pt-2 px-6 break-normal whitespace-pre'>{thread.content}</div>
+                                </div>
                                 <div className='bg-slate-200 text-sm text-slate-600 flex justify-end'>
                                     <div className='p-2'>{thread.human_created_at}</div>
                                     {
