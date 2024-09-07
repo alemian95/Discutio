@@ -28,9 +28,8 @@ class ThreadController extends Controller
      */
     public function create(Request $request)
     {
-        if ($request->user()->cannot('create', Thread::class)) {
-            abort(403);
-        }
+
+        Gate::authorize('create', Thread::class);
 
         $categories = Category::getPreOrderList();
 
@@ -41,7 +40,7 @@ class ThreadController extends Controller
                 $category = Category::findByCodeOrFail($request->get('category'));
             }
         } catch (Exception $e) {
-            abort(404);
+            abort(404, $e->getMessage());
         }
 
         $props = [

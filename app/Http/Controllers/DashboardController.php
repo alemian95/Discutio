@@ -28,7 +28,7 @@ class DashboardController extends Controller
         try {
             $category = Category::findByCodeOrFail($code);
         } catch (\Exception $e) {
-            abort(404);
+            abort(404, $e->getMessage());
         }
 
         $path = $category->path;
