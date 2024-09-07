@@ -52,8 +52,9 @@ class Thread extends Model
 
     public function humanCreatedAt(): Attribute
     {
+        $d = Carbon::parse($this->created_at);
         return Attribute::make(
-            get: fn () => Carbon::parse($this->created_at)->diffForHumans()
+            get: fn () => $d->diffInDays() < 1 ? $d->diffForHumans() : $d->toDayDateTimeString()
         );
     }
 }
