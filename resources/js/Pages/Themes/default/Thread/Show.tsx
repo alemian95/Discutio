@@ -71,10 +71,11 @@ export default function Show(
                             </div>
                             <div className='flex flex-col justify-between rounded-r-lg w-full'>
                                 <div>
-                                    <div className='pt-6 pb-2 px-6 font-semibold text-lg'>{thread.title}</div>
+                                    <div className='py-2 px-6 font-semibold text-lg bg-slate-50'>{thread.title}</div>
+                                    {/* <hr /> */}
                                     <div className='pb-6 pt-2 px-6 break-normal whitespace-pre'>{thread.content}</div>
                                 </div>
-                                <div className='bg-slate-200 text-sm text-slate-600 flex justify-end'>
+                                <div className='bg-slate-200 text-sm text-indigo-800 flex justify-end'>
                                     <div className='p-2'>{thread.human_created_at}</div>
                                     {
                                         canUpdateThread

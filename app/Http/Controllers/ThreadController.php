@@ -78,12 +78,12 @@ class ThreadController extends Controller
         return InertiaWithThemes::renderTheme('Thread/Show', [
             'thread' => $thread,
             'answers' => $thread->answers()->with('author')->orderBy('created_at')->get()->map(function ($answer) use ($request) {
-                $answer->canUpdateAnswer = $request->user()->can('update', $answer);
+                $answer->canUpdateAnswer = $request->user() && $request->user()->can('update', $answer);
                 return $answer;
             }),
             'breadcrumbs' => array_reverse($thread->category->path),
-            'canAnswerThread' => $request->user()->can('create', Answer::class),
-            'canUpdateThread' => $request->user()->can('update', $thread),
+            'canAnswerThread' => $request->user() && $request->user()->can('create', Answer::class),
+            'canUpdateThread' => $request->user() && $request->user()->can('update', $thread),
         ]);
     }
 

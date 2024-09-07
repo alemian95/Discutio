@@ -19,7 +19,7 @@ class DashboardController extends Controller
 
         return InertiaWithThemes::renderTheme('Dashboard', [
             'categories' => $parentCategories,
-            'canCreateThreads' => $request->user()->can('create', \App\Models\Thread::class),
+            'canCreateThreads' => $request->user() && $request->user()->can('create', \App\Models\Thread::class),
         ]);
     }
 
@@ -45,7 +45,7 @@ class DashboardController extends Controller
             'threads' => $threads,
             'category' => $category,
             'breadcrumbs' => array_reverse($path),
-            'canCreateThreads' => $request->user()->can('create', \App\Models\Thread::class),
+            'canCreateThreads' => $request->user() && $request->user()->can('create', \App\Models\Thread::class),
         ]);
     }
 }

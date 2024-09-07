@@ -11,18 +11,19 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Themes/'.env('APP_FRONTEND_THEME').'/Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    // return Inertia::render('Themes/'.env('APP_FRONTEND_THEME').'/Welcome', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    //     'laravelVersion' => Application::VERSION,
+    //     'phpVersion' => PHP_VERSION,
+    // ]);
+
+    return redirect()->route('dashboard');
 });
 
 // dashboard routes
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/dashboard/{code}', [DashboardController::class, 'category'])->middleware(['auth', 'verified'])->name('dashboard.category');
-// Route::get('/dashboard/{category}/children', [DashboardController::class, 'categoryChildren'])->middleware(['auth', 'verified'])->name('dashboard.category.children');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::get('/dashboard/{code}', [DashboardController::class, 'category'])->name('dashboard.category');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
