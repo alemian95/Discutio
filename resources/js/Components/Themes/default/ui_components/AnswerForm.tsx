@@ -28,7 +28,7 @@ export default function AnswerForm({ thread, answer } : { thread: Thread, answer
 
     return (
         <>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row justify-end gap-4">
                 {
                     showAnswerForm && ! answer
                         ?
