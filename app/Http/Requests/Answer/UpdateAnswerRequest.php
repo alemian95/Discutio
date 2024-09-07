@@ -13,7 +13,7 @@ class UpdateAnswerRequest extends FormRequest
      */
     public function authorize(): \Illuminate\Auth\Access\Response
     {
-        return Gate::authorize('update', Answer::find($this->route('answer'))->first());
+        return Gate::authorize('update', $this->route('answer'));
     }
 
     /**

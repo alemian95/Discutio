@@ -13,7 +13,7 @@ class UpdateThreadRequest extends FormRequest
      */
     public function authorize(): \Illuminate\Auth\Access\Response
     {
-        return Gate::authorize('update', Thread::find($this->route('thread'))->first());
+        return Gate::authorize('update', $this->route('thread'));
     }
 
     /**
