@@ -36,7 +36,7 @@ class ThreadPolicy
      */
     public function update(User $user, Thread $thread): bool
     {
-        return $thread->author == $user || $user->isModerator();
+        return $thread->author->id == $user->id || $user->isModerator();
     }
 
     /**
@@ -44,7 +44,7 @@ class ThreadPolicy
      */
     public function delete(User $user, Thread $thread): bool
     {
-        return $thread->author == $user || $user->isModerator();
+        return $thread->author->id == $user->id || $user->isModerator();
     }
 
     /**

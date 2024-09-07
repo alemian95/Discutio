@@ -44,7 +44,7 @@ export interface Answer {
     thread?: Thread;
     author?: User;
     human_created_at?: string;
-
+    canUpdateAnswer?: boolean;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {

@@ -3,6 +3,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { Answer, Category, PageProps, Thread } from '@/types';
 import React from 'react';
 import AnswerForm from '@/Components/Themes/default/ui_components/AnswerForm';
+import AnswerBox from '@/Components/Themes/default/ui_components/Answer';
 
 export default function Show(
     { thread, breadcrumbs, canAnswerThread, canUpdateThread, answers }
@@ -64,7 +65,7 @@ export default function Show(
 
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className='flex min-h-[200px]'>
-                            <div className="bg-indigo-200 flex items-center p-4 rounded-l-lg">
+                        <div className="bg-indigo-600 text-indigo-100 flex justify-center items-center p-4 rounded-l-lg min-w-[160px]">
                                 <b>{thread.author?.name}</b>
                             </div>
                             <div className='flex flex-col justify-between rounded-r-lg w-full'>
@@ -96,9 +97,13 @@ export default function Show(
                     </div>
 
                     <div className="flex flex-col gap-8 mt-16">
-                        <pre>
-                            {JSON.stringify(answers, null, 2)}
-                        </pre>
+                        {
+                            answers.map((answer, index) => {
+                                return (
+                                    <AnswerBox key={index} answer={answer} />
+                                )
+                            })
+                        }
                     </div>
 
                 </div>

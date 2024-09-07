@@ -36,7 +36,7 @@ class AnswerPolicy
      */
     public function update(User $user, Answer $answer): bool
     {
-        return true;
+        return $answer->author->id == $user->id || $user->isModerator();
     }
 
     /**
@@ -44,7 +44,7 @@ class AnswerPolicy
      */
     public function delete(User $user, Answer $answer): bool
     {
-        return true;
+        return $answer->author->id == $user->id || $user->isModerator();
     }
 
     /**
