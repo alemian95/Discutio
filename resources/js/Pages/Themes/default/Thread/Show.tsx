@@ -5,6 +5,7 @@ import React from 'react';
 import AnswerForm from '@/Components/Themes/default/ui_components/AnswerForm';
 import AnswerBox from '@/Components/Themes/default/ui_components/Answer';
 import { truncate } from '@/lib/utils';
+import SecondaryButton from '@/Components/Themes/default/SecondaryButton';
 
 export default function Show(
     { thread, breadcrumbs, canAnswerThread, canUpdateThread, answers }
@@ -63,6 +64,10 @@ export default function Show(
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+                    <div className="mb-6">
+                        <Link href={route('dashboard.category', thread.category!.code)}><SecondaryButton>&laquo; Back</SecondaryButton></Link>
+                    </div>
 
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className='flex min-h-[200px]'>

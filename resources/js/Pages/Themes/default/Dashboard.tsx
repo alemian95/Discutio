@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import CategoryBox from '@/Components/Themes/default/ui_components/Category';
 import ThreadBox from '@/Components/Themes/default/ui_components/Thread';
 import React from 'react';
+import SecondaryButton from '@/Components/Themes/default/SecondaryButton';
 
 export default function Dashboard( { categories, threads, category, breadcrumbs, canCreateThreads } : { categories: Category[], threads?: Thread[], category?: Category, breadcrumbs?: Category[], canCreateThreads: boolean } ) {
 
@@ -47,8 +48,21 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
 
             <div className="py-6">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="flex justify-end gap-6">
-                        { canCreateThreads && <a href={`${route('threads.create')}${category ? `?category=${category.code}` : ""}`}><PrimaryButton>New Thread +</PrimaryButton></a> }
+                    <div className="flex justify-between gap-6">
+                        <div>
+                            {
+                                category
+                                &&
+                                breadcrumbs
+                                &&
+                                (
+                                    <Link href={breadcrumbs.length >= 2 ? route('dashboard.category', breadcrumbs[breadcrumbs.length - 2].code) : route('dashboard')}><SecondaryButton>&laquo; Back</SecondaryButton></Link>
+                                )
+                            }
+                        </div>
+                        <div>
+                            { canCreateThreads && <a href={`${route('threads.create')}${category ? `?category=${category.code}` : ""}`}><PrimaryButton>New Thread +</PrimaryButton></a> }
+                        </div>
                     </div>
                 </div>
             </div>
