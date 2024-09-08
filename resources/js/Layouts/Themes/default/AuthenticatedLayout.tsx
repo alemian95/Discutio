@@ -135,23 +135,19 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                             </>
                             :
                             <>
-                                <div className="px-4">
-                                    <div className="font-medium text-base text-gray-800 dark:text-gray-200">
-                                        <Link
-                                            href={route('login')}
-                                            // className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                        >
-                                            Log in
-                                        </Link>
-                                    </div>
-                                    <div className="font-medium text-base text-gray-800 dark:text-gray-200">
-                                        <Link
-                                            href={route('register')}
-                                            // className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                                        >
-                                            Register
-                                        </Link>
-                                    </div>
+                                <div className="mt-3 space-y-1">
+                                    <ResponsiveNavLink
+                                        href={route('login')}
+                                        // className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                    >
+                                        Log in
+                                    </ResponsiveNavLink>
+                                    <ResponsiveNavLink
+                                        href={route('register')}
+                                        // className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                                    >
+                                        Register
+                                    </ResponsiveNavLink>
                                 </div>
                             </>
                         }
