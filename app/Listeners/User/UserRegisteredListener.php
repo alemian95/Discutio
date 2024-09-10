@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Spatie\Permission\Models\Role;
 
 class UserRegisteredListener
 {
@@ -23,13 +24,13 @@ class UserRegisteredListener
      */
     public function handle(UserRegisteredEvent $event): void
     {
-        $event->user->assignRole('user');
 
-        $e = new Event();
-        $e->type = Event::USER_REGISTERED;
-        $e->primary_entity_class = User::class;
-        $e->primary_entity_id = $event->user->id;
+        Event::create(Event::USER_REGISTERED)->dispatchedBy($event->user)->save();
 
-        $e->save();
+        $role = Role::findByName('user');
+        $event->user->assignRole($role);
+
+        Event::create(Event::USER_ASSIGNED_ROLE)->dispatchedBy($event->user)->referencesTo($role)->save();
+
     }
 }
