@@ -28,7 +28,7 @@ class ThreadPolicy
      */
     public function create(User $user): bool
     {
-        return $user ? true : false;
+        return $user && $user->email_verified_at ? true : false;
     }
 
     /**

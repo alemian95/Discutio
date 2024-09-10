@@ -3,11 +3,22 @@ import ApplicationLogo from '@/Components/Themes/default/ApplicationLogo';
 import Dropdown from '@/Components/Themes/default/Dropdown';
 import NavLink from '@/Components/Themes/default/NavLink';
 import ResponsiveNavLink from '@/Components/Themes/default/ResponsiveNavLink';
-import { Link } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import { User } from '@/types';
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user?: User, header?: ReactNode }>) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false)
+
+    const { post } = useForm({})
+    const [ verificationSent, setVerificationSent ] = useState(false)
+
+    function resendVerification() {
+        post(route('verification.send'), {
+            onSuccess() {
+                setVerificationSent(true)
+            }
+        })
+    }
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -161,6 +172,27 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}
+
+            {
+                user?.email_verified_at == null
+                &&
+                <div className='max-w-7xl mx-auto sm:px-6 lg:px-8 mt-6'>
+                    <div className='sm:rounded-xl p-6 bg-indigo-600 text-white'>
+                        {
+                            ! verificationSent
+                            ?
+                            <>
+                                <p>Your account has not been verified yet. Please check your emails and follow the istructions.</p>
+                                <p>If you didn't received the email, <span className='cursor-pointer underline text-indigo-200' onClick={resendVerification}>click here</span> and we will send you another one.</p>
+                            </>
+                            :
+                            <>
+                                <p>Another email has been sent to your inbox. Please check it and follow the instructions.</p>
+                            </>
+                        }
+                    </div>
+                </div>
+            }
 
             <main>{children}</main>
         </div>
