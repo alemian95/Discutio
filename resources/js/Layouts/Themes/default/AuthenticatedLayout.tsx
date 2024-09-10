@@ -174,7 +174,7 @@ export default function Authenticated({ user, header, children }: PropsWithChild
             )}
 
             {
-                user?.email_verified_at == null
+                user && user.email_verified_at == null
                 &&
                 <div className='max-w-7xl mx-auto sm:px-6 lg:px-8 mt-6'>
                     <div className='sm:rounded-xl p-6 bg-indigo-600 text-white'>
