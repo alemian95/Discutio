@@ -33,5 +33,8 @@ class DatabaseSeeder extends Seeder
 
         // User::factory(10)->create();
 
+        (new CategoriesSeeder())->run();
+        (new ConfigSeeder())->run();
+
     }
 }
