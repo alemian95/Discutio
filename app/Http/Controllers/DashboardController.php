@@ -5,22 +5,28 @@ namespace App\Http\Controllers;
 use App\Extensions\Inertia\InertiaWithThemes;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-        $parentCategories = Category::whereNull('parent_id')->withCount('children')->get();
+        $cacheKey = 'dashboard_data';
+        $data = Cache::remember($cacheKey, 60, function () use ($request) {
+            $parentCategories = Category::whereNull('parent_id')->withCount('children')->get();
 
-        foreach ($parentCategories as $index => $category) {
-            $parentCategories[$index]->threads_count = count($category->threadsWithSubcategories);
-            $parentCategories[$index]->last_thread = $category->threadsWithSubcategories->get(0);
-        }
+            foreach ($parentCategories as $index => $category) {
+                $parentCategories[$index]->threads_count = count($category->threadsWithSubcategories);
+                $parentCategories[$index]->last_thread = $category->threadsWithSubcategories->get(0);
+            }
 
-        return InertiaWithThemes::renderTheme('Dashboard', [
-            'categories' => $parentCategories,
-            'canCreateThreads' => $request->user() && $request->user()->can('create', \App\Models\Thread::class),
-        ]);
+            return [
+                'categories' => $parentCategories,
+                'canCreateThreads' => $request->user() && $request->user()->can('create', \App\Models\Thread::class),
+            ];
+        });
+
+        return InertiaWithThemes::renderTheme('Dashboard', $data);
     }
 
     public function category(Request $request, string $code)
@@ -31,21 +37,27 @@ class DashboardController extends Controller
             abort(404, $e->getMessage());
         }
 
-        $path = $category->path;
-        $categories = $category->children()->withCount('children')->get();
-        $threads = $category->threads()->with('author')->withCount('answers')->get();
+        $cacheKey = 'category_data_' . $code;
 
-        foreach ($categories as $index => $c) {
-            $categories[$index]->threads_count = count($c->threadsWithSubcategories);
-            $categories[$index]->last_thread = $c->lastInsertedThread;
-        }
+        $data = Cache::remember($cacheKey, 60, function () use ($request, $category) {
+            $path = $category->path;
+            $categories = $category->children()->withCount('children')->get();
+            $threads = $category->threads()->with('author')->withCount('answers')->get();
 
-        return InertiaWithThemes::renderTheme('Dashboard', [
-            'categories' => $categories,
-            'threads' => $threads,
-            'category' => $category,
-            'breadcrumbs' => array_reverse($path),
-            'canCreateThreads' => $request->user() && $request->user()->can('create', \App\Models\Thread::class),
-        ]);
+            foreach ($categories as $index => $c) {
+                $categories[$index]->threads_count = count($c->threadsWithSubcategories);
+                $categories[$index]->last_thread = $c->lastInsertedThread;
+            }
+
+            return [
+                'categories' => $categories,
+                'threads' => $threads,
+                'category' => $category,
+                'breadcrumbs' => array_reverse($path),
+                'canCreateThreads' => $request->user() && $request->user()->can('create', \App\Models\Thread::class),
+            ];
+        });
+
+        return InertiaWithThemes::renderTheme('Dashboard', $data);
     }
 }

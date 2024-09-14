@@ -18,7 +18,7 @@ class CacheConfigMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-        Cache::rememberForever('config_cache', function () {
+        Cache::remember('config_cache', 3600, function () {
             return Config::with('options')->get()->mapWithKeys(function ($config) {
                 $options = $config->options->mapWithKeys(function ($option) {
                     return [$option->id => $option->value];
