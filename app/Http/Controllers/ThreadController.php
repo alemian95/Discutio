@@ -79,6 +79,7 @@ class ThreadController extends Controller
             'thread' => $thread,
             'answers' => $thread->answers()->with('author')->orderBy('created_at')->get()->map(function ($answer) use ($request) {
                 $answer->canUpdateAnswer = $request->user() && $request->user()->can('update', $answer);
+
                 return $answer;
             }),
             'breadcrumbs' => array_reverse($thread->category->path),

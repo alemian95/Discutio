@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Thread;
 
-use App\Models\Thread;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 

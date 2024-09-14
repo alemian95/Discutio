@@ -14,7 +14,7 @@ class Config extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'group', 'key', 'type', 'value'
+        'group', 'key', 'type', 'value',
     ];
 
     public function options(): HasMany
@@ -25,6 +25,7 @@ class Config extends Model
     public static function getValue(string $key)
     {
         $config = Cache::get('config');
-        return $config[$key] ?? throw new Exception("Invalid config value requested");
+
+        return $config[$key] ?? throw new Exception('Invalid config value requested');
     }
 }

@@ -4,9 +4,6 @@ namespace App\Listeners\User;
 
 use App\Events\User\UserRegisteredEvent;
 use App\Models\Event;
-use App\Models\User;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Spatie\Permission\Models\Role;
 
 class UserRegisteredListener

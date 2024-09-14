@@ -21,7 +21,7 @@ trait HasHumanTimestamps
         );
     }
 
-    private function humanTimestamp(string $timestamp) : string
+    private function humanTimestamp(string $timestamp): string
     {
         Carbon::setLocale('it');
         $d = Carbon::parse($timestamp);

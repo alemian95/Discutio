@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Thread extends Model
 {
-    use HasFactory, SoftDeletes, HasHumanTimestamps;
+    use HasFactory, HasHumanTimestamps, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

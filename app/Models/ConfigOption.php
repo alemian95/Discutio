@@ -12,10 +12,10 @@ class ConfigOption extends Model
     use HasFactory,SoftDeletes;
 
     protected $fillable = [
-        'config_id', 'value'
+        'config_id', 'value',
     ];
 
-    public function config() : BelongsTo
+    public function config(): BelongsTo
     {
         return $this->belongsTo(Config::class);
     }

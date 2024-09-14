@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use App\Extensions\Traits\HasHumanTimestamps;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,5 +29,4 @@ class Answer extends Model
     {
         return $this->belongsTo(Thread::class);
     }
-
 }
