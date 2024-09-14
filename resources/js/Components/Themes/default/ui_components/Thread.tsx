@@ -15,9 +15,9 @@ export default function Thread({ thread }: { thread: ThreadType }) {
                         </Link>
                     </div>
                     <div className="flex flex-col lg:flex-row text-md lg:text-sm">
-                        <div className="border-indigo-400 p-2 lg:w-32 text-end">Answers: {thread.answers_count}</div>
-                        <div className="border-indigo-400 p-2 lg:w-40 text-end">Author: {thread.author?.name}</div>
-                        <div className="border-indigo-400 p-2 lg:w-52 text-end">{ thread.human_created_at }</div>
+                        <div className="border-indigo-400 p-2 lg:min-w-32 text-end">Answers: {thread.answers_count}</div>
+                        <div className="border-indigo-400 p-2 lg:min-w-40 text-end">Author: {thread.author?.name}</div>
+                        <div className="border-indigo-400 p-2 lg:min-w-52 text-end">{ thread.human_created_at }</div>
                     </div>
                 </div>
                 <div className="bg-slate-50 py-6 lg:py-2 px-4 rounded-b-md text-sm text-slate-600">
