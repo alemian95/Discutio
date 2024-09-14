@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Config\StoreConfigRequest;
 use App\Http\Requests\Config\UpdateConfigRequest;
 use App\Models\Config;
+use App\Providers\ConfigCacheProvider;
+use Illuminate\Support\Facades\Cache;
 
 class ConfigController extends Controller
 {
@@ -53,7 +55,8 @@ class ConfigController extends Controller
      */
     public function update(UpdateConfigRequest $request, Config $config)
     {
-        //
+        Cache::forget('config');
+        app(ConfigCacheProvider::class)->boot();
     }
 
     /**

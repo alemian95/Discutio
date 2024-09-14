@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Extensions\Traits\HasHumanTimestamps;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Answer extends Model
 {
-    use HasFactory;
+    use HasFactory, HasHumanTimestamps;
 
     /**
      * The attributes that are mass assignable.
@@ -31,11 +32,4 @@ class Answer extends Model
         return $this->belongsTo(Thread::class);
     }
 
-    public function humanCreatedAt(): Attribute
-    {
-        $d = Carbon::parse($this->created_at);
-        return Attribute::make(
-            get: fn () => $d->diffInDays() < 1 ? $d->diffForHumans() : $d->toDayDateTimeString()
-        );
-    }
 }

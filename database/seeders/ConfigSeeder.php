@@ -19,10 +19,11 @@ class ConfigSeeder extends Seeder
                 'cutThreadPreviewTextAfterNCharacters' => [ 'integer', '100' ],
             ],
             'datetime_format' => [
-                'defaultFormat' => [ 'string', '' ],
+                'defaultFunction' => [ 'string', 'toDayDateTimeString' ],
+                'defaultFormat' => [ 'string', 'Y-m-d H:i:s' ],
                 'showTimePassedByIfMoreThanOneDay' => [ 'boolean', false ],
                 'showTimeOnlyIfDateIsToday' => [ 'boolean', false ],
-                'showDayAndTimeOnlyIfDateIsThisWeek' => [ 'boolean', false ],
+                'showDayAndTimeOnlyIfDateIsLessThanAWeek' => [ 'boolean', false ],
             ]
         ];
 
@@ -37,4 +38,5 @@ class ConfigSeeder extends Seeder
             }
         }
     }
+
 }

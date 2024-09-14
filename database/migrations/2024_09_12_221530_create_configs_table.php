@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Config;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,24 +20,17 @@ return new class extends Migration
             $table->string('group');
             $table->string('key')->unique();
             $table->string('type');
+            $table->longText('value')->nullable();
         });
 
         Schema::create('config_options', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignIdFor('configs', 'config_id');
+            $table->foreignIdFor(Config::class, 'config_id')->constrained();
             $table->longText('value')->nullable();
         });
 
-        Schema::create('config_values', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->softDeletes();
-            $table->foreignIdFor('configs', 'config_id');
-            $table->foreignIdFor('config_options', 'option_id')->nullable();
-            $table->longText('value')->nullable();
-        });
     }
 
     /**
@@ -43,8 +38,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('configs');
         Schema::dropIfExists('config_options');
-        Schema::dropIfExists('config_values');
+        Schema::dropIfExists('configs');
     }
 };

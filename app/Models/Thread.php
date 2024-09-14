@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
+use App\Extensions\Traits\HasHumanTimestamps;
 use App\Http\Requests\Thread\StoreThreadRequest;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Thread extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasHumanTimestamps;
 
     /**
      * The attributes that are mass assignable.
@@ -50,11 +49,12 @@ class Thread extends Model
         return $thread;
     }
 
-    public function humanCreatedAt(): Attribute
-    {
-        $d = Carbon::parse($this->created_at);
-        return Attribute::make(
-            get: fn () => $d->diffInDays() < 1 ? $d->diffForHumans() : $d->toDayDateTimeString()
-        );
-    }
+    // public function humanCreatedAt(): Attribute
+    // {
+    //     Carbon::setLocale('it');
+    //     $d = Carbon::parse($this->created_at);
+    //     return Attribute::make(
+    //         get: fn () => $d->isToday() ? $d->isoFormat('H:mm') : ucwords($d->isoFormat('dddd, MMMM D, YYYY h:mm A'))//->format('D, M j, Y g:i A')//->toDayDateTimeString()
+    //     );
+    // }
 }
