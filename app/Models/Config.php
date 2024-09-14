@@ -17,6 +17,8 @@ class Config extends Model
         'group', 'key', 'type', 'value',
     ];
 
+    protected static $cache = null;
+
     public function options(): HasMany
     {
         return $this->hasMany(ConfigOption::class);
@@ -24,8 +26,10 @@ class Config extends Model
 
     public static function getValue(string $key)
     {
-        $config = Cache::get('config_cache')->toArray();
+        if (self::$cache === null) {
+            self::$cache = Cache::get('config_cache')->toArray();
+        }
 
-        return $config[$key]['value'] ?? throw new Exception('Invalid config value requested');
+        return self::$cache[$key]['value'] ?? throw new Exception('Invalid config value requested');
     }
 }
