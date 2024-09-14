@@ -24,8 +24,8 @@ class Config extends Model
 
     public static function getValue(string $key)
     {
-        $config = Cache::get('config');
+        $config = Cache::get('config_cache')->toArray();
 
-        return $config[$key] ?? throw new Exception('Invalid config value requested');
+        return $config[$key]['value'] ?? throw new Exception('Invalid config value requested');
     }
 }

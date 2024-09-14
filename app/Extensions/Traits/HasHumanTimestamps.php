@@ -2,6 +2,7 @@
 
 namespace App\Extensions\Traits;
 
+use App\Models\Config;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
@@ -23,9 +24,14 @@ trait HasHumanTimestamps
 
     private function humanTimestamp(string $timestamp): string
     {
-        Carbon::setLocale('it');
+        Carbon::setLocale(app()->getLocale());
         $d = Carbon::parse($timestamp);
 
-        return $d->isToday() ? $d->isoFormat('H:mm') : ucwords($d->isoFormat('dddd, MMMM D, YYYY h:mm A'));
+        if ((bool) Config::getValue('show_time_only_if_date_is_today')) {
+            return $d->isToday() ? $d->isoFormat(Config::getValue('time_format')) : ucwords($d->isoFormat(Config::getValue('date_format') . ' ' . Config::getValue('time_format')));
+        }
+        else {
+            return ucwords($d->isoFormat(Config::getValue('date_format') . ' ' . Config::getValue('time_format')));
+        }
     }
 }
