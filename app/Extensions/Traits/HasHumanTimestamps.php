@@ -27,11 +27,10 @@ trait HasHumanTimestamps
         Carbon::setLocale(app()->getLocale());
         $d = Carbon::parse($timestamp);
 
-        if ((bool) Config::getValue('show_time_only_if_date_is_today')) {
-            return $d->isToday() ? $d->isoFormat(Config::getValue('time_format')) : ucwords($d->isoFormat(Config::getValue('date_format') . ' ' . Config::getValue('time_format')));
+        if ((bool) Config::getValue('show_time_only_if_date_is_today') && $d->isToday()) {
+            return $d->isoFormat(Config::getValue('time_format'));
         }
-        else {
-            return ucwords($d->isoFormat(Config::getValue('date_format') . ' ' . Config::getValue('time_format')));
-        }
+
+        return ucwords($d->isoFormat(Config::getValue('date_format') . ' ' . Config::getValue('time_format')));
     }
 }
