@@ -23,6 +23,7 @@ class ConfigSeeder extends Seeder
                 'time_format' => [ 'string', 'h:mm A' ],
                 'date_format' => [ 'string', 'dddd, MMMM D, YYYY' ],
                 'show_time_only_if_date_is_today' => [ 'boolean', false ],
+                'show_day_and_time_only_if_date_is_this_wheek' => [ 'boolean', false ],
             ]
         ];
 
