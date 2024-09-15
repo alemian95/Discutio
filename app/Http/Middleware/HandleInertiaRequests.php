@@ -35,7 +35,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
-                'canViewConfigs' => $request->user()->can('viewAny', Config::class) ?? false
+                'canViewConfigs' => $request->user()?->can('viewAny', Config::class) ?? false
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

@@ -11,6 +11,7 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
+
         $cacheKey = 'dashboard_data';
         $data = Cache::remember($cacheKey, 60, function () use ($request) {
             $parentCategories = Category::whereNull('parent_id')->withCount('children')->get();
@@ -22,9 +23,10 @@ class DashboardController extends Controller
 
             return [
                 'categories' => $parentCategories,
-                'canCreateThreads' => $request->user() && $request->user()->can('create', \App\Models\Thread::class),
             ];
         });
+
+        $data['canCreateThreads'] = $request->user() && $request->user()->can('create', \App\Models\Thread::class);
 
         return InertiaWithThemes::renderTheme('Dashboard', $data);
     }
@@ -54,9 +56,10 @@ class DashboardController extends Controller
                 'threads' => $threads,
                 'category' => $category,
                 'breadcrumbs' => array_reverse($path),
-                'canCreateThreads' => $request->user() && $request->user()->can('create', \App\Models\Thread::class),
             ];
         });
+
+        $data['canCreateThreads'] = $request->user() && $request->user()->can('create', \App\Models\Thread::class);
 
         return InertiaWithThemes::renderTheme('Dashboard', $data);
     }
