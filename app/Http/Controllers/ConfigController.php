@@ -20,7 +20,7 @@ class ConfigController extends Controller
     {
         Gate::authorize('viewAny', Config::class);
 
-        $configs = Config::orderBy('key')->orderBy('group')->with('options')->get()->map(function ($config) {
+        $configs = Config::orderBy('group')->orderBy('key')->with('options')->get()->map(function ($config) {
             if ($config->group == "datetime") {
                 Carbon::setLocale(app()->getLocale());
                 $config->valueLabel = Carbon::now()->isoFormat($config->value);
