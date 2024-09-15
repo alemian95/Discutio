@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Extensions\Cache\CacheHelper;
 use App\Http\Requests\Config\StoreConfigRequest;
 use App\Http\Requests\Config\UpdateConfigRequest;
 use App\Models\Config;
-use App\Providers\ConfigCacheProvider;
-use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ConfigController extends Controller
 {
@@ -15,7 +17,19 @@ class ConfigController extends Controller
      */
     public function index()
     {
-        //
+        Gate::authorize('viewAny', Config::class);
+
+        $configs = Config::orderBy('key')->orderBy('group')->with('options')->get()->map(function ($config) {
+            if ($config->group == "datetime") {
+                Carbon::setLocale(app()->getLocale());
+                $config->valueLabel = Carbon::now()->isoFormat($config->value);
+                $config->options->map(function ($option) {
+                    $option->valueLabel = Carbon::now()->isoFormat($option->value);
+                });
+                return $config;
+            }
+        });
+        return $configs;
     }
 
     /**
@@ -42,6 +56,13 @@ class ConfigController extends Controller
         //
     }
 
+    public function updateAll(Request $request) {
+
+        Gate::authorize('viewAny', Config::class);
+
+        CacheHelper::clearConfig();
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -55,8 +76,7 @@ class ConfigController extends Controller
      */
     public function update(UpdateConfigRequest $request, Config $config)
     {
-        Cache::forget('config');
-        app(ConfigCacheProvider::class)->boot();
+        //
     }
 
     /**

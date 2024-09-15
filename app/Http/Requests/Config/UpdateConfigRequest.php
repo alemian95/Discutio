@@ -22,7 +22,7 @@ class UpdateConfigRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'configs' => 'required|array'
         ];
     }
 }

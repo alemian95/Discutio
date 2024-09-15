@@ -12,7 +12,7 @@ class ConfigPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -20,7 +20,7 @@ class ConfigPolicy
      */
     public function view(User $user, Config $config): bool
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -28,7 +28,7 @@ class ConfigPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -36,7 +36,7 @@ class ConfigPolicy
      */
     public function update(User $user, Config $config): bool
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -44,7 +44,7 @@ class ConfigPolicy
      */
     public function delete(User $user, Config $config): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -52,7 +52,7 @@ class ConfigPolicy
      */
     public function restore(User $user, Config $config): bool
     {
-        //
+        return $user->isAdmin();
     }
 
     /**
@@ -60,6 +60,6 @@ class ConfigPolicy
      */
     public function forceDelete(User $user, Config $config): bool
     {
-        //
+        return false;
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Api\ThreadController as ApiThreadController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ThreadController;
@@ -34,6 +35,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::resource('categories', CategoryController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
 Route::resource('threads', ThreadController::class)->only(['create', 'store', 'edit', 'update', 'show']);
 Route::resource('answers', AnswerController::class)->only(['store']);
+
+Route::resource('configs', ConfigController::class)->only(['index']);
+Route::post('configs/update', [ConfigController::class, 'updateAll'])->name('configs.updateAll');
 
 Route::name('api.')->prefix('api')->group(function () {
     Route::resource('api/threads', ApiThreadController::class);
