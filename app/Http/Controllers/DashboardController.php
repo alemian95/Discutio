@@ -13,7 +13,7 @@ class DashboardController extends Controller
     {
 
         $cacheKey = 'dashboard_data';
-        $data = Cache::remember($cacheKey, 60, function () use ($request) {
+        $data = Cache::remember($cacheKey, 60, function () {
             $parentCategories = Category::whereNull('parent_id')->withCount('children')->get();
 
             foreach ($parentCategories as $index => $category) {
@@ -39,9 +39,9 @@ class DashboardController extends Controller
             abort(404, $e->getMessage());
         }
 
-        $cacheKey = 'category_data_' . $code;
+        $cacheKey = 'category_data_'.$code;
 
-        $data = Cache::remember($cacheKey, 60, function () use ($request, $category) {
+        $data = Cache::remember($cacheKey, 60, function () use ($category) {
             $path = $category->path;
             $categories = $category->children()->withCount('children')->get();
             $threads = $category->threads()->with('author')->withCount('answers')->get();

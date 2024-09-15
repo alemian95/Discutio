@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheHelper
 {
-
     public static function clearConfig()
     {
         Cache::forget('config_cache');
@@ -18,7 +17,7 @@ class CacheHelper
         Cache::forget('dashboard_data');
         $categories = Category::all();
         foreach ($categories as $category) {
-            Cache::forget('category_data_' . $category->code);
+            Cache::forget('category_data_'.$category->code);
         }
     }
 

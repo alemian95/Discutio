@@ -21,14 +21,15 @@ class ConfigController extends Controller
         Gate::authorize('viewAny', Config::class);
 
         $configs = Config::orderBy('group')->orderBy('key')->with('options')->get()->map(function ($config) {
-            if ($config->group == "datetime") {
+            if ($config->group == 'datetime') {
                 Carbon::setLocale(app()->getLocale());
                 $config->valueLabel = Carbon::now()->isoFormat($config->value);
                 $config->options->map(function ($option) {
                     $option->valueLabel = Carbon::now()->isoFormat($option->value);
                 });
             }
-            $config->keyLabel = __('config.'. $config->group .'.'. $config->key);
+            $config->keyLabel = __('config.'.$config->group.'.'.$config->key);
+
             return $config;
         });
 
@@ -61,7 +62,8 @@ class ConfigController extends Controller
         //
     }
 
-    public function updateAll(Request $request) {
+    public function updateAll(Request $request)
+    {
 
         Gate::authorize('viewAny', Config::class);
 
