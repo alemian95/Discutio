@@ -50,6 +50,7 @@ export interface Answer {
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
+        canViewConfigs: boolean;
     };
     ziggy: Config & { location: string };
 };

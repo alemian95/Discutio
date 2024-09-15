@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Extensions\Cache\CacheHelper;
+use App\Extensions\Inertia\InertiaWithThemes;
 use App\Http\Requests\Config\StoreConfigRequest;
 use App\Http\Requests\Config\UpdateConfigRequest;
 use App\Models\Config;
@@ -15,7 +16,7 @@ class ConfigController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Gate::authorize('viewAny', Config::class);
 
@@ -26,10 +27,14 @@ class ConfigController extends Controller
                 $config->options->map(function ($option) {
                     $option->valueLabel = Carbon::now()->isoFormat($option->value);
                 });
-                return $config;
             }
+            $config->keyLabel = __('config.'. $config->group .'.'. $config->key);
+            return $config;
         });
-        return $configs;
+
+        return InertiaWithThemes::renderTheme('Configs/Index', [
+            'configs' => $configs,
+        ]);
     }
 
     /**

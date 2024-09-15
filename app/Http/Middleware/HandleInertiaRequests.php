@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Config;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -34,6 +35,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'canViewConfigs' => $request->user()->can('viewAny', Config::class) ?? false
             ],
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

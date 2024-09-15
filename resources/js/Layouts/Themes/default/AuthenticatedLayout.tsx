@@ -3,14 +3,16 @@ import ApplicationLogo from '@/Components/Themes/default/ApplicationLogo';
 import Dropdown from '@/Components/Themes/default/Dropdown';
 import NavLink from '@/Components/Themes/default/NavLink';
 import ResponsiveNavLink from '@/Components/Themes/default/ResponsiveNavLink';
-import { Link, useForm } from '@inertiajs/react';
-import { User } from '@/types';
+import { Link, useForm, usePage } from '@inertiajs/react';
+import { PageProps, User } from '@/types';
 
 export default function Authenticated({ user, header, children }: PropsWithChildren<{ user?: User, header?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false)
 
     const { post } = useForm({})
     const [ verificationSent, setVerificationSent ] = useState(false)
+
+    const { auth } = usePage<PageProps>().props
 
     function resendVerification() {
         post(route('verification.send'), {
@@ -36,6 +38,11 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                                {
+                                    auth.canViewConfigs
+                                    &&
+                                    <NavLink href={route('configs.index')} active={route().current('configs.index')}>Configurations</NavLink>
+                                }
                             </div>
                         </div>
 
@@ -117,11 +124,19 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                     </div>
                 </div>
 
+                {/* <pre>{JSON.stringify(auth)}</pre> */}
+
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        {
+                            auth.canViewConfigs &&
+                            <ResponsiveNavLink href={route('configs.index')} active={route().current('configs')}>
+                                Configurations
+                            </ResponsiveNavLink>
+                        }
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
