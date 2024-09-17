@@ -33,7 +33,7 @@ class ConfigController extends Controller
             return $config;
         });
 
-        return InertiaWithThemes::renderTheme('Configs/Index', [
+        return InertiaWithThemes::render('Configs/Index', [
             'configs' => $configs,
         ]);
     }

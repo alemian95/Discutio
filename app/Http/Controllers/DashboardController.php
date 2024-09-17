@@ -28,7 +28,7 @@ class DashboardController extends Controller
 
         $data['canCreateThreads'] = $request->user() && $request->user()->can('create', \App\Models\Thread::class);
 
-        return InertiaWithThemes::renderTheme('Dashboard', $data);
+        return InertiaWithThemes::render('Dashboard', $data);
     }
 
     public function category(Request $request, string $code)
@@ -61,6 +61,6 @@ class DashboardController extends Controller
 
         $data['canCreateThreads'] = $request->user() && $request->user()->can('create', \App\Models\Thread::class);
 
-        return InertiaWithThemes::renderTheme('Dashboard', $data);
+        return InertiaWithThemes::render('Dashboard', $data);
     }
 }

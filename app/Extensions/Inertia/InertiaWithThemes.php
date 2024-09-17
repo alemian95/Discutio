@@ -6,8 +6,8 @@ use Inertia\Inertia;
 
 class InertiaWithThemes extends Inertia
 {
-    public static function renderTheme($component, $props = [])
+    public static function render($component, $props = []) : \Inertia\Response
     {
-        return self::render('Themes/'.env('APP_FRONTEND_THEME').'/'.$component, $props);
+        return parent::render('Themes/'.env('APP_FRONTEND_THEME').'/'.$component, $props);
     }
 }

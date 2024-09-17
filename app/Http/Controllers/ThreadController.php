@@ -52,7 +52,7 @@ class ThreadController extends Controller
             $props['breadcrumbs'] = $category->path;
         }
 
-        return InertiaWithThemes::renderTheme('Thread/Form', $props);
+        return InertiaWithThemes::render('Thread/Form', $props);
     }
 
     /**
@@ -75,7 +75,7 @@ class ThreadController extends Controller
         $thread->author;
         $thread->human_created_at;
 
-        return InertiaWithThemes::renderTheme('Thread/Show', [
+        return InertiaWithThemes::render('Thread/Show', [
             'thread' => $thread,
             'answers' => $thread->answers()->with('author')->orderBy('created_at')->get()->map(function ($answer) use ($request) {
                 $answer->canUpdateAnswer = $request->user() && $request->user()->can('update', $answer);
@@ -99,7 +99,7 @@ class ThreadController extends Controller
 
         $thread->category;
 
-        return InertiaWithThemes::renderTheme('Thread/Form', [
+        return InertiaWithThemes::render('Thread/Form', [
             'categories' => $categories,
             'thread' => $thread,
             'breadcrumbs' => array_reverse($thread->category->path),
