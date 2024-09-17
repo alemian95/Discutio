@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Extensions\Cache;
+namespace App\Helpers;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Cache;

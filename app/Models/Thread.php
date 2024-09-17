@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Extensions\Traits\HasHumanTimestamps;
+use App\Traits\HasHumanTimestamps;
 use App\Http\Requests\Thread\StoreThreadRequest;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -49,12 +49,4 @@ class Thread extends Model
         return $thread;
     }
 
-    // public function humanCreatedAt(): Attribute
-    // {
-    //     Carbon::setLocale('it');
-    //     $d = Carbon::parse($this->created_at);
-    //     return Attribute::make(
-    //         get: fn () => $d->isToday() ? $d->isoFormat('H:mm') : ucwords($d->isoFormat('dddd, MMMM D, YYYY h:mm A'))//->format('D, M j, Y g:i A')//->toDayDateTimeString()
-    //     );
-    // }
 }

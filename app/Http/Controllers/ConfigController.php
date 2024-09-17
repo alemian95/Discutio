@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Extensions\Cache\CacheHelper;
+use App\Helpers\CacheHelper;
 use App\Extensions\Inertia\InertiaWithThemes;
 use App\Http\Requests\Config\StoreConfigRequest;
 use App\Http\Requests\Config\UpdateConfigRequest;
