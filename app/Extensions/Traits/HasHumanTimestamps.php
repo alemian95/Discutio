@@ -31,7 +31,7 @@ trait HasHumanTimestamps
             return $d->isoFormat(Config::getValue('time_format'));
         }
 
-        if ((bool) Config::getValue('show_day_and_time_only_if_date_is_this_wheek') && $d->isCurrentWeek()) {
+        if ((bool) Config::getValue('show_day_and_time_only_if_date_is_this_week') && $d->isCurrentWeek()) {
             return $d->isoFormat('dddd, '.Config::getValue('time_format'));
         }
 

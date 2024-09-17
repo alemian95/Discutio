@@ -30,6 +30,6 @@ class Config extends Model
             self::$cache = Cache::get('config_cache')->toArray();
         }
 
-        return self::$cache[$key]['value'] ?? throw new Exception('Invalid config value requested');
+        return self::$cache[$key]['value'] ?? throw new Exception("Invalid config value requested: $key");
     }
 }
