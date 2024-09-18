@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\CacheHelper;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -13,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+
+        $this->app->singleton('cache_service', function () {
+            return new CacheHelper();
+        });
     }
 
     /**

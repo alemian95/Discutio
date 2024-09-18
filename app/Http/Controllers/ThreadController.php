@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Extensions\Inertia\InertiaWithThemes;
+use App\Facades\CacheService;
 use App\Http\Requests\Thread\StoreThreadRequest;
 use App\Http\Requests\Thread\UpdateThreadRequest;
 use App\Models\Answer;
@@ -61,8 +62,9 @@ class ThreadController extends Controller
     public function store(StoreThreadRequest $request)
     {
         $thread = Thread::createFromRequest($request);
-
         $thread->save();
+
+        CacheService::clearDashboard();
 
         return Redirect::route('threads.show', ['thread' => $thread]);
     }
@@ -113,6 +115,8 @@ class ThreadController extends Controller
     {
         $thread->fill($request->validated());
         $thread->save();
+
+        CacheService::clearDashboard();
 
         return Redirect::route('threads.show', ['thread' => $thread]);
     }
