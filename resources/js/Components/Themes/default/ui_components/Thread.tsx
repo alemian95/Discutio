@@ -7,7 +7,7 @@ export default function Thread({ thread }: { thread: ThreadType }) {
         <>
             <div className="flex flex-col shadow-md rounded-md">
                 <div
-                    className="bg-indigo-100 px-2 font-semibold border-b-2 border-indigo-400 text-indigo-600 rounded-t-md flex flex-col lg:flex-row lg:justify-between lg:items-center"
+                    className="bg-blue-900/20 px-2 font-semibold border-b-2 border-blue-900 text-blue-900 rounded-t-md flex flex-col lg:flex-row lg:justify-between lg:items-center"
                 >
                     <div className="p-4 lg:p-2 text-xl lg:text-base">
                         <Link href={route("threads.show", thread.id)}>
@@ -15,9 +15,9 @@ export default function Thread({ thread }: { thread: ThreadType }) {
                         </Link>
                     </div>
                     <div className="flex flex-col lg:flex-row text-md lg:text-sm">
-                        <div className="border-indigo-400 p-2 lg:min-w-32 text-end">Answers: {thread.answers_count}</div>
-                        <div className="border-indigo-400 p-2 lg:min-w-40 text-end">Author: {thread.author?.name}</div>
-                        <div className="border-indigo-400 p-2 lg:min-w-52 text-end">{ thread.human_created_at }</div>
+                        <div className="p-2 lg:min-w-32 text-end">Answers: {thread.answers_count}</div>
+                        <div className="p-2 lg:min-w-40 text-end">Author: {thread.author?.name}</div>
+                        <div className="p-2 lg:min-w-52 text-end">{ thread.human_created_at }</div>
                     </div>
                 </div>
                 <div className="bg-slate-50 py-6 lg:py-2 px-4 rounded-b-md text-sm text-slate-600">

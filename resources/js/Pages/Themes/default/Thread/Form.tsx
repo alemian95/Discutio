@@ -34,7 +34,7 @@ export default function Form( { category, categories, thread, breadcrumbs } : { 
                     <Link
                         key={0}
                         href={route('dashboard')}
-                        className='font-semibold text-indigo-600'
+                        className='font-semibold text-blue-900'
                     >
                         <span>Dashboard</span>
                     </Link>
@@ -46,7 +46,7 @@ export default function Form( { category, categories, thread, breadcrumbs } : { 
                                     <span>&raquo;</span>
                                     <Link
                                         href={route('dashboard.category', category.code)}
-                                        className='font-semibold text-indigo-600'
+                                        className='font-semibold text-blue-900'
                                     >
                                         <span>{category.name}</span>
                                     </Link>
@@ -62,7 +62,7 @@ export default function Form( { category, categories, thread, breadcrumbs } : { 
                             <Link
                                 key={breadcrumbs.length}
                                 href={route('threads.show', thread.id)}
-                                className='font-semibold text-indigo-600'
+                                className='font-semibold text-blue-900'
                             >
                                 <span>{thread?.title}</span>
                             </Link>
@@ -105,7 +105,9 @@ export default function Form( { category, categories, thread, breadcrumbs } : { 
 
                                 <div className='flex flex-col'>
                                     <TextInput name='title' value={data.title} onChange={(e) => setData('title', e.currentTarget.value)} />
-                                    <textarea name='content' value={data.content} onChange={(e) => setData('content', e.currentTarget.value)} className='rounded-md border border-slate-400'></textarea>
+                                    <textarea name='content' value={data.content} onChange={(e) => setData('content', e.currentTarget.value)}
+                                        className='border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-900 dark:focus:border-blue-900 focus:ring-blue-900 dark:focus:ring-blue-900 rounded-md shadow-sm'
+                                    ></textarea>
                                 </div>
 
                                 <div>

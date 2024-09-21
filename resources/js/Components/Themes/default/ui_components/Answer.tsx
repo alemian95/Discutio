@@ -5,7 +5,7 @@ export default function Answer({ answer } : { answer: AnswerType}) {
     return (
         <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div className='flex min-h-[200px]'>
-                <div className="bg-indigo-300 text-indigo-800 flex justify-center items-center p-4 rounded-l-lg min-w-[160px]">
+                <div className="bg-blue-300 text-blue-900 flex justify-center items-center p-4 rounded-l-lg min-w-[160px]">
                     <b>{answer.author?.name}</b>
                 </div>
                 <div className='flex flex-col justify-between rounded-r-lg w-full'>
@@ -16,7 +16,7 @@ export default function Answer({ answer } : { answer: AnswerType}) {
                             answer.canUpdateAnswer
                             &&
                             <div className='p-2 px-4 border-l-2 border-slate-400'>
-                                <Link className='text-indigo-600' href={route('threads.edit', answer.id)}><b>Edit</b></Link>
+                                <Link className='text-blue-900' href={route('threads.edit', answer.id)}><b>Edit</b></Link>
                             </div>
                         }
                     </div>

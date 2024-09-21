@@ -20,7 +20,7 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                         <Link
                             key={0}
                             href={route('dashboard')}
-                            className='font-semibold text-indigo-600'
+                            className='font-semibold text-blue-900'
                         >
                             <span>Dashboard</span>
                         </Link>
@@ -32,7 +32,7 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
                                         <span>&raquo;</span>
                                         <Link
                                             href={route('dashboard.category', category.code)}
-                                            className='font-semibold text-indigo-600'
+                                            className='font-semibold text-blue-900'
                                         >
                                             <span>{category.name}</span>
                                         </Link>

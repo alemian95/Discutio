@@ -29,7 +29,7 @@ export default function Show(
                     <Link
                         key={0}
                         href={route('dashboard')}
-                        className='font-semibold text-indigo-600'
+                        className='font-semibold text-blue-900'
                     >
                         <span>Dashboard</span>
                     </Link>
@@ -41,7 +41,7 @@ export default function Show(
                                     <span>&raquo;</span>
                                     <Link
                                         href={route('dashboard.category', category.code)}
-                                        className='font-semibold text-indigo-600'
+                                        className='font-semibold text-blue-900'
                                     >
                                         <span>{category.name}</span>
                                     </Link>
@@ -53,7 +53,7 @@ export default function Show(
                     <Link
                         key={breadcrumbs.length}
                         href={route('threads.show', thread.id)}
-                        className='font-semibold text-indigo-600'
+                        className='font-semibold text-blue-900'
                     >
                         <span>{truncate(thread.title, 30)}</span>
                     </Link>
@@ -71,7 +71,7 @@ export default function Show(
 
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className='flex min-h-[200px]'>
-                        <div className="bg-indigo-600 text-indigo-100 flex justify-center items-center p-4 rounded-l-lg min-w-[160px]">
+                        <div className="bg-blue-900 text-blue-100 flex justify-center items-center p-4 rounded-l-lg min-w-[160px]">
                                 <b>{thread.author?.name}</b>
                             </div>
                             <div className='flex flex-col justify-between rounded-r-lg w-full'>
@@ -80,13 +80,13 @@ export default function Show(
                                     {/* <hr /> */}
                                     <div className='pb-6 pt-2 px-6 break-normal whitespace-pre'>{thread.content}</div>
                                 </div>
-                                <div className='bg-slate-200 text-sm text-indigo-800 flex justify-end'>
+                                <div className='bg-slate-200 text-sm text-blue-900 flex justify-end'>
                                     <div className='p-2'>{thread.human_created_at}</div>
                                     {
                                         canUpdateThread
                                         &&
                                         <div className='p-2 px-4 border-l-2 border-slate-400'>
-                                            <Link className='text-indigo-600' href={route('threads.edit', thread.id)}><b>Edit</b></Link>
+                                            <Link className='text-blue-900' href={route('threads.edit', thread.id)}><b>Edit</b></Link>
                                         </div>
                                     }
                                 </div>

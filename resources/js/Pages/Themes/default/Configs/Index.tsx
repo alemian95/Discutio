@@ -37,7 +37,7 @@ export default function Index({ configs } : { configs : Config[] }) {
                         <Link
                             key={0}
                             href={route('dashboard')}
-                            className='font-semibold text-indigo-600'
+                            className='font-semibold text-blue-900'
                         >
                             <span>Dashboard</span>
                         </Link>
@@ -45,7 +45,7 @@ export default function Index({ configs } : { configs : Config[] }) {
                         <Link
                             key={0}
                             href={route('configs.index')}
-                            className='font-semibold text-indigo-600'
+                            className='font-semibold text-blue-900'
                         >
                             <span>Configurations</span>
                         </Link>

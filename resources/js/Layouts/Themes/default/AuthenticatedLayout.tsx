@@ -192,13 +192,13 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                 user && user.email_verified_at == null
                 &&
                 <div className='max-w-7xl mx-auto sm:px-6 lg:px-8 mt-6'>
-                    <div className='sm:rounded-xl p-6 bg-indigo-600 text-white'>
+                    <div className='sm:rounded-xl p-6 bg-blue-900 text-white'>
                         {
                             ! verificationSent
                             ?
                             <>
                                 <p>Your account has not been verified yet. Please check your emails and follow the istructions.</p>
-                                <p>If you didn't received the email, <span className='cursor-pointer underline text-indigo-200' onClick={resendVerification}>click here</span> and we will send you another one.</p>
+                                <p>If you didn't received the email, <span className='cursor-pointer underline text-blue-200' onClick={resendVerification}>click here</span> and we will send you another one.</p>
                             </>
                             :
                             <>

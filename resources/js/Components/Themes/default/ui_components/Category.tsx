@@ -5,7 +5,7 @@ export default function Category({ category }: { category: CategoryType }) {
     return (
         <>
             <div className="flex flex-col shadow-md rounded-md">
-                <div className="bg-indigo-50 font-semibold text-indigo-600 p-2 border-b-2 border-indigo-400 rounded-t-md">
+                <div className="bg-blue-900/20 font-semibold text-blue-900 p-2 border-b-2 border-blue-900 rounded-t-md">
                     <Link href={route("dashboard.category", category.code)}>
                         {category.name}
                     </Link>
@@ -19,7 +19,7 @@ export default function Category({ category }: { category: CategoryType }) {
                         <span>
                             {category.last_thread ? (
                                 <Link
-                                    className="text-indigo-700"
+                                    className="text-blue-900"
                                     href={route(
                                         "threads.show",
                                         category.last_thread.id
