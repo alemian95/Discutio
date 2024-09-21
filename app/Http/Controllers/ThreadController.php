@@ -65,6 +65,7 @@ class ThreadController extends Controller
         $thread->save();
 
         CacheService::clearDashboard();
+        CacheService::clearCategory($thread->category);
 
         return Redirect::route('threads.show', ['thread' => $thread]);
     }
@@ -117,6 +118,7 @@ class ThreadController extends Controller
         $thread->save();
 
         CacheService::clearDashboard();
+        CacheService::clearCategory($thread->category);
 
         return Redirect::route('threads.show', ['thread' => $thread]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\CacheService;
 use App\Http\Requests\Answer\StoreAnswerRequest;
 use App\Http\Requests\Answer\UpdateAnswerRequest;
 use App\Models\Answer;
@@ -34,6 +35,8 @@ class AnswerController extends Controller
         $answer->thread_id = $request->thread;
         $answer->author_id = $request->user()->id;
         $answer->save();
+
+        CacheService::clearCategory($answer->thread->category);
     }
 
     /**

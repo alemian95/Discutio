@@ -15,15 +15,19 @@ class CacheHelper
     public static function clearDashboard()
     {
         Cache::forget('dashboard_data');
-        $categories = Category::all();
-        foreach ($categories as $category) {
-            Cache::forget('category_data_'.$category->code);
-        }
+    }
+
+    public static function clearCategory(Category $category)
+    {
+        Cache::forget('category_data_'.$category->code);
     }
 
     public static function clearAll()
     {
         self::clearConfig();
         self::clearDashboard();
+        foreach (Category::all() as $category) {
+            Cache::forget('category_data_'.$category->code);
+        }
     }
 }
