@@ -1,7 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
+import { FormEventHandler } from 'react';
 
 type Config = {
     id: number
@@ -28,6 +29,23 @@ export default function Index({ configs } : { configs : Config[] }) {
 
     const { auth } = usePage<PageProps>().props
 
+    const initialValues : any = {}
+
+    configs.forEach(config => {
+        if (config.type === 'boolean') {
+            initialValues[config.key] = config.value === '0' ? false : true
+        }
+        else {
+            initialValues[config.key] = config.value
+        }
+    })
+
+    const { data, setData, post, processing } = useForm(initialValues)
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -52,54 +70,67 @@ export default function Index({ configs } : { configs : Config[] }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-                        {
-                            configs.map((config, index) => {
 
-                                if (config.options.length > 0) {
-                                    return (
-                                        <div key={index}>
-                                            <label>{config.keyLabel}</label>
-                                            <select defaultValue={config.value} name={config.key}>
+                        <form onSubmit={submit}>
+                            <table className='w-full'>
+                                <thead className='w-full'>
+                                    <tr className='w-full'>
+                                        <th className='w-1/2'>
+                                            Configuration
+                                        </th>
+                                        <th className='w-1/2'>
+                                            Value
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody className='w-full'>
+                                {
+                                    configs.map((config, index) => {
+
+                                        return (
+                                            <tr key={index} className='w-full'>
+                                                <td className='w-1/2'>{config.keyLabel}</td>
+                                                <td className='w-1/2'>
                                                 {
-                                                    config.options.map((option) => {
-                                                        const key = option.value || option;
-                                                        return (
-                                                            <option value={option.value}>{option.valueLabel}</option>
-                                                        )
-                                                    })
+
+                                                    config.options.length > 0
+                                                    ?
+                                                    (
+                                                        <select defaultValue={data[config.key]} name={config.key} onChange={(e) => setData(config.key, e.currentTarget.value)}>
+                                                            {
+                                                                config.options.map((option) => {
+                                                                    return (
+                                                                        <option key={option.id} value={option.value}>{option.valueLabel}</option>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </select>
+                                                    )
+                                                    :
+                                                    config.type === 'integer'
+                                                    ?
+                                                    <input type="number" name={config.key} value={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.value)} />
+                                                    :
+                                                    config.type === 'boolean'
+                                                    ?
+                                                    <input type="checkbox" name={config.key} checked={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.checked)} />
+                                                    :
+                                                    <input name={config.key} value={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.value)} />
                                                 }
-                                            </select>
-                                        </div>
-                                    )
+                                                </td>
+                                            </tr>
+                                        )
+
+                                    })
                                 }
+                                </tbody>
+                            </table>
 
-                                if (config.type === 'integer') {
-                                    return (
-                                        <div key={index}>
-                                            <label>{config.keyLabel}</label>
-                                            <input type="number" name={config.key} value={config.value} />
-                                        </div>
-                                    )
-                                }
+                            <div className="flex justify-end">
+                                <PrimaryButton>Save</PrimaryButton>
+                            </div>
+                        </form>
 
-                                if (config.type === 'boolean') {
-                                    return (
-                                        <div key={index}>
-                                            <label>{config.keyLabel}</label>
-                                            <input type="checkbox" name={config.key} checked={config.value === "1" ? true : false } />
-                                        </div>
-                                    )
-                                }
-
-                                return (
-                                    <div key={index}>
-                                        <label>{config.keyLabel}</label>
-                                        <input name={config.key} value={config.value}/>
-                                    </div>
-                                )
-
-                            })
-                        }
                     </div>
                 </div>
             </div>
