@@ -27,11 +27,11 @@ class StoreAnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'thread' => [
-                'required',
-                'integer',
-                Rule::exists('threads', 'id'),
-            ],
+            // 'thread' => [
+            //     'required',
+            //     'integer',
+            //     Rule::exists('threads', 'id'),
+            // ],
             'content' => 'required|string',
         ];
     }

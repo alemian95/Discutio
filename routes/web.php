@@ -34,7 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store', 'update', 'show', 'destroy']);
 Route::resource('threads', ThreadController::class)->only(['create', 'store', 'edit', 'update', 'show']);
-Route::resource('answers', AnswerController::class)->only(['store']);
+Route::resource('threads/{thread}/answers', AnswerController::class)->only(['store']);
 
 Route::resource('configs', ConfigController::class)->only(['index']);
 Route::post('configs/update', [ConfigController::class, 'updateAll'])->name('configs.updateAll');

@@ -6,6 +6,7 @@ use App\Facades\CacheService;
 use App\Http\Requests\Answer\StoreAnswerRequest;
 use App\Http\Requests\Answer\UpdateAnswerRequest;
 use App\Models\Answer;
+use App\Models\Thread;
 
 class AnswerController extends Controller
 {
@@ -28,15 +29,15 @@ class AnswerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAnswerRequest $request)
+    public function store(StoreAnswerRequest $request, Thread $thread)
     {
         $answer = new Answer;
         $answer->content = $request->content;
-        $answer->thread_id = $request->thread;
+        $answer->thread_id = $thread->id;
         $answer->author_id = $request->user()->id;
         $answer->save();
 
-        CacheService::clearCategory($answer->thread->category);
+        CacheService::clearCategory($thread->category);
     }
 
     /**
@@ -58,9 +59,12 @@ class AnswerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAnswerRequest $request, Answer $answer)
+    public function update(UpdateAnswerRequest $request, Thread $thread, Answer $answer)
     {
-        //
+        $answer->content = $request->content;
+        $answer->save();
+
+        CacheService::clearCategory($thread->category);
     }
 
     /**

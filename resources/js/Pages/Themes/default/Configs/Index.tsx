@@ -4,6 +4,7 @@ import { PageProps } from '@/types';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import { FormEventHandler } from 'react';
 import Checkbox from '@/Components/Themes/default/Checkbox';
+import TextInput from '@/Components/Themes/default/TextInput';
 
 type Config = {
     id: number
@@ -97,7 +98,7 @@ export default function Index({ configs } : { configs : Config[] }) {
                                                     config.options.length > 0
                                                     ?
                                                     (
-                                                        <select defaultValue={data[config.key]} name={config.key} onChange={(e) => setData(config.key, e.currentTarget.value)}>
+                                                        <select className='border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-900 dark:focus:border-blue-900 focus:ring-blue-900 dark:focus:ring-blue-900 rounded-md shadow-sm' defaultValue={data[config.key]} name={config.key} onChange={(e) => setData(config.key, e.currentTarget.value)}>
                                                             {
                                                                 config.options.map((option) => {
                                                                     return (
@@ -110,13 +111,13 @@ export default function Index({ configs } : { configs : Config[] }) {
                                                     :
                                                     config.type === 'integer'
                                                     ?
-                                                    <input type="number" name={config.key} value={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.value)} />
+                                                    <TextInput type="number" name={config.key} value={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.value)} />
                                                     :
                                                     config.type === 'boolean'
                                                     ?
                                                     <Checkbox type="checkbox" name={config.key} checked={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.checked)} />
                                                     :
-                                                    <input name={config.key} value={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.value)} />
+                                                    <TextInput name={config.key} value={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.value)} />
                                                 }
                                                 </td>
                                             </tr>

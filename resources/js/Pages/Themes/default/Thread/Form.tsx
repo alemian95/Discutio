@@ -4,6 +4,7 @@ import { Category, PageProps, Thread } from '@/types';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import TextInput from '@/Components/Themes/default/TextInput';
 import React, { FormEventHandler } from 'react';
+import InputError from '@/Components/Themes/default/InputError';
 
 export default function Form( { category, categories, thread, breadcrumbs } : { category?: string, categories: Category[], thread?: Thread, breadcrumbs: Category[] } ) {
 
@@ -82,33 +83,26 @@ export default function Form( { category, categories, thread, breadcrumbs } : { 
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6">
 
-                            <div>
-                                <pre>
-                                    <pre>{JSON.stringify({ data }, null,'  ')}</pre>
-                                    <pre className='text-red-600'>{JSON.stringify({ errors }, null,'  ')}</pre>
-                                </pre>
-                            </div>
+                            <form onSubmit={submit} className='flex flex-col space-y-4'>
+                                { errors.category && <InputError message={errors.category} className="mt-2" /> }
+                                <select className='border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-900 dark:focus:border-blue-900 focus:ring-blue-900 dark:focus:ring-blue-900 rounded-md shadow-sm' value={data.category} onChange={(e) => setData('category', e.currentTarget.value)} disabled={thread ? true : false}>
+                                    <option value="">Select Category</option>
+                                    {
+                                        categories.map(category => {
+                                            return (
+                                                <option key={category.id} value={category.code}>{category.name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
 
-                            <form onSubmit={submit}>
-                                <div>
-                                    <select value={data.category} onChange={(e) => setData('category', e.currentTarget.value)} disabled={thread ? true : false}>
-                                        <option value="">Select Category</option>
-                                        {
-                                            categories.map(category => {
-                                                return (
-                                                    <option key={category.id} value={category.code}>{category.name}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                </div>
+                                { errors.title && <InputError message={errors.title} className="mt-2" /> }
+                                <TextInput name='title' value={data.title} onChange={(e) => setData('title', e.currentTarget.value)} />
 
-                                <div className='flex flex-col'>
-                                    <TextInput name='title' value={data.title} onChange={(e) => setData('title', e.currentTarget.value)} />
-                                    <textarea name='content' value={data.content} onChange={(e) => setData('content', e.currentTarget.value)}
-                                        className='border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-900 dark:focus:border-blue-900 focus:ring-blue-900 dark:focus:ring-blue-900 rounded-md shadow-sm'
-                                    ></textarea>
-                                </div>
+                                { errors.content && <InputError message={errors.content} className="mt-2" /> }
+                                <textarea name='content' value={data.content} onChange={(e) => setData('content', e.currentTarget.value)}
+                                    className='border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-900 dark:focus:border-blue-900 focus:ring-blue-900 dark:focus:ring-blue-900 rounded-md shadow-sm'
+                                ></textarea>
 
                                 <div>
                                     <PrimaryButton disabled={processing}>{ thread ? "Save" : "Create" }</PrimaryButton>
