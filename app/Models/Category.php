@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class Category extends Model
 {
@@ -78,15 +79,17 @@ class Category extends Model
 
     public function pathToParent(): array
     {
-        $pointer = $this;
-        $path = [];
+        return Cache::rememberForever('category_path_'.$this->code, function () {
+            $pointer = $this;
+            $path = [];
 
-        while ($pointer != null) {
-            $path[] = $pointer;
-            $pointer = $pointer->parent;
-        }
+            while ($pointer != null) {
+                $path[] = $pointer;
+                $pointer = $pointer->parent;
+            }
 
-        return $path;
+            return $path;
+        });
     }
 
     public function depth(): Attribute
@@ -129,15 +132,16 @@ class Category extends Model
 
     public static function getPreOrderList()
     {
-        $categories = Category::with('children')->get()->keyBy('id');
-        $ordered = [];
-        foreach ($categories as $category) {
-            if ($category->parent_id === null) {
-                self::preorderTraversal($category, $ordered);
+        return Cache::rememberForever('categories_preorder', function () {
+            $categories = Category::whereNull('parent_id')->with('children')->get()->keyBy('id');
+            $ordered = [];
+            foreach ($categories as $category) {
+                if ($category->parent_id === null) {
+                    self::preorderTraversal($category, $ordered);
+                }
             }
-        }
-
-        return $ordered;
+            return $ordered;
+        });
     }
 
     private static function preorderTraversal($category, &$ordered)
