@@ -3,6 +3,7 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import { FormEventHandler } from 'react';
+import Checkbox from '@/Components/Themes/default/Checkbox';
 
 type Config = {
     id: number
@@ -113,7 +114,7 @@ export default function Index({ configs } : { configs : Config[] }) {
                                                     :
                                                     config.type === 'boolean'
                                                     ?
-                                                    <input type="checkbox" name={config.key} checked={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.checked)} />
+                                                    <Checkbox type="checkbox" name={config.key} checked={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.checked)} />
                                                     :
                                                     <input name={config.key} value={data[config.key]} onChange={(e) => setData(config.key, e.currentTarget.value)} />
                                                 }
