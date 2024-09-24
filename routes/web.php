@@ -37,7 +37,7 @@ Route::resource('threads', ThreadController::class)->only(['create', 'store', 'e
 Route::resource('threads/{thread}/answers', AnswerController::class)->only(['store', 'update']);
 
 Route::resource('configs', ConfigController::class)->only(['index']);
-Route::post('configs/update', [ConfigController::class, 'updateAll'])->name('configs.updateAll');
+Route::post('configs/update', [ConfigController::class, 'updateAll'])->name('configs.update.all');
 
 Route::name('api.')->prefix('api')->group(function () {
     Route::resource('api/threads', ApiThreadController::class);

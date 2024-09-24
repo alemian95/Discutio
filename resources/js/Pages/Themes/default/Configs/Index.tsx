@@ -5,6 +5,7 @@ import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
 import { FormEventHandler } from 'react';
 import Checkbox from '@/Components/Themes/default/Checkbox';
 import TextInput from '@/Components/Themes/default/TextInput';
+import { Transition } from '@headlessui/react';
 
 type Config = {
     id: number
@@ -42,10 +43,12 @@ export default function Index({ configs } : { configs : Config[] }) {
         }
     })
 
-    const { data, setData, post, processing } = useForm(initialValues)
+    const { data, setData, post, processing, recentlySuccessful } = useForm(initialValues)
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+
+        post(route('configs.update.all'), data)
     };
 
     return (
@@ -131,6 +134,16 @@ export default function Index({ configs } : { configs : Config[] }) {
                             <div className="flex justify-end">
                                 <PrimaryButton>Save</PrimaryButton>
                             </div>
+
+                            <Transition
+                                show={recentlySuccessful}
+                                enter="transition ease-in-out duration-5000"
+                                enterFrom="opacity-0"
+                                leave="transition ease-in-out duration-1000"
+                                leaveTo="opacity-0"
+                            >
+                                <div className="w-full rounded-lg bg-green-700 text-white p-4 my-4 font-semibold">Configuration saved successfully</div>
+                            </Transition>
                         </form>
 
                     </div>

@@ -67,6 +67,16 @@ class ConfigController extends Controller
 
         Gate::authorize('viewAny', Config::class);
 
+        // dd($request);
+
+        $keys = Config::pluck('key')->toArray();
+
+        foreach ($keys as $key) {
+            if ($request->has($key)) {
+                Config::where('key', $key)->update(['value' => $request->get($key)]);
+            }
+        }
+
         CacheHelper::clearConfig();
     }
 
