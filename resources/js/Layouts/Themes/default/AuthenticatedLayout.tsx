@@ -39,6 +39,11 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                     Dashboard
                                 </NavLink>
                                 {
+                                    auth.canViewAdmin
+                                    &&
+                                    <NavLink href={'#'} active={route().current('configs.index')}>Administration</NavLink>
+                                }
+                                {
                                     auth.canViewConfigs
                                     &&
                                     <NavLink href={route('configs.index')} active={route().current('configs.index')}>Configurations</NavLink>
@@ -131,6 +136,12 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                         <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
                             Dashboard
                         </ResponsiveNavLink>
+                        {
+                            auth.canViewAdmin &&
+                            <ResponsiveNavLink href={'#'} active={route().current('configs')}>
+                                Administration
+                            </ResponsiveNavLink>
+                        }
                         {
                             auth.canViewConfigs &&
                             <ResponsiveNavLink href={route('configs.index')} active={route().current('configs')}>
