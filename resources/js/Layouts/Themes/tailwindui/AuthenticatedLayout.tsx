@@ -1,8 +1,8 @@
 import { useState, PropsWithChildren, ReactNode } from 'react';
-import ApplicationLogo from '@/Components/Themes/default/ApplicationLogo';
-import Dropdown from '@/Components/Themes/default/Dropdown';
-import NavLink from '@/Components/Themes/default/NavLink';
-import ResponsiveNavLink from '@/Components/Themes/default/ResponsiveNavLink';
+import ApplicationLogo from '@/Components/Themes/tailwindui/ApplicationLogo';
+import Dropdown from '@/Components/Themes/tailwindui/Dropdown';
+import NavLink from '@/Components/Themes/tailwindui/NavLink';
+import ResponsiveNavLink from '@/Components/Themes/tailwindui/ResponsiveNavLink';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { PageProps, User } from '@/types';
 

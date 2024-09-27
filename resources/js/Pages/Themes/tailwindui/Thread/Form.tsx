@@ -1,10 +1,10 @@
-import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/Themes/tailwindui/AuthenticatedLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
-import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
-import TextInput from '@/Components/Themes/default/TextInput';
+import PrimaryButton from '@/Components/Themes/tailwindui/PrimaryButton';
+import TextInput from '@/Components/Themes/tailwindui/TextInput';
 import React, { FormEventHandler } from 'react';
-import InputError from '@/Components/Themes/default/InputError';
+import InputError from '@/Components/Themes/tailwindui/InputError';
 
 export default function Form( { category, categories, thread, breadcrumbs } : { category?: string, categories: Category[], thread?: Thread, breadcrumbs: Category[] } ) {
 

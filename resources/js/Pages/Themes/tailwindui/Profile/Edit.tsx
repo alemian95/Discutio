@@ -1,4 +1,4 @@
-import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/Themes/tailwindui/AuthenticatedLayout';
 import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';

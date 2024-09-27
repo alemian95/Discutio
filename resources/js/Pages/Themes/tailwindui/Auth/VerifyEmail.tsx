@@ -1,5 +1,5 @@
-import GuestLayout from '@/Layouts/Themes/default/GuestLayout';
-import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
+import GuestLayout from '@/Layouts/Themes/tailwindui/GuestLayout';
+import PrimaryButton from '@/Components/Themes/tailwindui/PrimaryButton';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 

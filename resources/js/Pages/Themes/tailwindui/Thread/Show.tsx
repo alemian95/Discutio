@@ -1,11 +1,11 @@
-import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/Themes/tailwindui/AuthenticatedLayout';
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Answer, Category, PageProps, Thread } from '@/types';
 import React from 'react';
-import AnswerForm from '@/Components/Themes/default/ui_components/AnswerForm';
-import AnswerBox from '@/Components/Themes/default/ui_components/Answer';
+import AnswerForm from '@/Components/Themes/tailwindui/ui_components/AnswerForm';
+import AnswerBox from '@/Components/Themes/tailwindui/ui_components/Answer';
 import { truncate } from '@/lib/utils';
-import SecondaryButton from '@/Components/Themes/default/SecondaryButton';
+import SecondaryButton from '@/Components/Themes/tailwindui/SecondaryButton';
 
 export default function Show(
     { thread, breadcrumbs, canAnswerThread, canUpdateThread, answers }

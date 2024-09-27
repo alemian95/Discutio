@@ -1,10 +1,10 @@
-import AuthenticatedLayout from '@/Layouts/Themes/default/AuthenticatedLayout';
+import AuthenticatedLayout from '@/Layouts/Themes/tailwindui/AuthenticatedLayout';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
-import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
+import PrimaryButton from '@/Components/Themes/tailwindui/PrimaryButton';
 import { FormEventHandler } from 'react';
-import Checkbox from '@/Components/Themes/default/Checkbox';
-import TextInput from '@/Components/Themes/default/TextInput';
+import Checkbox from '@/Components/Themes/tailwindui/Checkbox';
+import TextInput from '@/Components/Themes/tailwindui/TextInput';
 import { Transition } from '@headlessui/react';
 
 type Config = {

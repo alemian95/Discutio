@@ -1,7 +1,7 @@
-import InputError from '@/Components/Themes/default/InputError';
-import InputLabel from '@/Components/Themes/default/InputLabel';
-import PrimaryButton from '@/Components/Themes/default/PrimaryButton';
-import TextInput from '@/Components/Themes/default/TextInput';
+import InputError from '@/Components/Themes/tailwindui/InputError';
+import InputLabel from '@/Components/Themes/tailwindui/InputLabel';
+import PrimaryButton from '@/Components/Themes/tailwindui/PrimaryButton';
+import TextInput from '@/Components/Themes/tailwindui/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import { FormEventHandler } from 'react';
