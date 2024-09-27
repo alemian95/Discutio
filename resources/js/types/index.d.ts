@@ -51,6 +51,7 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     auth: {
         user: User;
         canViewConfigs: boolean;
+        canViewAdmin: boolean;
     };
     ziggy: Config & { location: string };
 };
