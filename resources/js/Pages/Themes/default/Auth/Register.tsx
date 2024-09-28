@@ -6,6 +6,8 @@ import PrimaryButton from '@/Components/Themes/tailwindui/PrimaryButton';
 import TextInput from '@/Components/Themes/tailwindui/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AuthLayout from '@/Layouts/Themes/default/AuthLayout';
+import { Label } from '@/Components/Themes/default/ui/label';
+import { Input } from '@/Components/Themes/default/ui/input';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -29,26 +31,25 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <Label htmlFor="name">Name</Label>
 
-                    <TextInput
+                    <Input
                         id="name"
                         name="name"
                         value={data.name}
                         className="mt-1 block w-full"
                         autoComplete="name"
-                        isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.name} className="mt-2" />
+                    {errors.name && <Label className="mt-2 text-destructive">{errors.name}</Label>}
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                    <Label htmlFor="email">Email</Label>
 
-                    <TextInput
+                    <Input
                         id="email"
                         type="email"
                         name="email"
@@ -59,13 +60,13 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    {errors.email && <Label className="mt-2 text-destructive">{errors.email}</Label>}
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <Label htmlFor="password">Password</Label>
 
-                    <TextInput
+                    <Input
                         id="password"
                         type="password"
                         name="password"
@@ -76,13 +77,13 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    {errors.password && <Label className="mt-2 text-destructive">{errors.password}</Label>}
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+                    <Label htmlFor="password_confirmation">Confirm Password</Label>
 
-                    <TextInput
+                    <Input
                         id="password_confirmation"
                         type="password"
                         name="password_confirmation"
@@ -93,7 +94,7 @@ export default function Register() {
                         required
                     />
 
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                    {errors.password_confirmation && <Label className="mt-2 text-destructive">{errors.password_confirmation}</Label>}
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
