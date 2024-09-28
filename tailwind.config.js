@@ -49,6 +49,14 @@ export default {
     				DEFAULT: 'var(--accent)',
     				foreground: 'var(--accent-foreground)'
     			},
+                positive: {
+    				DEFAULT: 'var(--positive)',
+    				foreground: 'var(--positive-foreground)'
+    			},
+                warning: {
+    				DEFAULT: 'var(--warning)',
+    				foreground: 'var(--warning-foreground)'
+    			},
     			destructive: {
     				DEFAULT: 'var(--destructive)',
     				foreground: 'var(--destructive-foreground)'
