@@ -55,3 +55,8 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     };
     ziggy: Config & { location: string };
 };
+
+export type Breadcrumb = {
+    label: string;
+    url?: string;
+}

@@ -1,5 +1,5 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Category, PageProps, Thread } from '@/types';
+import { Breadcrumb, Category, PageProps, Thread } from '@/types';
 import PrimaryButton from '@/Components/Themes/tailwindui/PrimaryButton';
 import CategoryBox from '@/Components/Themes/tailwindui/ui_components/Category';
 import ThreadBox from '@/Components/Themes/tailwindui/ui_components/Thread';
@@ -11,38 +11,23 @@ export default function Dashboard( { categories, threads, category, breadcrumbs,
 
     const { auth } = usePage<PageProps>().props
 
+    const completeBreadcrumbs : Breadcrumb[] = []
+
+    completeBreadcrumbs.push({
+        url: route('dashboard'),
+        label: "Dashboard"
+    })
+    breadcrumbs?.forEach((b) => {
+        completeBreadcrumbs.push({
+            url: route('dashboard.category', b.code),
+            label: b.name
+        })
+    })
+
     return (
         <AppLayout
             user={auth.user}
-            header={
-                <>
-                    <div className='flex flex-row gap-4'>
-                        <Link
-                            key={0}
-                            href={route('dashboard')}
-                            className='font-semibold text-blue-950'
-                        >
-                            <span>Dashboard</span>
-                        </Link>
-                        {
-                            breadcrumbs?.length &&
-                            breadcrumbs.map((category, index) => {
-                                return (
-                                    <React.Fragment key={category.id}>
-                                        <span>&raquo;</span>
-                                        <Link
-                                            href={route('dashboard.category', category.code)}
-                                            className='font-semibold text-blue-950'
-                                        >
-                                            <span>{category.name}</span>
-                                        </Link>
-                                    </React.Fragment>
-                                )
-                            })
-                        }
-                    </div>
-                </>
-            }
+            breadcrumbs={completeBreadcrumbs}
         >
             <Head title={category?.name || "Dashboard"} />
 
