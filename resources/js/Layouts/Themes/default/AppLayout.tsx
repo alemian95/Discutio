@@ -1,19 +1,12 @@
-import React, { useState, PropsWithChildren, ReactNode } from "react";
+import { useState, PropsWithChildren } from "react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Breadcrumb as BreadcrumbType, PageProps, User } from "@/types";
 import ApplicationLogo from "@/Components/Themes/tailwindui/ApplicationLogo";
 import { HomeIcon, PackageIcon, SidebarIcon, UserIcon } from "lucide-react";
 import { NavLink } from "@/Components/Themes/default/NavLink";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/Components/Themes/default/ui/breadcrumb";
-import { Avatar, AvatarFallback } from "@/Components/Themes/default/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/Themes/default/ui/dropdown-menu";
+import { UserMenu } from "./partials/UserMenu";
+import { NavigationMenu } from "./partials/NavigationMenu";
+import { Alert } from "@/Components/Themes/default/ui/alert";
 
 export default function AppLayout({
     children,
@@ -73,87 +66,38 @@ export default function AppLayout({
                 <div className="fixed left-0 right-0 bg-white px-4 h-12 md:h-auto md:static md:bg-transparent md:p-2 flex justify-between items-center">
                     <div>
                         <div className="hidden md:block">
-                            <Breadcrumb>
-                                <BreadcrumbList>
-                                    {breadcrumbs?.map((breadcrumb, index) => {
-                                        return (
-                                            <React.Fragment key={index}>
-                                                <BreadcrumbItem>
-                                                    {breadcrumb.url ? (
-                                                        <BreadcrumbLink
-                                                            href={breadcrumb.url}
-                                                        >
-                                                            {breadcrumb.label}
-                                                        </BreadcrumbLink>
-                                                    ) : (
-                                                        <BreadcrumbPage>
-                                                            {breadcrumb.label}
-                                                        </BreadcrumbPage>
-                                                    )}
-                                                </BreadcrumbItem>
-                                                {index ===
-                                                breadcrumbs.length - 1 ? null : (
-                                                    <BreadcrumbSeparator />
-                                                )}
-                                            </React.Fragment>
-                                        );
-                                    })}
-                                </BreadcrumbList>
-                            </Breadcrumb>
+                            <NavigationMenu breadcrumbs={breadcrumbs} />
                         </div>
                         <div className="md:hidden">
                             <SidebarIcon />
                         </div>
                     </div>
                     <div>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger>
-                                <Avatar>
-                                    {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
-                                    <AvatarFallback>
-                                        {
-                                            auth.user
-                                            ?
-                                            auth.user.email.charAt(0).toUpperCase()
-                                            :
-                                            <UserIcon />
-                                        }
-                                    </AvatarFallback>
-                                </Avatar>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="border-none">
-                                {
-                                    auth.user
-                                    ?
-                                    <>
-                                        <DropdownMenuLabel>
-                                            { auth.user.name }
-                                        </DropdownMenuLabel>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem>
-                                            <Link href={route('profile.edit')}>Profile</Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem className="text-destructive font-semibold">
-                                            <Link href={route('logout')} method="post" as="button">Logout</Link>
-                                        </DropdownMenuItem>
-                                    </>
-                                    :
-                                    <>
-                                        <DropdownMenuItem>
-                                            <Link href={route('login')}>Login</Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem>
-                                            <Link href={route('register')}>Register</Link>
-                                        </DropdownMenuItem>
-                                    </>
-                                }
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                        <UserMenu user={auth.user} />
                     </div>
                 </div>
 
                 <div className="pt-12 md:pt-0">
+
+                    {
+                        auth.user && auth.user.email_verified_at == null
+                        &&
+                        <Alert className="bg-primary text-primary-foreground">
+                            {
+                                ! verificationSent
+                                ?
+                                <>
+                                    <p>Your account has not been verified yet. Please check your emails and follow the istructions.</p>
+                                    <p>If you didn't received the email, <span className='cursor-pointer underline text-secondary' onClick={resendVerification}>click here</span> and we will send you another one.</p>
+                                </>
+                                :
+                                <>
+                                    <p>Another email has been sent to your inbox. Please check it and follow the instructions.</p>
+                                </>
+                            }
+                        </Alert>
+                    }
+
                     {children}
                 </div>
             </div>
