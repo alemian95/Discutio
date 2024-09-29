@@ -25,26 +25,26 @@ export function UserMenu({ user } : { user : User | null | undefined }) {
                         <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                            <Link href={route("profile.edit")}>Profile</Link>
+                            <Link className="w-full" href={route("profile.edit")}><span>Profile</span></Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="text-destructive font-semibold">
                             <Link
                                 href={route("logout")}
                                 method="post"
-                                as="button"
+                                className="w-full"
                             >
-                                Logout
+                                <span>Logout</span>
                             </Link>
                         </DropdownMenuItem>
                     </>
                 ) : (
                     <>
                         <DropdownMenuItem>
-                            <Link href={route("login")}>Login</Link>
+                            <Link className="w-full" href={route("login")}><span>Login</span></Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                            <Link href={route("register")}>Register</Link>
+                            <Link className="w-full" href={route("register")}><span>Register</span></Link>
                         </DropdownMenuItem>
                     </>
                 )}
