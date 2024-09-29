@@ -1,9 +1,9 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Answer, Breadcrumb, Category, PageProps, Thread } from '@/types';
-import AnswerForm from '@/Components/Themes/tailwindui/ui_components/AnswerForm';
-import AnswerBox from '@/Components/Themes/tailwindui/ui_components/Answer';
-import SecondaryButton from '@/Components/Themes/tailwindui/SecondaryButton';
 import AppLayout from '@/Layouts/Themes/default/AppLayout';
+import AnswerForm from '@/Components/Themes/default/AnswerForm';
+import { AnswerCard } from '@/Components/Themes/default/AnswerCard';
+import { Button } from '@/Components/Themes/default/ui/button';
 
 export default function Show(
     { thread, breadcrumbs, canAnswerThread, canUpdateThread, answers }
@@ -42,7 +42,7 @@ export default function Show(
             <Head title={thread.title} />
 
             <div className="mb-6">
-                <Link href={route('dashboard.category', thread.category!.code)}><SecondaryButton>&laquo; Back</SecondaryButton></Link>
+                <Link href={route('dashboard.category', thread.category!.code)}><Button>&laquo; Back</Button></Link>
             </div>
 
             <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -86,7 +86,7 @@ export default function Show(
                 {
                     answers.map((answer, index) => {
                         return (
-                            <AnswerBox key={index} answer={answer} />
+                            <AnswerCard key={index} answer={answer} />
                         )
                     })
                 }

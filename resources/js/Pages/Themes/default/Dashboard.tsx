@@ -1,10 +1,9 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { Breadcrumb, Category, PageProps, Thread } from '@/types';
-import CategoryBox from '@/Components/Themes/tailwindui/ui_components/Category';
-import ThreadBox from '@/Components/Themes/tailwindui/ui_components/Thread';
-import SecondaryButton from '@/Components/Themes/tailwindui/SecondaryButton';
 import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import { Button } from '@/Components/Themes/default/ui/button';
+import CategoryCard from '@/Components/Themes/default/CategoryCard';
+import ThreadCard from '@/Components/Themes/default/ThreadCard';
 
 export default function Dashboard(
     { categories, threads, category, breadcrumbs, canCreateThreads }
@@ -43,7 +42,7 @@ export default function Dashboard(
                         breadcrumbs
                         &&
                         (
-                            <Link href={breadcrumbs.length >= 2 ? route('dashboard.category', breadcrumbs[breadcrumbs.length - 2].code) : route('dashboard')}><SecondaryButton>&laquo; Back</SecondaryButton></Link>
+                            <Link href={breadcrumbs.length >= 2 ? route('dashboard.category', breadcrumbs[breadcrumbs.length - 2].code) : route('dashboard')}><Button variant={'secondary'}>&laquo; Back</Button></Link>
                         )
                     }
                 </div>
@@ -59,7 +58,7 @@ export default function Dashboard(
                         {
                             categories.map((category, index) => {
                                 return (
-                                    <CategoryBox category={category} key={index} />
+                                    <CategoryCard category={category} key={index} />
                                 )
                             })
                         }
@@ -75,7 +74,7 @@ export default function Dashboard(
                         {
                             threads.map((thread, index) => {
                                 return (
-                                    <ThreadBox thread={thread} key={index} />
+                                    <ThreadCard thread={thread} key={index} />
                                 )
                             })
                         }
