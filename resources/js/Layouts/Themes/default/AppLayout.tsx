@@ -2,11 +2,12 @@ import { useState, PropsWithChildren } from "react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Breadcrumb as BreadcrumbType, PageProps, User } from "@/types";
 import ApplicationLogo from "@/Components/Themes/tailwindui/ApplicationLogo";
-import { HomeIcon, PackageIcon, SidebarIcon, UserIcon } from "lucide-react";
+import { HomeIcon, PackageIcon, SettingsIcon, Shield, SidebarIcon, UserIcon } from "lucide-react";
 import { NavLink } from "@/Components/Themes/default/NavLink";
 import { UserMenu } from "./partials/UserMenu";
 import { NavigationMenu } from "./partials/NavigationMenu";
 import { Alert } from "@/Components/Themes/default/ui/alert";
+import { userInfo } from "os";
 
 export default function AppLayout({
     children,
@@ -58,7 +59,30 @@ export default function AppLayout({
                             }
                         />
                     </div>
-                    <div>here admin menu</div>
+                    <div>
+                        <div className="flex flex-col gap-4 items-center">
+                            {
+                                auth.canViewAdmin &&
+                                <NavLink
+                                    label="Administration"
+                                    url={'#'}
+                                    icon={
+                                        <Shield className="w-8 h-8 text-primary" />
+                                    }
+                                />
+                            }
+                            {
+                                auth.canViewConfigs &&
+                                <NavLink
+                                    label="Configuration"
+                                    url={route("configs.index")}
+                                    icon={
+                                        <SettingsIcon className="w-8 h-8 text-primary" />
+                                    }
+                                />
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
 
