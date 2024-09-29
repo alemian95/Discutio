@@ -42,7 +42,7 @@ export default function Show(
             <Head title={thread.title} />
 
             <div className="mb-6">
-                <Link href={route('dashboard.category', thread.category!.code)}><Button>&laquo; Back</Button></Link>
+                <Link href={route('dashboard.category', thread.category!.code)}><Button variant='secondary'>&laquo; Back</Button></Link>
             </div>
 
             <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">

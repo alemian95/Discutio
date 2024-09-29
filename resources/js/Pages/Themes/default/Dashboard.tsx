@@ -31,6 +31,7 @@ export default function Dashboard(
             user={auth.user}
             breadcrumbs={completeBreadcrumbs}
             title={category? category.name : "Dashboard"}
+            useCard={false}
         >
             <Head title={category?.name || "Dashboard"} />
 

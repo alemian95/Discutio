@@ -9,15 +9,15 @@
     --background: theme(colors.slate.100);
     --foreground: theme(colors.slate.950);
 
-    --card: white;
+    --card: theme(colors.white);
     --card-foreground: theme(colors.slate.950);
 
-    --popover: white;
+    --popover: theme(colors.white);
     --popover-foreground: theme(colors.slate.950);
 
-    --primary: hsl(247, 54%, 28%);
-    --primary-foreground: hsl(210 40% 98%);
-    --secondary: hsl(0, 0%, 92%);
+    --primary: hsla(247 54% 28%);
+    --primary-foreground: hsla(210 40% 98%);
+    --secondary: hsla(0, 0%, 92%);
     --secondary-foreground: theme(colors.slate.950);
 
     --muted: theme(colors.slate.300);
@@ -29,7 +29,7 @@
     --destructive: theme(colors.red.600);
     --destructive-foreground: white;
     --positive: theme(colors.green.700);
-    --positive-foreground: white;
+    --positive-foreground: theme(colors.white);
     --warning: theme(colors.yellow.400);
     --warning-foreground: theme(colors.slate.950);
 
@@ -37,11 +37,11 @@
     --input: theme(colors.slate.300);
     --ring: theme(colors.primary.DEFAULT);
 
-    --chart-1: hsl(12 76% 61%);
-    --chart-2: hsl(173 58% 39%);
-    --chart-3: hsl(197 37% 24%);
-    --chart-4: hsl(43 74% 66%);
-    --chart-5: hsl(27 87% 67%);
+    --chart-1: hsla(12 76% 61%);
+    --chart-2: hsla(173 58% 39%);
+    --chart-3: hsla(197 37% 24%);
+    --chart-4: hsla(43 74% 66%);
+    --chart-5: hsla(27 87% 67%);
 
     --radius: 0.5rem
 

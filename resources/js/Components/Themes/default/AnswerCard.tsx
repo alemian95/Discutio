@@ -1,6 +1,7 @@
 import { Answer as AnswerType } from "@/types";
 import { useForm } from "@inertiajs/react";
 import { FormEventHandler, useState } from "react";
+import { Textarea } from "./ui/textarea";
 
 export function AnswerCard({ answer } : { answer: AnswerType}) {
 
@@ -33,13 +34,12 @@ export function AnswerCard({ answer } : { answer: AnswerType}) {
                             editEnable
                             ?
                             <form onSubmit={submit}>
-                                <textarea
+                                <Textarea
                                     rows={5}
                                     className="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-blue-900 dark:focus:border-blue-900 focus:ring-blue-900 dark:focus:ring-blue-900 rounded-md shadow-sm"
                                     onChange={(e) => setData('content', e.target.value)}
-                                >
-                                    {data.content}
-                                </textarea>
+                                    defaultValue={data.content}
+                                />
                                 <div className='p-2 px-4 space-x-4'>
                                     <span className='text-slate-600 cursor-pointer' onClick={() => setEditEnable(false)}><b>Cancel</b></span>
                                     <button className='text-blue-950 cursor-pointer'><b>Save</b></button>
