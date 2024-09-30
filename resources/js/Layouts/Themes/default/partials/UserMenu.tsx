@@ -32,7 +32,8 @@ export function UserMenu({ user } : { user : User | null | undefined }) {
                             <Link
                                 href={route("logout")}
                                 method="post"
-                                className="w-full"
+                                className="w-full text-start"
+                                as="button"
                             >
                                 <span>Logout</span>
                             </Link>

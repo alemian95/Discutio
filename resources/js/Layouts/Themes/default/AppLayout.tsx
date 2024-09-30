@@ -2,23 +2,38 @@ import { useState, PropsWithChildren } from "react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Breadcrumb as BreadcrumbType, PageProps, User } from "@/types";
 import ApplicationLogo from "@/Components/Themes/tailwindui/ApplicationLogo";
-import { HomeIcon, PackageIcon, SettingsIcon, Shield, SidebarIcon, UserIcon } from "lucide-react";
+import {
+    HomeIcon,
+    PackageIcon,
+    SettingsIcon,
+    Shield,
+    SidebarIcon,
+    UserIcon,
+} from "lucide-react";
 import { NavLink } from "@/Components/Themes/default/NavLink";
 import { UserMenu } from "./partials/UserMenu";
 import { NavigationMenu } from "./partials/NavigationMenu";
 import { Alert } from "@/Components/Themes/default/ui/alert";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/Themes/default/ui/card";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/Components/Themes/default/ui/card";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/Themes/default/ui/sheet";
 
 export default function AppLayout({
     children,
     breadcrumbs,
     useCard = true,
-    title
+    title,
 }: PropsWithChildren<{
     user?: User;
     breadcrumbs?: BreadcrumbType[];
-    useCard?: boolean,
-    title?: string
+    useCard?: boolean;
+    title?: string;
 }>) {
     const { post } = useForm({});
     const [verificationSent, setVerificationSent] = useState(false);
@@ -57,18 +72,16 @@ export default function AppLayout({
                     </div>
                     <div>
                         <div className="flex flex-col gap-4 items-center">
-                            {
-                                auth.canViewAdmin &&
+                            {auth.canViewAdmin && (
                                 <NavLink
                                     label="Administration"
-                                    url={'#'}
+                                    url={"#"}
                                     icon={
                                         <Shield className="w-8 h-8 text-primary" />
                                     }
                                 />
-                            }
-                            {
-                                auth.canViewConfigs &&
+                            )}
+                            {auth.canViewConfigs && (
                                 <NavLink
                                     label="Configuration"
                                     url={route("configs.index")}
@@ -76,7 +89,7 @@ export default function AppLayout({
                                         <SettingsIcon className="w-8 h-8 text-primary" />
                                     }
                                 />
-                            }
+                            )}
                         </div>
                     </div>
                 </div>
@@ -89,7 +102,42 @@ export default function AppLayout({
                             <NavigationMenu breadcrumbs={breadcrumbs} />
                         </div>
                         <div className="md:hidden">
-                            <SidebarIcon />
+                            <Sheet>
+                                <SheetTrigger><SidebarIcon className="w-6 h-6 text-primary" /></SheetTrigger>
+                                <SheetContent side={'left'} className="h-full flex flex-col">
+                                    <SheetHeader>
+                                        <SheetTitle>
+                                            <ApplicationLogo className="w-12 h-12" />
+                                        </SheetTitle>
+                                    </SheetHeader>
+                                    <div className="flex flex-col justify-between pt-6 flex-1">
+                                        <div className="flex flex-col gap-4">
+                                            <Link href={route('dashboard')} className="flex flex-row justify-start items-center gap-4 text-primary p-2 w-full hover:bg-accent hover:text-accent-foreground rounded-md">
+                                                <HomeIcon className="w-6 h-6" />
+                                                <span>Dashboard</span>
+                                            </Link>
+                                            <Link href={route('dashboard')} className="flex flex-row justify-start items-center gap-4 text-primary p-2 w-full hover:bg-accent hover:text-accent-foreground rounded-md">
+                                                <PackageIcon className="w-6 h-6" />
+                                                <span>My Contents</span>
+                                            </Link>
+                                        </div>
+                                        <div className="flex flex-col gap-4">
+                                            {auth.canViewAdmin && (
+                                                <Link href='#' className="flex flex-row justify-start items-center gap-4 text-primary p-2 w-full hover:bg-accent hover:text-accent-foreground rounded-md">
+                                                    <Shield className="w-6 h-6" />
+                                                    <span>Administration</span>
+                                                </Link>
+                                            )}
+                                            {auth.canViewConfigs && (
+                                                <Link href={route('configs.index')} className="flex flex-row justify-start items-center gap-4 text-primary p-2 w-full hover:bg-accent hover:text-accent-foreground rounded-md">
+                                                    <SettingsIcon className="w-6 h-6" />
+                                                    <span>Configurations</span>
+                                                </Link>
+                                            )}
+                                        </div>
+                                    </div>
+                                </SheetContent>
+                            </Sheet>
                         </div>
                     </div>
                     <div>
@@ -98,38 +146,50 @@ export default function AppLayout({
                 </div>
 
                 <div className="pt-12 md:pt-0">
-
-                    {
-                        auth.user && auth.user.email_verified_at == null
-                        &&
+                    {auth.user && auth.user.email_verified_at == null && (
                         <Alert className="bg-primary text-primary-foreground">
-                            {
-                                !verificationSent
-                                    ?
-                                    <>
-                                        <p>Your account has not been verified yet. Please check your emails and follow the istructions.</p>
-                                        <p>If you didn't received the email, <span className='cursor-pointer underline text-secondary' onClick={resendVerification}>click here</span> and we will send you another one.</p>
-                                    </>
-                                    :
-                                    <>
-                                        <p>Another email has been sent to your inbox. Please check it and follow the instructions.</p>
-                                    </>
-                            }
+                            {!verificationSent ? (
+                                <>
+                                    <p>
+                                        Your account has not been verified yet.
+                                        Please check your emails and follow the
+                                        istructions.
+                                    </p>
+                                    <p>
+                                        If you didn't received the email,{" "}
+                                        <span
+                                            className="cursor-pointer underline text-secondary"
+                                            onClick={resendVerification}
+                                        >
+                                            click here
+                                        </span>{" "}
+                                        and we will send you another one.
+                                    </p>
+                                </>
+                            ) : (
+                                <>
+                                    <p>
+                                        Another email has been sent to your
+                                        inbox. Please check it and follow the
+                                        instructions.
+                                    </p>
+                                </>
+                            )}
                         </Alert>
-                    }
+                    )}
 
-                    {
-                        useCard
-                        ?
+                    {useCard ? (
                         <Card className="border-none shadow-sm max-w-7xl mx-auto p-4 bg-white rounded-none md:rounded-lg mt-6">
-                            { title && <CardHeader className="font-bold text-xl">{ title} </CardHeader> }
-                            <CardContent>
-                                {children}
-                            </CardContent>
+                            {title && (
+                                <CardHeader className="font-bold text-xl">
+                                    {title}{" "}
+                                </CardHeader>
+                            )}
+                            <CardContent>{children}</CardContent>
                         </Card>
-                        :
-                        <>{ children }</>
-                    }
+                    ) : (
+                        <>{children}</>
+                    )}
                 </div>
             </div>
         </div>
