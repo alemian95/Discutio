@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Extensions\Inertia\InertiaWithThemes;
 use App\Models\Thread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,10 +30,16 @@ class SearchController extends Controller
             $join->on('threads.id', '=', 'search_results.id');
         })
         ->select('threads.*', 'search_results.relevance')
-        ->with('answers')
+        // ->with('answers')
+        ->withCount('answers')
         ->orderByDesc('search_results.relevance')
         ->get();
 
-        dd($threads);
+        // dd($threads);
+
+        return InertiaWithThemes::render("Search", [
+            'query' => $query,
+            'threads' => $threads
+        ]);
     }
 }

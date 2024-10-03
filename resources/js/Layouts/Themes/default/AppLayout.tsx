@@ -1,10 +1,11 @@
-import { useState, PropsWithChildren } from "react";
+import { useState, PropsWithChildren, FormEventHandler } from "react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Breadcrumb as BreadcrumbType, PageProps, User } from "@/types";
 import ApplicationLogo from "@/Components/Themes/tailwindui/ApplicationLogo";
 import {
     HomeIcon,
     PackageIcon,
+    SearchIcon,
     SettingsIcon,
     Shield,
     SidebarIcon,
@@ -23,22 +24,31 @@ import {
     CardTitle,
 } from "@/Components/Themes/default/ui/card";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/Themes/default/ui/sheet";
+import { Input } from "@/Components/Themes/default/ui/input";
+import { Button } from "@/Components/Themes/default/ui/button";
 
 export default function AppLayout({
     children,
     breadcrumbs,
     useCard = true,
     title,
+    defaultSearchQuery
 }: PropsWithChildren<{
     user?: User;
     breadcrumbs?: BreadcrumbType[];
     useCard?: boolean;
     title?: string;
+    defaultSearchQuery?: string;
 }>) {
-    const { post } = useForm({});
-    const [verificationSent, setVerificationSent] = useState(false);
+    const { post } = useForm({})
 
-    const { auth } = usePage<PageProps>().props;
+    const [verificationSent, setVerificationSent] = useState(false)
+
+    const { auth } = usePage<PageProps>().props
+
+    const { data: query, setData: setQuery, get } = useForm({
+        query: defaultSearchQuery || ""
+    })
 
     function resendVerification() {
         post(route("verification.send"), {
@@ -46,6 +56,11 @@ export default function AppLayout({
                 setVerificationSent(true);
             },
         });
+    }
+
+    const search: FormEventHandler = (e) => {
+        e.preventDefault();
+        get(route('search', query))
     }
 
     return (
@@ -140,7 +155,11 @@ export default function AppLayout({
                             </Sheet>
                         </div>
                     </div>
-                    <div>
+                    <div className="flex flex-row justify-end items-center gap-4">
+                        <form onSubmit={search} className="flex flex-row justify-end items-center gap-1">
+                            <Input className="bg-white min-w-64 h-10" type='text' placeholder='Search' value={query.query} onChange={(e) => setQuery('query', e.target.value)} />
+                            <Button variant={'ghost'} className="p-2 h-10 w-12 rounded-md"><SearchIcon className="h-4 w-4" /></Button>
+                        </form>
                         <UserMenu user={auth.user} />
                     </div>
                 </div>
