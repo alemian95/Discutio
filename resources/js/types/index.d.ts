@@ -1,5 +1,3 @@
-import { Config } from 'ziggy-js';
-
 export interface User {
     id: number;
     name: string;
@@ -45,6 +43,27 @@ export interface Answer {
     author?: User;
     human_created_at?: string;
     canUpdateAnswer?: boolean;
+}
+
+type Config = {
+    id: number
+    created_at: string
+    updated_at: string
+    group: string
+    key: string
+    value: string
+    type: string
+    keyLabel: string
+    options: Option[]
+}
+
+type Option = {
+    id: number
+    created_at: string
+    updated_at: string
+    config_id: number
+    value: string
+    valueLabel: string
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
