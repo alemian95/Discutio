@@ -4,6 +4,7 @@ import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import AnswerForm from '@/Components/Themes/default/AnswerForm';
 import { AnswerCard } from '@/Components/Themes/default/AnswerCard';
 import { Button } from '@/Components/Themes/default/ui/button';
+import { truncate } from '@/lib/utils';
 
 export default function Show(
     { thread, breadcrumbs, canAnswerThread, canUpdateThread, answers }
@@ -17,7 +18,7 @@ export default function Show(
         }
 ) {
 
-    const { auth } = usePage<PageProps>().props
+    const { auth, config } = usePage<PageProps>().props
 
     const completeBreadcrumbs: Breadcrumb[] = []
 
@@ -31,7 +32,7 @@ export default function Show(
             label: b.name
         })
     })
-    completeBreadcrumbs.push({ label: thread.title })
+    completeBreadcrumbs.push({ label: truncate(thread.title, config.text.cut_breadcrumbs_text_after_n_characters) })
 
     return (
         <AppLayout

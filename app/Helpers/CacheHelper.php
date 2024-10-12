@@ -10,6 +10,8 @@ class CacheHelper
     public static function clearConfig()
     {
         Cache::forget('config_cache');
+        Cache::forget('text_config');
+        Cache::forget('datetime_config');
     }
 
     public static function clearDashboard()
