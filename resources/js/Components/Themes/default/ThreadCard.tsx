@@ -13,15 +13,17 @@ export default function ThreadCard({ thread }: { thread: ThreadType }) {
                         <Link href={route("threads.show", thread.id)}>
                             {truncate(thread.title, 30)}
                         </Link>
+                        <span className="block lg:inline">
+                            <span className="text-xs lg:ml-4"> from </span><span className="text-sm">{thread.author?.name}</span>
+                        </span>
                     </div>
                     <div className="flex flex-col lg:flex-row text-sm">
-                        <div className="p-1 lg:min-w-32 text-end">Answers: {thread.answers_count}</div>
-                        <div className="p-1 lg:min-w-40 text-end">Author: {thread.author?.name}</div>
-                        <div className="p-1 lg:min-w-52 text-end">{ thread.human_created_at }</div>
+                        <div className="p-1 lg:w-32 text-end">{thread.answers_count} answers</div>
+                        <div className="p-1 lg:w-64 text-end">{ thread.human_created_at }</div>
                     </div>
                 </div>
                 <div className="bg-white py-6 lg:py-2 px-4 md:rounded-b-md text-sm text-slate-600">
-                    <p>{ thread.content.length > 100 ? thread.content.slice(0, 100) + "..." : thread.content }</p>
+                    <p>{ truncate(thread.content, 100) }</p>
                 </div>
             </div>
         </>
