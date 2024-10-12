@@ -2,19 +2,30 @@ import { Head, usePage } from '@inertiajs/react';
 import { PageProps, Thread } from '@/types';
 import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import ThreadCard from '@/Components/Themes/default/ThreadCard';
+import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
+import { useEffect } from 'react';
 
 export default function Search(
     { threads, query }
     :
-    {threads: Thread[], query: string }
+    { threads: Thread[], query: string }
 ) {
 
     const { auth } = usePage<PageProps>().props
 
+    const { breadcrumbs: completeBreadcrumbs, append: appendBreadcrumb, reset: resetBreadcrumb } = useBreadcrumbs()
+
+    useEffect(() => {
+        resetBreadcrumb()
+        appendBreadcrumb({ label: "Dashboard", url: route('dashboard')})
+        appendBreadcrumb({ label: "Search"})
+        appendBreadcrumb({ label: query})
+    }, [ query ])
+
     return (
         <AppLayout
             user={auth.user}
-            breadcrumbs={[{ label: "Dashboard", url: route('dashboard') }, { label: "Search" }]}
+            breadcrumbs={completeBreadcrumbs}
             title={`Search results for: ${query}`}
             useCard={false}
             defaultSearchQuery={query}

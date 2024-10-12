@@ -4,6 +4,8 @@ import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import { Button } from '@/Components/Themes/default/ui/button';
 import CategoryCard from '@/Components/Themes/default/CategoryCard';
 import ThreadCard from '@/Components/Themes/default/ThreadCard';
+import { useEffect } from 'react';
+import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
 
 export default function Dashboard(
     { categories, threads, category, breadcrumbs, canCreateThreads }
@@ -13,18 +15,15 @@ export default function Dashboard(
 
     const { auth } = usePage<PageProps>().props
 
-    const completeBreadcrumbs: Breadcrumb[] = []
+    const { breadcrumbs: completeBreadcrumbs, append: appendBreadcrumb, reset: resetBreadcrumb } = useBreadcrumbs()
 
-    completeBreadcrumbs.push({
-        url: route('dashboard'),
-        label: "Dashboard"
-    })
-    breadcrumbs?.forEach((b) => {
-        completeBreadcrumbs.push({
-            url: route('dashboard.category', b.code),
-            label: b.name
+    useEffect(() => {
+        resetBreadcrumb()
+        appendBreadcrumb({ label: "Dashboard", url: route('dashboard')})
+        breadcrumbs?.forEach((b) => {
+            appendBreadcrumb({ url: route('dashboard.category', b.code), label: b.name })
         })
-    })
+    }, [breadcrumbs])
 
     return (
         <AppLayout

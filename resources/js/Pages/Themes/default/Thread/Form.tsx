@@ -1,6 +1,6 @@
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useEffect } from 'react';
 import InputError from '@/Components/Themes/tailwindui/InputError';
 import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import { Textarea } from '@/Components/Themes/default/ui/textarea';
@@ -8,6 +8,7 @@ import { Input } from '@/Components/Themes/default/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/Themes/default/ui/select';
 import { Button } from '@/Components/Themes/default/ui/button';
 import { Label } from '@/Components/Themes/default/ui/label';
+import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
 
 export default function Form({ category, categories, thread, breadcrumbs }: { category?: string, categories: Category[], thread?: Thread, breadcrumbs: Category[] }) {
 
@@ -30,10 +31,27 @@ export default function Form({ category, categories, thread, breadcrumbs }: { ca
         }
     };
 
+    const { breadcrumbs: completeBreadcrumbs, append: appendBreadcrumb, reset: resetBreadcrumb } = useBreadcrumbs()
+
+    useEffect(() => {
+        resetBreadcrumb()
+        if (thread) {
+            appendBreadcrumb({
+                label: thread.title,
+                url: route('threads.show', thread.id),
+            })
+            appendBreadcrumb({label: "Edit"})
+        }
+        else {
+            appendBreadcrumb({label: "New Thread"})
+        }
+    }, [ categories ])
+
     return (
         <AppLayout
             user={auth.user}
             title={thread? `Edit Thread: ${thread.title}` : 'New Thread'}
+            breadcrumbs={completeBreadcrumbs}
         >
             <Head title="New Thread" />
 

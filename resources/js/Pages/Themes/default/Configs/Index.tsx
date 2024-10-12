@@ -3,18 +3,25 @@ import { Config, PageProps } from '@/types';
 import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/Components/Themes/default/ui/tabs';
 import { ConfigForm } from './Partials/ConfigForm';
+import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
+import { useEffect } from 'react';
 
 export default function Index({ configs }: { configs: Config[] }) {
 
     const { auth } = usePage<PageProps>().props
 
+    const { breadcrumbs: completeBreadcrumbs, append: appendBreadcrumb, reset: resetBreadcrumb } = useBreadcrumbs()
+
+    useEffect(() => {
+        resetBreadcrumb()
+        appendBreadcrumb({ label: "Dashboard", url: route('dashboard')})
+        appendBreadcrumb({ label: "Configuration"})
+    }, [ configs ])
+
     return (
         <AppLayout
             user={auth.user}
-            breadcrumbs={[
-                { label: 'Dashboard', url: route('dashboard') },
-                { label: 'Configurations' },
-            ]}
+            breadcrumbs={completeBreadcrumbs}
             title='Configurations'
         >
             <Head title="Configurations" />

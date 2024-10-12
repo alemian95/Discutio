@@ -5,6 +5,8 @@ import AnswerForm from '@/Components/Themes/default/AnswerForm';
 import { AnswerCard } from '@/Components/Themes/default/AnswerCard';
 import { Button } from '@/Components/Themes/default/ui/button';
 import { truncate } from '@/lib/utils';
+import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
+import { useEffect } from 'react';
 
 export default function Show(
     { thread, breadcrumbs, canAnswerThread, canUpdateThread, answers }
@@ -18,21 +20,18 @@ export default function Show(
         }
 ) {
 
-    const { auth, config } = usePage<PageProps>().props
+    const { auth } = usePage<PageProps>().props
 
-    const completeBreadcrumbs: Breadcrumb[] = []
+    const { breadcrumbs: completeBreadcrumbs, append: appendBreadcrumb, reset: resetBreadcrumb } = useBreadcrumbs()
 
-    completeBreadcrumbs.push({
-        url: route('dashboard'),
-        label: "Dashboard"
-    })
-    breadcrumbs?.forEach((b) => {
-        completeBreadcrumbs.push({
-            url: route('dashboard.category', b.code),
-            label: b.name
+    useEffect(() => {
+        resetBreadcrumb()
+        appendBreadcrumb({ label: "Dashboard", url: route('dashboard')})
+        breadcrumbs?.forEach((b) => {
+            appendBreadcrumb({ url: route('dashboard.category', b.code), label: b.name })
         })
-    })
-    completeBreadcrumbs.push({ label: truncate(thread.title, config.text.cut_breadcrumbs_text_after_n_characters) })
+        appendBreadcrumb({ label: thread.title })
+    }, [breadcrumbs])
 
     return (
         <AppLayout
