@@ -160,7 +160,6 @@
 </svg>
 </p>
 
-
 <p align="center">
 <!-- <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
@@ -172,8 +171,7 @@
 
 **Discutio** is an online forum platform designed to foster meaningful discussions and exchange of ideas in a structured environment. Inspired by the ancient Roman forums, it aims to provide a modern space for debate, collaboration, and community interaction. The platform features a simple and intuitive user interface, allowing users to create and participate in various discussion topics effortlessly.
 
-
-**Key features (in progress)**
+## Key Features
 
 - Organized topic threads for structured discussions
 - User profiles and role management for community engagement
