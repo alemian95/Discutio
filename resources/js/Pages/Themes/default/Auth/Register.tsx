@@ -1,9 +1,5 @@
 import { FormEventHandler } from 'react';
-import GuestLayout from '@/Layouts/Themes/tailwindui/GuestLayout';
-import InputError from '@/Components/Themes/tailwindui/InputError';
-import InputLabel from '@/Components/Themes/tailwindui/InputLabel';
 import PrimaryButton from '@/Components/Themes/tailwindui/PrimaryButton';
-import TextInput from '@/Components/Themes/tailwindui/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AuthLayout from '@/Layouts/Themes/default/AuthLayout';
 import { Label } from '@/Components/Themes/default/ui/label';

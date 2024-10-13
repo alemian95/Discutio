@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\HasHumanTimestamps;
 use App\Http\Requests\Thread\StoreThreadRequest;
+use App\Traits\HasHumanTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -48,5 +48,4 @@ class Thread extends Model
 
         return $thread;
     }
-
 }

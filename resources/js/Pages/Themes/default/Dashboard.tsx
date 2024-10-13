@@ -1,5 +1,5 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Breadcrumb, Category, PageProps, Thread } from '@/types';
+import { Category, PageProps, Thread } from '@/types';
 import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import { Button } from '@/Components/Themes/default/ui/button';
 import CategoryCard from '@/Components/Themes/default/CategoryCard';

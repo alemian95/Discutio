@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\CacheHelper;
 use App\Extensions\Inertia\InertiaWithThemes;
+use App\Helpers\CacheHelper;
 use App\Http\Requests\Config\StoreConfigRequest;
 use App\Http\Requests\Config\UpdateConfigRequest;
 use App\Models\Config;

@@ -1,7 +1,3 @@
-import GuestLayout from '@/Layouts/Themes/tailwindui/GuestLayout';
-import InputError from '@/Components/Themes/tailwindui/InputError';
-import PrimaryButton from '@/Components/Themes/tailwindui/PrimaryButton';
-import TextInput from '@/Components/Themes/tailwindui/TextInput';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 import AuthLayout from '@/Layouts/Themes/default/AuthLayout';

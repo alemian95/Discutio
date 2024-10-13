@@ -28,7 +28,7 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 Route::get('/dashboard/{code}', [DashboardController::class, 'category'])->name('dashboard.category');
 
-Route::get('/search', [SearchController::class,'search'])->name('search');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,11 +43,9 @@ Route::resource('threads/{thread}/answers', AnswerController::class)->only(['sto
 Route::resource('configs', ConfigController::class)->only(['index']);
 Route::post('configs/update', [ConfigController::class, 'updateAll'])->name('configs.update.all');
 
-
 Route::name('admin.')->prefix('admin')->group(function () {
     Route::resource('users', UserController::class);
 });
-
 
 Route::name('api.')->prefix('api')->group(function () {
     Route::resource('api/threads', ApiThreadController::class);

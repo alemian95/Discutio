@@ -140,6 +140,7 @@ class Category extends Model
                     self::preorderTraversal($category, $ordered);
                 }
             }
+
             return $ordered;
         });
     }

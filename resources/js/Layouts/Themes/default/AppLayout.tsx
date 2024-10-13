@@ -9,7 +9,6 @@ import {
     SettingsIcon,
     Shield,
     SidebarIcon,
-    UserIcon,
 } from "lucide-react";
 import { NavLink } from "@/Components/Themes/default/NavLink";
 import { UserMenu } from "./partials/UserMenu";
@@ -18,12 +17,9 @@ import { Alert } from "@/Components/Themes/default/ui/alert";
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
     CardHeader,
-    CardTitle,
 } from "@/Components/Themes/default/ui/card";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/Themes/default/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/Themes/default/ui/sheet";
 import { Input } from "@/Components/Themes/default/ui/input";
 import { Button } from "@/Components/Themes/default/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/Components/Themes/default/ui/popover";

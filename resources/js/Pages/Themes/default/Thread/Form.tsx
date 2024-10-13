@@ -1,7 +1,6 @@
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { Category, PageProps, Thread } from '@/types';
 import { FormEventHandler, useEffect } from 'react';
-import InputError from '@/Components/Themes/tailwindui/InputError';
 import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import { Textarea } from '@/Components/Themes/default/ui/textarea';
 import { Input } from '@/Components/Themes/default/ui/input';

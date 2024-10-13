@@ -1,10 +1,9 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { Answer, Breadcrumb, Category, PageProps, Thread } from '@/types';
+import { Answer, Category, PageProps, Thread } from '@/types';
 import AppLayout from '@/Layouts/Themes/default/AppLayout';
 import AnswerForm from '@/Components/Themes/default/AnswerForm';
 import { AnswerCard } from '@/Components/Themes/default/AnswerCard';
 import { Button } from '@/Components/Themes/default/ui/button';
-import { truncate } from '@/lib/utils';
 import { useBreadcrumbs } from '@/hooks/useBreadcrumbs';
 import { useEffect } from 'react';
 

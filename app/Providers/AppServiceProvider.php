@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         $this->app->singleton('cache_service', function () {
-            return new CacheHelper();
+            return new CacheHelper;
         });
     }
 

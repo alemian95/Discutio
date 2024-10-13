@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
-
     public function __construct()
     {
         Gate::authorize('viewAny', User::class);

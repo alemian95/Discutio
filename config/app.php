@@ -125,6 +125,6 @@ return [
 
     'aliases' => [
         'CacheService' => App\Facades\CacheService::class,
-    ]
+    ],
 
 ];
