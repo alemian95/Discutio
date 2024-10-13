@@ -26,6 +26,7 @@ import {
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/Components/Themes/default/ui/sheet";
 import { Input } from "@/Components/Themes/default/ui/input";
 import { Button } from "@/Components/Themes/default/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/Components/Themes/default/ui/popover";
 
 export default function AppLayout({
     children,
@@ -156,10 +157,15 @@ export default function AppLayout({
                         </div>
                     </div>
                     <div className="flex flex-row justify-end items-center gap-4">
-                        <form onSubmit={search} className="flex flex-row justify-end items-center gap-1">
-                            <Input className="bg-white min-w-64 h-10" type='text' placeholder='Search' value={query.query} onChange={(e) => setQuery('query', e.target.value)} />
-                            <Button variant={'ghost'} className="p-2 h-10 w-12 rounded-md"><SearchIcon className="h-4 w-4" /></Button>
-                        </form>
+                        <Popover>
+                            <PopoverTrigger><Button variant={'ghost'} className="p-2 h-10 w-12 rounded-md"><SearchIcon className="h-4 w-4" /></Button></PopoverTrigger>
+                            <PopoverContent className="w-full">
+                                <form onSubmit={search} className="flex flex-row justify-end items-center gap-1">
+                                    <Input className="bg-white min-w-64 h-10 shadow-none" type='text' placeholder='Search' value={query.query} onChange={(e) => setQuery('query', e.target.value)} />
+                                    <Button variant={'ghost'}>Search</Button>
+                                </form>
+                            </PopoverContent>
+                        </Popover>
                         <UserMenu user={auth.user} />
                     </div>
                 </div>

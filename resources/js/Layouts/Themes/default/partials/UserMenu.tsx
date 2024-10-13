@@ -28,7 +28,7 @@ export function UserMenu({ user } : { user : User | null | undefined }) {
                             <Link className="w-full" href={route("profile.edit")}><span>Profile</span></Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-destructive font-semibold">
+                        <DropdownMenuItem className="text-destructive font-semibold focus:bg-destructive focus:text-destructive-foreground">
                             <Link
                                 href={route("logout")}
                                 method="post"
