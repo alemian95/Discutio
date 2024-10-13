@@ -154,7 +154,7 @@ export default function AppLayout({
                     </div>
                     <div className="flex flex-row justify-end items-center gap-4">
                         <Popover>
-                            <PopoverTrigger><Button variant={'ghost'} className="p-2 h-10 w-12 rounded-md"><SearchIcon className="h-4 w-4" /></Button></PopoverTrigger>
+                            <PopoverTrigger asChild><Button variant={'ghost'} className="p-2 h-10 w-12 rounded-md"><SearchIcon className="h-4 w-4" /></Button></PopoverTrigger>
                             <PopoverContent className="w-full">
                                 <form onSubmit={search} className="flex flex-row justify-end items-center gap-1">
                                     <Input className="bg-white min-w-64 h-10 shadow-none" type='text' placeholder='Search' value={query.query} onChange={(e) => setQuery('query', e.target.value)} />
