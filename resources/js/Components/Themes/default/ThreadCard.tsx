@@ -22,7 +22,7 @@ export default function ThreadCard({ thread }: { thread: ThreadType }) {
                     </div>
                     <div className="flex flex-col lg:flex-row text-sm">
                         <div className="p-1 lg:w-32 text-end">{thread.answers_count} answers</div>
-                        <div className="p-1 lg:w-64 text-end">{ thread.human_created_at }</div>
+                        <div className="p-1 lg:w-72 text-end">{ thread.human_created_at }</div>
                     </div>
                 </div>
                 <div className="bg-white py-6 lg:py-2 px-4 md:rounded-b-md text-sm text-slate-600">
