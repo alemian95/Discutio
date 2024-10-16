@@ -1,4 +1,5 @@
 import { DataTable } from "@/Components/Themes/default/datatable/Datatable"
+import { DateTimeFormatter } from "@/Components/Themes/default/datatable/formatters/DateTimeFormatter"
 import { SortableColumnHeader } from "@/Components/Themes/default/datatable/headers/SortableColumnHeader"
 import { Button } from "@/Components/Themes/default/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/Themes/default/ui/dropdown-menu"
@@ -65,6 +66,16 @@ export default function Index({ users } : { users : User[] }) {
             cell: ({ row }) => (
                 <div onClick={() => alert('ciao')}>{row.original.threads?.length}</div>
             )
+        },
+        {
+            accessorKey: "created_at",
+            header: ({ column }) => <SortableColumnHeader column={column} label="Registered At" />,
+            cell: ({ row }) => <DateTimeFormatter date={row.original.created_at!} format="year/month/date"/>,
+        },
+        {
+            accessorKey: "role",
+            header: ({ column }) => <SortableColumnHeader column={column} label="Role" />,
+            cell: ({ row }) => <div>{row.original.roles!.length ? row.original.roles![0].name : '-'}</div>,
         },
         {
             id: "actions",

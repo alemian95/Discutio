@@ -21,7 +21,7 @@ class UserController extends Controller
     public function index()
     {
         return InertiaWithThemes::render('Admin/Users/Index', [
-            'users' => User::with('threads')->get()
+            'users' => User::with('threads', 'roles')->get()
         ]);
     }
 

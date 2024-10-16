@@ -3,7 +3,19 @@ export interface User {
     name: string;
     email: string;
     email_verified_at: string;
-    threads?: Thread[]
+    created_at?: string;
+    updated_at?: string;
+    human_created_at?: string;
+    threads?: Thread[];
+    roles?: Role[];
+}
+
+export interface Role {
+    id: number;
+    name: string;
+    guard_name: string;
+    created_at?: string;
+    updated_at?: string;
 }
 
 export interface Category {
