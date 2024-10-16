@@ -23,6 +23,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/Co
 import { Input } from "@/Components/Themes/default/ui/input";
 import { Button } from "@/Components/Themes/default/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/Components/Themes/default/ui/popover";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/Themes/default/ui/dropdown-menu";
 
 export default function AppLayout({
     children,
@@ -85,13 +86,28 @@ export default function AppLayout({
                     <div>
                         <div className="flex flex-col gap-4 items-center">
                             {auth.canViewAdmin && (
-                                <NavLink
-                                    label="Administration"
-                                    url={"#"}
-                                    icon={
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger>
                                         <Shield className="w-8 h-8 text-primary" />
-                                    }
-                                />
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent side="right" className="min-w-44">
+                                        <DropdownMenuLabel>Administration</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>
+                                            <Link className="w-full" href={route("admin.users.index")}>Manage Users</Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>Billing</DropdownMenuItem>
+                                        <DropdownMenuItem>Team</DropdownMenuItem>
+                                        <DropdownMenuItem>Subscription</DropdownMenuItem>
+                                        <DropdownMenuItem>Billing</DropdownMenuItem>
+                                        <DropdownMenuItem>Team</DropdownMenuItem>
+                                        <DropdownMenuItem>Subscription</DropdownMenuItem>
+                                        <DropdownMenuItem>Billing</DropdownMenuItem>
+                                        <DropdownMenuItem>Team</DropdownMenuItem>
+                                        <DropdownMenuItem>Subscription</DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+
                             )}
                             {auth.canViewConfigs && (
                                 <NavLink
