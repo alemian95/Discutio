@@ -12,6 +12,7 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('query');
+        $queryLike = '%' . $request->get('query') . '%';
 
         $subQuery = Thread::select('threads.id', DB::raw('
             (MATCH (threads.title, threads.content) AGAINST (? IN NATURAL LANGUAGE MODE) +
@@ -19,10 +20,13 @@ class SearchController extends Controller
             FROM answers WHERE answers.thread_id = threads.id)) as relevance
         '))
             ->whereRaw('MATCH (threads.title, threads.content) AGAINST (? IN NATURAL LANGUAGE MODE)', [$query, $query])
-            ->orWhereExists(function ($queryBuilder) use ($query) {
+            ->orWhere('threads.title', 'LIKE', $queryLike)
+            ->orWhere('threads.content', 'LIKE', $queryLike)
+            ->orWhereExists(function ($queryBuilder) use ($query, $queryLike) {
                 $queryBuilder->select(DB::raw(1))
                     ->from('answers')
                     ->whereRaw('MATCH (answers.content) AGAINST (? IN NATURAL LANGUAGE MODE)', [$query, $query])
+                    ->orWhere('answers.content', 'LIKE', $queryLike)
                     ->whereColumn('answers.thread_id', 'threads.id');
             });
 
