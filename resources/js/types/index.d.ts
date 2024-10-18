@@ -6,6 +6,7 @@ export interface User {
     created_at?: string;
     updated_at?: string;
     human_created_at?: string;
+    short_human_created_at?: string;
     threads?: Thread[];
     roles?: Role[];
 }

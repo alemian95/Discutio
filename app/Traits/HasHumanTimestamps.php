@@ -22,6 +22,20 @@ trait HasHumanTimestamps
         );
     }
 
+    public function shortHumanCreatedAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->shortHumanTimestamp($this->created_at)
+        );
+    }
+
+    public function shortHumanUpdatedAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->shortHumanTimestamp($this->updated_at)
+        );
+    }
+
     private function humanTimestamp(string $timestamp): string
     {
         Carbon::setLocale(app()->getLocale());
@@ -40,5 +54,15 @@ trait HasHumanTimestamps
         } catch (\Exception $e) {
             return $d->isoFormat("dddd, MMMM D, YYYY h:mm A");
         }
+    }
+
+    private function shortHumanTimestamp(string $timestamp): string
+    {
+        Carbon::setLocale(app()->getLocale());
+        $d = Carbon::parse($timestamp);
+        $dateFormat = Config::getValue('date_format');
+        $dateFormat = str_replace('dddd, ', '', $dateFormat);
+        $dateFormat = str_replace('ddd, ', '', $dateFormat);
+        return ucwords($d->isoFormat($dateFormat.' '.Config::getValue('time_format')));
     }
 }

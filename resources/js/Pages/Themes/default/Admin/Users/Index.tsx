@@ -70,7 +70,8 @@ export default function Index({ users } : { users : User[] }) {
         {
             accessorKey: "created_at",
             header: ({ column }) => <SortableColumnHeader column={column} label="Registered At" />,
-            cell: ({ row }) => <DateTimeFormatter date={row.original.created_at!} format="year/month/date"/>,
+            // cell: ({ row }) => <DateTimeFormatter date={row.original.created_at!} format="year/month/date"/>,
+            cell: ({ row }) => <div>{row.original.short_human_created_at}</div>
         },
         {
             accessorKey: "role",

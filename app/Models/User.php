@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasHumanTimestamps;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, HasRoles, Notifiable, SoftDeletes;
+    use HasFactory, HasRoles, Notifiable, SoftDeletes, HasHumanTimestamps;
 
     /**
      * The attributes that are mass assignable.
@@ -33,6 +34,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $appends = [
+        'human_created_at',
+        // 'human_updated_at',
+        'short_human_created_at',
+        // 'short_human_updated_at',
     ];
 
     /**
