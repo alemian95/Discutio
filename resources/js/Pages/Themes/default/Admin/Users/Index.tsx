@@ -79,6 +79,11 @@ export default function Index({ users } : { users : User[] }) {
             cell: ({ row }) => <div>{row.original.roles!.length ? row.original.roles![0].name : '-'}</div>,
         },
         {
+            accessorKey: "status",
+            header: ({ column }) => <SortableColumnHeader column={column} label="Status" />,
+            cell: ({ row }) => <div>{row.original.human_banned_until}</div>,
+        },
+        {
             id: "actions",
             enableHiding: false,
             cell: ({ row }) => {

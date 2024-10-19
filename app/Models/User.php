@@ -43,7 +43,9 @@ class User extends Authenticatable implements MustVerifyEmail
         // 'human_updated_at',
         'short_human_created_at',
         // 'short_human_updated_at',
-        'is_banned'
+        'is_banned',
+        'banned_until',
+        'human_banned_until',
     ];
 
     /**
@@ -85,11 +87,32 @@ class User extends Authenticatable implements MustVerifyEmail
         return $ban;
     }
 
+    public function lastBanInstance(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->hasMany(BanInstance::class)->orderBy('created_at', 'desc')->first()
+        )->shouldCache();
+    }
+
     public function isBanned(): Attribute
     {
-        $ban = $this->hasMany(BanInstance::class)->orderBy('created_at', 'desc')->first();
+        $ban = $this->last_ban_instance;
         return Attribute::make(
-            get: fn () => (is_null($ban->until) || Carbon::now()->isBefore(Carbon::parse($ban->until))) && Carbon::now()->isAfter(Carbon::parse($ban->from)),
-        );
+            get: fn () => $ban ? (is_null($ban->until) || Carbon::now()->isBefore(Carbon::parse($ban->until))) && Carbon::now()->isAfter(Carbon::parse($ban->from)) : false,
+        )->shouldCache();
+    }
+
+    public function bannedUntil(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->last_ban_instance ? $this->last_ban_instance->until : null
+        )->shouldCache();
+    }
+
+    public function humanBannedUntil(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->banned_until ? $this->shortHumanTimestamp($this->banned_until) : null,
+        )->shouldCache();
     }
 }
