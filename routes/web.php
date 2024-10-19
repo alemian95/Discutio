@@ -9,6 +9,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ThreadController;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -49,6 +51,10 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
 Route::name('api.')->prefix('api')->group(function () {
     Route::resource('api/threads', ApiThreadController::class);
+});
+
+Route::get('/test', function () {
+    User::find(9)->createBanInstance()->withMessage('Test ban message')->from(Carbon::now())->save();
 });
 
 require __DIR__.'/auth.php';

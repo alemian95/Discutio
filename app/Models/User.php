@@ -75,4 +75,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Thread::class, 'author_id', 'id');
     }
+
+    public function createBanInstance() : BanInstance {
+        $ban = new BanInstance();
+        $ban->user_id = $this->id;
+        return $ban;
+    }
 }
