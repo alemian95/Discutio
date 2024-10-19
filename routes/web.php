@@ -53,8 +53,4 @@ Route::name('api.')->prefix('api')->group(function () {
     Route::resource('api/threads', ApiThreadController::class);
 });
 
-Route::get('/test', function () {
-    User::find(9)->createBanInstance()->withMessage('Test ban message')->from(Carbon::now())->save();
-});
-
 require __DIR__.'/auth.php';

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Traits\HasHumanTimestamps;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -41,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
         // 'human_updated_at',
         'short_human_created_at',
         // 'short_human_updated_at',
+        'is_banned'
     ];
 
     /**
@@ -80,5 +83,13 @@ class User extends Authenticatable implements MustVerifyEmail
         $ban = new BanInstance();
         $ban->user_id = $this->id;
         return $ban;
+    }
+
+    public function isBanned(): Attribute
+    {
+        $ban = $this->hasMany(BanInstance::class)->orderBy('created_at', 'desc')->first();
+        return Attribute::make(
+            get: fn () => (is_null($ban->until) || Carbon::now()->isBefore(Carbon::parse($ban->until))) && Carbon::now()->isAfter(Carbon::parse($ban->from)),
+        );
     }
 }
