@@ -52,7 +52,7 @@ trait HasHumanTimestamps
 
             return ucwords($d->isoFormat(Config::getValue('date_format').' '.Config::getValue('time_format')));
         } catch (\Exception $e) {
-            return $d->isoFormat("dddd, MMMM D, YYYY h:mm A");
+            return $d->isoFormat('dddd, MMMM D, YYYY h:mm A');
         }
     }
 
@@ -63,6 +63,7 @@ trait HasHumanTimestamps
         $dateFormat = Config::getValue('date_format');
         $dateFormat = str_replace('dddd, ', '', $dateFormat);
         $dateFormat = str_replace('ddd, ', '', $dateFormat);
+
         return ucwords($d->isoFormat($dateFormat.' '.Config::getValue('time_format')));
     }
 }

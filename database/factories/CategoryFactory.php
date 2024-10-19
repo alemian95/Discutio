@@ -18,9 +18,10 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         $title = fake()->sentence(3);
+
         return [
             'code' => Str::slugify(fake()->sentence(2)),
-            'title' => fake()->sentence(3)
+            'title' => fake()->sentence(3),
         ];
     }
 }

@@ -23,7 +23,7 @@ class RegistrationTest extends TestCase
     {
         Notification::fake();
 
-        if (!Role::where('name', 'user')->exists()) {
+        if (! Role::where('name', 'user')->exists()) {
             Role::create(['name' => 'user']);
         }
 

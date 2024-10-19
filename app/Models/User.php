@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, HasRoles, Notifiable, SoftDeletes, HasHumanTimestamps;
+    use HasFactory, HasHumanTimestamps, HasRoles, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -84,22 +84,23 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function createBanInstance(): BanInstance
     {
-        $ban = new BanInstance();
+        $ban = new BanInstance;
         $ban->user_id = $this->id;
+
         return $ban;
     }
 
     public function lastBanInstance(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->hasMany(BanInstance::class)->orderBy('created_at', 'desc')->first()
+            get: fn () => $this->hasMany(BanInstance::class)->orderBy('created_at', 'desc')->first()
         )->shouldCache();
     }
 
     public function isBanned(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->last_ban_instance ?
+            get: fn () => $this->last_ban_instance ?
                 (is_null($this->last_ban_instance->until) || Carbon::now()->isBefore(Carbon::parse($this->last_ban_instance->until)))
                 &&
                 Carbon::now()->isAfter(Carbon::parse($this->last_ban_instance->from))
@@ -111,14 +112,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function bannedUntil(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->last_ban_instance ? $this->last_ban_instance->until : null
+            get: fn () => $this->last_ban_instance ? $this->last_ban_instance->until : null
         )->shouldCache();
     }
 
     public function humanBannedUntil(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->banned_until ? $this->shortHumanTimestamp($this->banned_until) : null,
+            get: fn () => $this->banned_until ? $this->shortHumanTimestamp($this->banned_until) : null,
         )->shouldCache();
     }
 }

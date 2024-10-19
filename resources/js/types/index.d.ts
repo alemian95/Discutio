@@ -7,6 +7,7 @@ export interface User {
     updated_at?: string;
     human_created_at?: string;
     short_human_created_at?: string;
+    is_banned?: boolean;
     human_banned_until?: string;
     threads?: Thread[];
     roles?: Role[];

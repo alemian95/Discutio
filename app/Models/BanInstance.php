@@ -20,7 +20,7 @@ class BanInstance extends Model
         'short_human_created_at',
     ];
 
-    public function user() : BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -39,34 +39,37 @@ class BanInstance extends Model
         );
     }
 
-    public function withMessage(string $message) : self
+    public function withMessage(string $message): self
     {
         $this->message = $message;
+
         return $this;
     }
 
-    public function withDescription(string $description) : self
+    public function withDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
-    public function from(Carbon | string $date) : self
+    public function from(Carbon|string $date): self
     {
         if ($date instanceof Carbon) {
             $date = $date->format('Y-m-d H:i:s');
         }
         $this->from = $date;
+
         return $this;
     }
 
-    public function until(Carbon | string $date): self
+    public function until(Carbon|string $date): self
     {
         if ($date instanceof Carbon) {
             $date = $date->format('Y-m-d H:i:s');
         }
         $this->until = $date;
+
         return $this;
     }
-
 }

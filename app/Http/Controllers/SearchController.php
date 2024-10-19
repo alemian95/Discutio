@@ -12,7 +12,7 @@ class SearchController extends Controller
     public function search(Request $request)
     {
         $query = $request->get('query');
-        $queryLike = '%' . $request->get('query') . '%';
+        $queryLike = '%'.$request->get('query').'%';
 
         $subQuery = Thread::select('threads.id', DB::raw('
             (MATCH (threads.title, threads.content) AGAINST (? IN NATURAL LANGUAGE MODE) +

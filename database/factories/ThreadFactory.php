@@ -20,7 +20,7 @@ class ThreadFactory extends Factory
             'title' => fake()->sentence(3),
             'content' => fake()->paragraph(),
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
         ];
     }
 }

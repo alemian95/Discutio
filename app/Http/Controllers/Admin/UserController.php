@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Extensions\Inertia\InertiaWithThemes;
 use App\Http\Controllers\Controller;
-use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -21,15 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        // dump(User::find(1)->human_banned_until);
-        // dump(User::find(9)->human_banned_until);
-        // die;
-
-        foreach (User::all() as $user){
-            dump($user->id, $user->human_banned_until);
-        }
         return InertiaWithThemes::render('Admin/Users/Index', [
-            'users' => User::with('threads', 'roles')->get()
+            'users' => User::with('threads', 'roles')->get(),
         ]);
     }
 

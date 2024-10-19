@@ -1,5 +1,4 @@
 import { DataTable } from "@/Components/Themes/default/datatable/Datatable"
-import { DateTimeFormatter } from "@/Components/Themes/default/datatable/formatters/DateTimeFormatter"
 import { SortableColumnHeader } from "@/Components/Themes/default/datatable/headers/SortableColumnHeader"
 import { Button } from "@/Components/Themes/default/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/Themes/default/ui/dropdown-menu"
@@ -81,7 +80,10 @@ export default function Index({ users } : { users : User[] }) {
         {
             accessorKey: "status",
             header: ({ column }) => <SortableColumnHeader column={column} label="Status" />,
-            cell: ({ row }) => <div>{row.original.human_banned_until}</div>,
+            cell: ({ row }) => row.original.is_banned ?
+                <div className="px-3 py-1 rounded bg-destructive text-destructive-foreground w-fit text-xs">Banned {row.original.human_banned_until ? `until ${row.original.human_banned_until}` : `permanently`}</div>
+                :
+                <div className="px-3 py-1 rounded bg-positive text-positive-foreground w-fit text-xs">Active</div>
         },
         {
             id: "actions",
