@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Extensions\Inertia\InertiaWithThemes;
 use App\Http\Controllers\Controller;
+use App\Models\BanInstance;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
@@ -18,10 +19,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         return InertiaWithThemes::render('Admin/Users/Index', [
             'users' => User::with('threads', 'roles')->get(),
+            'canBanUsers' => $request->user()->can('create', BanInstance::class),
         ]);
     }
 

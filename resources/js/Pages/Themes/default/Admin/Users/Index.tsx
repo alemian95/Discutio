@@ -1,5 +1,6 @@
 import { DataTable } from "@/Components/Themes/default/datatable/Datatable"
 import { SortableColumnHeader } from "@/Components/Themes/default/datatable/headers/SortableColumnHeader"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/Components/Themes/default/ui/alert-dialog"
 import { Button } from "@/Components/Themes/default/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/Themes/default/ui/dropdown-menu"
 import { useBreadcrumbs } from "@/hooks/useBreadcrumbs"
@@ -10,16 +11,22 @@ import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
 
-export default function Index({ users } : { users : User[] }) {
+export default function Index(
+    { users, canBanUsers }
+    :
+    { users: User[], canBanUsers: boolean }
+) {
 
     const { auth } = usePage<PageProps>().props
 
     const { breadcrumbs: completeBreadcrumbs, append: appendBreadcrumb, reset: resetBreadcrumb } = useBreadcrumbs()
 
+    const [ banModelOpen, setBanModalOpen ] = useState(false)
+
     useEffect(() => {
         resetBreadcrumb()
-        appendBreadcrumb({ label: "Admin", url: route('dashboard')})
-        appendBreadcrumb({ label: "Users"})
+        appendBreadcrumb({ label: "Admin", url: route('dashboard') })
+        appendBreadcrumb({ label: "Users" })
     }, [users])
 
     const columns: ColumnDef<Partial<User>>[] = [
@@ -102,7 +109,11 @@ export default function Index({ users } : { users : User[] }) {
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem className='cursor-pointer' onClick={() => navigator.clipboard.writeText(or.email!)}>Copy email</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Some action</DropdownMenuItem>
+                            {
+                                canBanUsers
+                                &&
+                                <DropdownMenuItem onClick={() => setBanModalOpen(true)}>Create Ban Instance</DropdownMenuItem>
+                            }
                         </DropdownMenuContent>
                     </DropdownMenu>
                 )
@@ -129,6 +140,26 @@ export default function Index({ users } : { users : User[] }) {
                 error={null}
                 pageSize={20}
             />
+
+            {
+                canBanUsers
+                &&
+                <AlertDialog open={banModelOpen} onOpenChange={setBanModalOpen}>
+                    {/* <AlertDialogTrigger>
+
+                    </AlertDialogTrigger> */}
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>This action will create a new Ban Instance for this user. This means that the user will be banned from all services. You can also use the "Ban" button in the top right corner of the page to ban users.</AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction>Confirm</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            }
 
         </AppLayout>
     );
