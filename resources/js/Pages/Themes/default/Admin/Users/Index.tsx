@@ -1,13 +1,16 @@
 import { DataTable } from "@/Components/Themes/default/datatable/Datatable"
 import { SortableColumnHeader } from "@/Components/Themes/default/datatable/headers/SortableColumnHeader"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/Components/Themes/default/ui/alert-dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/Components/Themes/default/ui/dialog"
 import { Badge } from "@/Components/Themes/default/ui/badge"
 import { Button } from "@/Components/Themes/default/ui/button"
+import { Checkbox } from "@/Components/Themes/default/ui/checkbox"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/Components/Themes/default/ui/dropdown-menu"
+import { Input } from "@/Components/Themes/default/ui/input"
+import { Label } from "@/Components/Themes/default/ui/label"
 import { useBreadcrumbs } from "@/hooks/useBreadcrumbs"
 import AppLayout from "@/Layouts/Themes/default/AppLayout"
 import { PageProps, User } from "@/types"
-import { Head, usePage } from "@inertiajs/react"
+import { Head, useForm, usePage } from "@inertiajs/react"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
 import { useEffect, useState } from "react"
@@ -23,6 +26,16 @@ export default function Index(
     const { breadcrumbs: completeBreadcrumbs, append: appendBreadcrumb, reset: resetBreadcrumb } = useBreadcrumbs()
 
     const [ banModelOpen, setBanModalOpen ] = useState(false)
+
+    const [ selectedBanUser, setSelectedBanUser ] = useState<User|Partial<User>|null>(null)
+
+    const { data: banFormData, setData: setBanFormData } = useForm({
+        user_id: selectedBanUser?.id || undefined,
+        now: true,
+        from: "",
+        forever: false,
+        until: ""
+    })
 
     useEffect(() => {
         resetBreadcrumb()
@@ -113,7 +126,7 @@ export default function Index(
                             {
                                 canBanUsers
                                 &&
-                                <DropdownMenuItem className="cursor-pointer" onClick={() => setBanModalOpen(true)}>Create Ban Instance</DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer" onClick={() => { setSelectedBanUser(row.original); setBanFormData('user_id', row.original.id); setBanModalOpen(true)}}>Create Ban Instance</DropdownMenuItem>
                             }
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -126,10 +139,10 @@ export default function Index(
         <AppLayout
             user={auth.user}
             breadcrumbs={completeBreadcrumbs}
-            title={`User list`}
+            title={`User Management`}
             useCard={true}
         >
-            <Head title={`User list`} />
+            <Head title={`User Management`} />
 
             <DataTable
                 data={users}
@@ -145,21 +158,41 @@ export default function Index(
             {
                 canBanUsers
                 &&
-                <AlertDialog open={banModelOpen} onOpenChange={setBanModalOpen}>
-                    {/* <AlertDialogTrigger>
-
-                    </AlertDialogTrigger> */}
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>This action will create a new Ban Instance for this user. This means that the user will be banned from all services. You can also use the "Ban" button in the top right corner of the page to ban users.</AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction>Confirm</AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
+                <Dialog open={banModelOpen} onOpenChange={setBanModalOpen}>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Are you sure you want to ban {selectedBanUser?.name}?</DialogTitle>
+                            <DialogDescription>This action will create a new Ban Instance for this user.</DialogDescription>
+                        </DialogHeader>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center gap-1">
+                                    <Label htmlFor="now">From now</Label>
+                                    <Checkbox name="now" id="now" checked={banFormData.now} onCheckedChange={(e) => setBanFormData('now', e.valueOf() as boolean)} />
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <Label htmlFor="from">Or select date</Label>
+                                    <Input name="from" id="from" type="datetime-local" value={banFormData.from} onChange={(e) => setBanFormData('from', e.target.value)} />
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center gap-1">
+                                    <Label htmlFor="forever">Forever</Label>
+                                    <Checkbox name="forever" id="forever" checked={banFormData.forever} onCheckedChange={(e) => setBanFormData('forever', e.valueOf() as boolean)} />
+                                </div>
+                                <div className="flex items-center gap-1">
+                                    <Label htmlFor="until">Or select date</Label>
+                                    <Input name="until" id="until" type="datetime-local" value={banFormData.until} onChange={(e) => setBanFormData('until', e.target.value)} />
+                                </div>
+                            </div>
+                        </div>
+                        <pre>{JSON.stringify(banFormData, null, 2)}</pre>
+                        <DialogFooter>
+                            <Button>Cancel</Button>
+                            <Button>Confirm</Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             }
 
         </AppLayout>
