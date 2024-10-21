@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BanInstanceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Api\ThreadController as ApiThreadController;
@@ -43,8 +44,9 @@ Route::resource('threads/{thread}/answers', AnswerController::class)->only(['sto
 Route::resource('configs', ConfigController::class)->only(['index']);
 Route::post('configs/update', [ConfigController::class, 'updateAll'])->name('configs.update.all');
 
-Route::name('admin.')->prefix('admin')->group(function () {
+Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function () {
     Route::resource('users', UserController::class);
+    Route::resource('users/{user}/ban', BanInstanceController::class)->only(['index', 'show', 'store', 'update']);
 });
 
 Route::name('api.')->prefix('api')->group(function () {

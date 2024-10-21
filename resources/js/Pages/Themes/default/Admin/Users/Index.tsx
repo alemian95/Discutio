@@ -13,7 +13,9 @@ import { PageProps, User } from "@/types"
 import { Head, useForm, usePage } from "@inertiajs/react"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { ColumnDef } from "@tanstack/react-table"
-import { useEffect, useState } from "react"
+import { FormEventHandler, useEffect, useState } from "react"
+import axios from "axios"
+import { Textarea } from "@/Components/Themes/default/ui/textarea"
 
 export default function Index(
     { users, canBanUsers }
@@ -29,12 +31,13 @@ export default function Index(
 
     const [ selectedBanUser, setSelectedBanUser ] = useState<User|Partial<User>|null>(null)
 
-    const { data: banFormData, setData: setBanFormData } = useForm({
-        user_id: selectedBanUser?.id || undefined,
-        now: true,
-        from: "",
-        forever: false,
-        until: ""
+    const { data: banFormData, setData: setBanFormData, reset: resetBanFormData, post: postBanFormData, errors: errorsBanFormData } = useForm({
+        from_now: true,
+        from_date: "",
+        until_forever: false,
+        until_date: "",
+        message: "",
+        description: "",
     })
 
     useEffect(() => {
@@ -42,6 +45,21 @@ export default function Index(
         appendBreadcrumb({ label: "Admin", url: route('dashboard') })
         appendBreadcrumb({ label: "Users" })
     }, [users])
+
+    // function createBanInstance(e) {
+    //     axios.post(route('admin.ban.store', { user: selectedBanUser?.id }), banFormData)
+    //         .then((response) => {
+    //             console.log(response)
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //         })
+    // }
+
+    const createBanInstance: FormEventHandler = (e) => {
+        e.preventDefault();
+        postBanFormData(route('admin.ban.store', { user: selectedBanUser?.id }));
+    };
 
     const columns: ColumnDef<Partial<User>>[] = [
         // {
@@ -128,7 +146,7 @@ export default function Index(
                                 &&
                                 <>
                                     <DropdownMenuLabel>Ban Actions</DropdownMenuLabel>
-                                    <DropdownMenuItem className="cursor-pointer" onClick={() => { setSelectedBanUser(row.original); setBanFormData('user_id', row.original.id); setBanModalOpen(true)}}>Create Ban Instance</DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer" onClick={() => { setSelectedBanUser(row.original); setBanModalOpen(true)}}>Create Ban Instance</DropdownMenuItem>
                                     <DropdownMenuItem className="cursor-pointer">Ban History</DropdownMenuItem>
                                     <DropdownMenuItem className="cursor-pointer">Extend Ban</DropdownMenuItem>
                                     <DropdownMenuItem className="cursor-pointer">Terminate Ban</DropdownMenuItem>
@@ -166,37 +184,50 @@ export default function Index(
                 &&
                 <Dialog open={banModelOpen} onOpenChange={setBanModalOpen}>
                     <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Are you sure you want to ban {selectedBanUser?.name}?</DialogTitle>
-                            <DialogDescription>This action will create a new Ban Instance for this user.</DialogDescription>
-                        </DialogHeader>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center gap-1">
-                                    <Label htmlFor="now">From now</Label>
-                                    <Checkbox name="now" id="now" checked={banFormData.now} onCheckedChange={(e) => setBanFormData('now', e.valueOf() as boolean)} />
+                        <form onSubmit={createBanInstance}>
+                            <DialogHeader>
+                                <DialogTitle>Are you sure you want to ban {selectedBanUser?.name}?</DialogTitle>
+                                <DialogDescription>This action will create a new Ban Instance for this user.</DialogDescription>
+                            </DialogHeader>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex items-center gap-1">
+                                        <Label htmlFor="from_now">From now</Label>
+                                        <Checkbox name="from_now" id="from_now" checked={banFormData.from_now} onCheckedChange={(e) => setBanFormData('from_now', e.valueOf() as boolean)} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <Label htmlFor="from_date">Or select date</Label>
+                                        <Input name="from_date" id="from_date" type="datetime-local" disabled={banFormData.from_now === true} value={banFormData.from_date} onChange={(e) => setBanFormData('from_date', e.target.value)} />
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-1">
-                                    <Label htmlFor="from">Or select date</Label>
-                                    <Input name="from" id="from" type="datetime-local" value={banFormData.from} onChange={(e) => setBanFormData('from', e.target.value)} />
+                                <div className="flex flex-col gap-4">
+                                    <div className="flex items-center gap-1">
+                                        <Label htmlFor="until_forever">Until forever</Label>
+                                        <Checkbox name="until_forever" id="until_forever" checked={banFormData.until_forever} onCheckedChange={(e) => setBanFormData('until_forever', e.valueOf() as boolean)} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <Label htmlFor="until_date">Or select date</Label>
+                                        <Input name="until_date" id="until_date" type="datetime-local" disabled={banFormData.until_forever === true} value={banFormData.until_date} onChange={(e) => setBanFormData('until_date', e.target.value)} />
+                                    </div>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4">
-                                <div className="flex items-center gap-1">
-                                    <Label htmlFor="forever">Until forever</Label>
-                                    <Checkbox name="forever" id="forever" checked={banFormData.forever} onCheckedChange={(e) => setBanFormData('forever', e.valueOf() as boolean)} />
+                                <div className="flex flex-col gap-1">
+                                    <Label htmlFor="message">Message</Label>
+                                    <Input name="message" id="message" value={banFormData.message} onChange={(e) => setBanFormData('message', e.target.value)} />
                                 </div>
                                 <div className="flex flex-col gap-1">
-                                    <Label htmlFor="until">Or select date</Label>
-                                    <Input name="until" id="until" type="datetime-local" value={banFormData.until} onChange={(e) => setBanFormData('until', e.target.value)} />
+                                    <Label htmlFor="description">Description (optional)</Label>
+                                    <Textarea name="description" id="description" value={banFormData.description} onChange={(e) => setBanFormData('description', e.target.value)} />
                                 </div>
                             </div>
-                        </div>
-                        <pre>{JSON.stringify(banFormData, null, 2)}</pre>
-                        <DialogFooter>
-                            <Button>Cancel</Button>
-                            <Button>Confirm</Button>
-                        </DialogFooter>
+                            <pre>{JSON.stringify(banFormData, null, 2)}</pre>
+                            <DialogFooter>
+                                <Button type="button" onClick={() => { resetBanFormData(), setBanModalOpen(false) }}>Cancel</Button>
+                                {/* <Button onClick={createBanInstance}>Confirm</Button> */}
+                                <Button>Confirm</Button>
+                            </DialogFooter>
+                        </form>
                     </DialogContent>
                 </Dialog>
             }

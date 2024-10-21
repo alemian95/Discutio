@@ -11,16 +11,13 @@ use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        Gate::authorize('viewAny', User::class);
-    }
 
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
+        Gate::authorize('viewAny', User::class);
         return InertiaWithThemes::render('Admin/Users/Index', [
             'users' => User::with('threads', 'roles')->get(),
             'canBanUsers' => $request->user()->can('create', BanInstance::class),
