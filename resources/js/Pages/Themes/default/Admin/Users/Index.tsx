@@ -126,7 +126,13 @@ export default function Index(
                             {
                                 canBanUsers
                                 &&
-                                <DropdownMenuItem className="cursor-pointer" onClick={() => { setSelectedBanUser(row.original); setBanFormData('user_id', row.original.id); setBanModalOpen(true)}}>Create Ban Instance</DropdownMenuItem>
+                                <>
+                                    <DropdownMenuLabel>Ban Actions</DropdownMenuLabel>
+                                    <DropdownMenuItem className="cursor-pointer" onClick={() => { setSelectedBanUser(row.original); setBanFormData('user_id', row.original.id); setBanModalOpen(true)}}>Create Ban Instance</DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer">Ban History</DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer">Extend Ban</DropdownMenuItem>
+                                    <DropdownMenuItem className="cursor-pointer">Terminate Ban</DropdownMenuItem>
+                                </>
                             }
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -170,17 +176,17 @@ export default function Index(
                                     <Label htmlFor="now">From now</Label>
                                     <Checkbox name="now" id="now" checked={banFormData.now} onCheckedChange={(e) => setBanFormData('now', e.valueOf() as boolean)} />
                                 </div>
-                                <div className="flex items-center gap-1">
+                                <div className="flex flex-col gap-1">
                                     <Label htmlFor="from">Or select date</Label>
                                     <Input name="from" id="from" type="datetime-local" value={banFormData.from} onChange={(e) => setBanFormData('from', e.target.value)} />
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4">
                                 <div className="flex items-center gap-1">
-                                    <Label htmlFor="forever">Forever</Label>
+                                    <Label htmlFor="forever">Until forever</Label>
                                     <Checkbox name="forever" id="forever" checked={banFormData.forever} onCheckedChange={(e) => setBanFormData('forever', e.valueOf() as boolean)} />
                                 </div>
-                                <div className="flex items-center gap-1">
+                                <div className="flex flex-col gap-1">
                                     <Label htmlFor="until">Or select date</Label>
                                     <Input name="until" id="until" type="datetime-local" value={banFormData.until} onChange={(e) => setBanFormData('until', e.target.value)} />
                                 </div>

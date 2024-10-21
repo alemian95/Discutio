@@ -132,7 +132,7 @@ export function DataTable<T>(props: DataTableProps<T>) {
                                         <TableRow
                                             key={row.id}
                                             data-state={row.getIsSelected() && "selected"}
-                                            className={ index % 2 === 0 ? "bg-slate-50" : "bg-sky-50" }
+                                            className={`${index % 2 === 0 ? "bg-sky-50" : "bg-white"}`}
                                         >
                                             {row.getVisibleCells().map((cell) => (
                                                 <TableCell key={cell.id} className="p-1">
