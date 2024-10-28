@@ -58,12 +58,17 @@ trait HasHumanTimestamps
 
     private function shortHumanTimestamp(string $timestamp): string
     {
-        Carbon::setLocale(app()->getLocale());
-        $d = Carbon::parse($timestamp);
-        $dateFormat = Config::getValue('date_format');
-        $dateFormat = str_replace('dddd, ', '', $dateFormat);
-        $dateFormat = str_replace('ddd, ', '', $dateFormat);
+        try {
+            Carbon::setLocale(app()->getLocale());
+            $d = Carbon::parse($timestamp);
+            $dateFormat = Config::getValue('date_format');
+            $dateFormat = str_replace('dddd, ', '', $dateFormat);
+            $dateFormat = str_replace('ddd, ', '', $dateFormat);
 
-        return ucwords($d->isoFormat($dateFormat.' '.Config::getValue('time_format')));
+            return ucwords($d->isoFormat($dateFormat.' '.Config::getValue('time_format')));
+        }
+        catch (\Exception $e) {
+            return $d->isoFormat('MMMM D, YYYY h:mm A');
+        }
     }
 }
